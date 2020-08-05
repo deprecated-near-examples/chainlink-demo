@@ -14,10 +14,8 @@ export default function App() {
   useEffect(() => {
       if (window.walletConnection.isSignedIn()) {
         // window.contract is set by initContract in index.js
-        window.contract.getGreeting({ accountId: window.accountId })
-          .then(greetingFromContract => {
-            setGreeting(greetingFromContract)
-          })
+        window.contract.get_balance({ owner_id: window.accountId })
+          .then(result => console.log(result))
       }
   },[])
 
