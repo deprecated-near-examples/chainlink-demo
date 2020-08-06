@@ -1,11 +1,20 @@
 import 'regenerator-runtime/runtime'
 import React, { useEffect, useState } from 'react'
-import { logout, onSubmit } from './utils'
+import { logout, onSubmit } from './services/utils'
+import getConfig from './services/config'
+import SignIn from './components/signIn'
+import { 
+  getAccountBalance, 
+  isOracleAuthorized, 
+  getOracleRequestSummary, 
+  getOracleRequests, 
+  getAllowance,
+  checkWithdrawableTokens} from './services/contractMethods'
 import './global.css'
 
-import getConfig from './config'
-import SignIn from './components/signIn'
 const { networkId } = getConfig(process.env.NODE_ENV || 'development')
+
+const baseAccount = 'joshford.testnet'
 
 export default function App() {
   const [greeting, setGreeting] = useState()
@@ -13,44 +22,30 @@ export default function App() {
 
   useEffect(() => {
       if (window.walletConnection.isSignedIn()) {
-        // window.contract is set by initContract in index.js
-        window.contract.get_balance({ owner_id: window.accountId })
-          .then(result => console.log(result))
       }
   },[])
 
-  const handleSubmit = async () => {
-     const newGreeting = event.target.elements.greeting.value
-     await onSubmit(event)
-     setGreeting(newGreeting)
+  const handleSubmit = () => {
+    // getAccountBalance(`client.${baseAccount}`);
+    //getAllowance(baseAccount)
+    // isOracleAuthorized();
+    // getOracleRequestSummary();
+    //getOracleRequests(baseAccount);
+    checkWithdrawableTokens();
   }
 
   if (!window.walletConnection.isSignedIn()) return <SignIn/>
   
   return (
     <>
+      <main>
+        <button onClick={handleSubmit}>
+          TEST
+        </button>
+      </main>
       <button className="link" onClick={logout}>
         Sign out
       </button>
-
-      <main>
-        <form onSubmit={handleSubmit}>
-          <fieldset id="fieldset">
-            <div>
-              <input
-                autoComplete="off"
-                defaultValue={greeting}
-                id="greeting"
-                onChange={e => setButtonDisabled(e.target.value === greeting)}
-              />
-              <button disabled={buttonDisabled}>
-                Save
-              </button>
-            </div>
-          </fieldset>
-        </form>
-      </main>
-
     </>
   )
 }

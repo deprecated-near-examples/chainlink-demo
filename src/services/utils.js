@@ -18,9 +18,27 @@ export async function initContract() {
   // Getting the Account ID. If still unauthorized, it's just empty string
   window.accountId = window.walletConnection.getAccountId()
   // Initializing our contract APIs by contract name and configuration
-  window.contract = await new Contract(window.walletConnection.account(), nearConfig.contractName, {
-    viewMethods: ['get_balance' ],
-    changeMethods: [ 'transfer', 'inc_allowance' ],
+  window.nearLinkContract = await new Contract(
+    window.walletConnection.account(), nearConfig.contractName, {
+      viewMethods: ['get_balance', 'get_allowance' ],
+      changeMethods: [ 'transfer', 'inc_allowance' ],
+  })
+  
+  window.oracleContract = await new Contract(
+    window.walletConnection.account(), 
+    'oracle.joshford.testnet', 
+      { viewMethods: [
+          'is_authorized', 
+          'get_requests_summary', 
+          'get_requests',
+          'get_all_requests',
+          'get_withdrawable_tokens' 
+        ],
+        changeMethods: [ 
+          'add_authorization',
+          'fulfill_request',
+          'request'
+         ],
   })
 }
 // attached to the form used to update the greeting
