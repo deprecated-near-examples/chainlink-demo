@@ -1,30 +1,30 @@
 //NEAR-LINK Functions
-export function getAccountBalance(account){
+export function getAccountBalance(acct){
   window.nearLinkContract
     .get_balance({ 
-      owner_id: account
+      owner_id: acct
     })
     .then(result => 
-      console.log(`${account} balance: `, result)
+      console.log(`${acct} balance: `, result)
       )
 }
 
-export function getAllowance(baseAccount){
+export function getAllowance(baseAcct){
   window.nearLinkContract
   .get_allowance({
-    owner_id: `client.${baseAccount}`,
-    escrow_account_id: `oracle.${baseAccount}`
+    owner_id: `client.${baseAcct}`,
+    escrow_account_id: `oracle.${baseAcct}`
   })
   .then(result => 
-    console.log(`client.${baseAccount}'s oracle allowance: `, result)
+    console.log(`oracle.${baseAcct} allowance: `, result)
     )
 }
 
 //Oracle Functions
-export function isOracleAuthorized(baseAccount){
+export function isOracleAuthorized(baseAcct){
   window.oracleContract
     .is_authorized({ 
-      node: `oracle-node.${baseAccount}`
+      node: `oracle-node.${baseAcct}`
     })
     .then(result => 
       console.log('oracle authorized? ', result)
@@ -41,10 +41,10 @@ export function getOracleRequestSummary(){
       )
 }     
 
-export function getOracleRequests(baseAccount){
+export function getOracleRequests(baseAcct){
   window.oracleContract
     .get_requests({
-      account: `client.${baseAccount}`,
+      account: `client.${baseAcct}`,
       max_requests: "10"
     })
     .then(result => console.log(result)) 
