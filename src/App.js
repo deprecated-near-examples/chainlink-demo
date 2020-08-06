@@ -9,7 +9,8 @@ import {
   getOracleRequestSummary, 
   getOracleRequests, 
   getAllowance,
-  checkWithdrawableTokens} from './services/contractMethods'
+  checkWithdrawableTokens,
+  makeTransfer} from './services/contractMethods'
 import './global.css'
 
 const { networkId } = getConfig(process.env.NODE_ENV || 'development')
@@ -23,14 +24,15 @@ export default function App() {
   const [buttonDisabled, setButtonDisabled] = useState(true)
 
   const handleSubmit = () => {
-    getAccountBalance(baseAcct);
-    getAccountBalance(clientAcct);
-    getAccountBalance(oracleAcct);
-    getAllowance(baseAcct)
-    isOracleAuthorized();
-    getOracleRequestSummary();
-    getOracleRequests(baseAcct);
-    checkWithdrawableTokens();
+    makeTransfer(baseAcct);
+    // getAccountBalance(baseAcct);
+    // getAccountBalance(clientAcct);
+    // getAccountBalance(oracleAcct);
+    // getAllowance(baseAcct)
+    // isOracleAuthorized();
+    // getOracleRequestSummary();
+    // getOracleRequests(baseAcct);
+    // checkWithdrawableTokens();
   }
 
   if (!window.walletConnection.isSignedIn()) return <SignIn/>

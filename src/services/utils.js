@@ -1,5 +1,4 @@
 import { connect, Contract, keyStores, WalletConnection } from 'near-api-js'
-import getConfig from './config'
 //const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 const nearConfig = {
   networkId: 'default',

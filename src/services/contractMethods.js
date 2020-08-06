@@ -1,4 +1,22 @@
-//NEAR-LINK Functions
+import Big from 'big.js'
+import { utils } from 'near-api-js';
+
+const max_gas = Big(3).times(10 ** 14).toFixed()
+const storageStakePayment = utils.format.parseNearAmount('.0365')
+
+//NEAR-LINK change functions
+export function makeTransfer(baseAcct){
+  window.nearLinkContract
+    .transfer({
+      new_owner_id: `client.${baseAcct}`,
+      amount: "50",
+    }, max_gas, storageStakePayment)
+    .then(result => 
+      console.log(`Transfer done `, result)
+    )
+}
+
+//NEAR-LINK view functions
 export function getAccountBalance(acct){
   window.nearLinkContract
     .get_balance({ 
@@ -20,7 +38,7 @@ export function getAllowance(baseAcct){
     )
 }
 
-//Oracle Functions
+//Oracle view functions
 export function isOracleAuthorized(baseAcct){
   window.oracleContract
     .is_authorized({ 
