@@ -14,23 +14,22 @@ import './global.css'
 
 const { networkId } = getConfig(process.env.NODE_ENV || 'development')
 
-const baseAccount = 'joshford.testnet'
+const baseAcct = 'joshford.testnet'
+const clientAcct = `client.${baseAcct}`
+const oracleAcct = `oracle.${baseAcct}`
 
 export default function App() {
   const [greeting, setGreeting] = useState()
   const [buttonDisabled, setButtonDisabled] = useState(true)
 
-  useEffect(() => {
-      if (window.walletConnection.isSignedIn()) {
-      }
-  },[])
-
   const handleSubmit = () => {
-    // getAccountBalance(`client.${baseAccount}`);
-    //getAllowance(baseAccount)
-    // isOracleAuthorized();
-    // getOracleRequestSummary();
-    //getOracleRequests(baseAccount);
+    getAccountBalance(baseAcct);
+    getAccountBalance(clientAcct);
+    getAccountBalance(oracleAcct);
+    getAllowance(baseAcct)
+    isOracleAuthorized();
+    getOracleRequestSummary();
+    getOracleRequests(baseAcct);
     checkWithdrawableTokens();
   }
 
