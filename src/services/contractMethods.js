@@ -4,7 +4,9 @@ export function getAccountBalance(account){
     .get_balance({ 
       owner_id: account
     })
-    .then(result => console.log(result))
+    .then(result => 
+      console.log(`${account} balance: `, result)
+      )
 }
 
 export function getAllowance(baseAccount){
@@ -13,8 +15,9 @@ export function getAllowance(baseAccount){
     owner_id: `client.${baseAccount}`,
     escrow_account_id: `oracle.${baseAccount}`
   })
-  .then(result => console.log(result))
-
+  .then(result => 
+    console.log(`client.${baseAccount}'s oracle allowance: `, result)
+    )
 }
 
 //Oracle Functions
@@ -23,7 +26,9 @@ export function isOracleAuthorized(baseAccount){
     .is_authorized({ 
       node: `oracle-node.${baseAccount}`
     })
-    .then(result => console.log(result))
+    .then(result => 
+      console.log('oracle authorized? ', result)
+      )
 }
 
 export function getOracleRequestSummary(){
@@ -31,14 +36,15 @@ export function getOracleRequestSummary(){
     .get_requests_summary({ 
       max_num_accounts: '10'
     })
-    .then(result => console.log(result))
+    .then(result => 
+      console.log('oracle request summary: ', result)
+      )
 }     
 
 export function getOracleRequests(baseAccount){
   window.oracleContract
     .get_requests({
       account: `client.${baseAccount}`,
-      // account: `oracle-node.${baseAccount}`,
       max_requests: "10"
     })
     .then(result => console.log(result)) 
@@ -47,5 +53,7 @@ export function getOracleRequests(baseAccount){
 export function checkWithdrawableTokens(){
   window.oracleContract 
     .get_withdrawable_tokens()
-    .then(result => console.log(result))
+    .then(result => 
+      console.log('withdrawable tokens amt: ', result)
+      )
 }

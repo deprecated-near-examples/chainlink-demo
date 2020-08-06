@@ -20,18 +20,14 @@ export default function App() {
   const [greeting, setGreeting] = useState()
   const [buttonDisabled, setButtonDisabled] = useState(true)
 
-  useEffect(() => {
-      if (window.walletConnection.isSignedIn()) {
-      }
-  },[])
-
   const handleSubmit = () => {
-    // getAccountBalance(`client.${baseAccount}`);
+    getAccountBalance(`client.${baseAccount}`);
+    getAccountBalance(baseAccount);
     //getAllowance(baseAccount)
     // isOracleAuthorized();
     // getOracleRequestSummary();
     //getOracleRequests(baseAccount);
-    checkWithdrawableTokens();
+    // checkWithdrawableTokens();
   }
 
   if (!window.walletConnection.isSignedIn()) return <SignIn/>
