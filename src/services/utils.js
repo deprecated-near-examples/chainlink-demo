@@ -1,4 +1,5 @@
-import { connect, Contract, keyStores, WalletConnection } from 'near-api-js'
+import { connect, Contract, keyStores, WalletConnection, KeyPair} from 'near-api-js'
+import { BrowserLocalStorageKeyStore } from 'near-api-js/lib/key_stores';
 //const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 const nearConfig = {
   networkId: 'default',
@@ -7,24 +8,29 @@ const nearConfig = {
   walletUrl: 'https://wallet.testnet.near.org',
   helperUrl: 'https://helper.testnet.near.org'
 };
-// Initialize contract & set global variables
-export async function initContract() {
-  // Initialize connection to the NEAR testnet
-  const near = await connect(Object.assign({ deps: { keyStore: new keyStores.BrowserLocalStorageKeyStore() } }, nearConfig))
-  // Initializing Wallet based Account. It can work with NEAR testnet wallet that
-  // is hosted at https://wallet.testnet.near.org
+
+export async function initContract() {    
+  const keyStore = new keyStores.InMemoryKeyStore()
+  const keyPair = KeyPair.fromString(process.env.CLIENT_PRIVATE_KEY)
+  const near = await connect(Object.assign({ deps: { keyStore: keyStore} }, nearConfig))
+  const nearLink = await near.account('near-link.joshford.testnet')
+  await keyStore.setKey(nearConfig.networkId, nearConfig.contractName, keyPair)
+
+  console.log('key_pair', keyPair)
+  console.log('keyStore', keyStore)
+
   window.walletConnection = new WalletConnection(near)
-  // Getting the Account ID. If still unauthorized, it's just empty string
   window.accountId = window.walletConnection.getAccountId()
-  // Initializing our contract APIs by contract name and configuration
-  window.nearLinkContract = await new Contract(
-    window.walletConnection.account(), nearConfig.contractName, {
-      viewMethods: ['get_balance', 'get_allowance' ],
-      changeMethods: [ 'transfer', 'inc_allowance' ],
-  })
+
+  window.nearLinkContract = await new Contract(nearLink, nearConfig.contractName, 
+      {
+        viewMethods: ['get_balance', 'get_allowance' ],
+        changeMethods: [ 'transfer', 'inc_allowance', 'transfer_from' ],
+      }
+    )
   
   window.oracleContract = await new Contract(
-    window.walletConnection.account(), 
+    await near.account('oracle.joshford.testnet'), 
     'oracle.joshford.testnet', 
       { viewMethods: [
           'is_authorized', 
@@ -37,8 +43,9 @@ export async function initContract() {
           'add_authorization',
           'fulfill_request',
           'request'
-         ],
-  })
+        ],
+      }
+    )
 }
 // attached to the form used to update the greeting
 // in utils because it works with a vanilla JS or a React approach

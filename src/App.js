@@ -35,7 +35,7 @@ export default function App() {
     // checkWithdrawableTokens();
   }
 
-  if (!window.walletConnection.isSignedIn()) return <SignIn/>
+  // if (!window.walletConnection.isSignedIn()) return <SignIn/>
   
   return (
     <>
