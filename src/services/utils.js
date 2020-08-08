@@ -17,7 +17,7 @@ export async function initContract() {
   await keyStore.setKey(nearConfig.networkId, nearConfig.contractName, keyPair)
 
   console.log('key_pair', keyPair)
-  console.log('keyStore', keyStore)
+  console.log('key_store', keyStore)
 
   window.walletConnection = new WalletConnection(near)
   window.accountId = window.walletConnection.getAccountId()
