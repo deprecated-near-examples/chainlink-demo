@@ -1,8 +1,9 @@
 * {
   box-sizing: border-box;
+  max-width: 1600px;
 }
 
-html {
+/* html {
   --bg: #efefef;
   --fg: #1e1e1e;
   --gray: #555;
@@ -30,7 +31,7 @@ main {
 }
 
 h1 {
-  background-image: url(assets/logo-black.svg);
+  background-image: url(../assets/logo-black.svg);
   background-position: center 1em;
   background-repeat: no-repeat;
   background-size: auto 1.5em;
@@ -180,9 +181,9 @@ aside footer *:last-child {
     --light-gray: #444;
   }
   h1 {
-    background-image: url(assets/logo-white.svg);
+    background-image: url(../assets/logo-white.svg);
   }
   input:focus {
     box-shadow: 0 0 10em rgba(255, 255, 255, 0.02) inset;
   }
-}
+} */

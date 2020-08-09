@@ -1,0 +1,43 @@
+.header-block {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    margin: 24px auto;
+    max-height: 72px;
+    margin-left: 165px;
+    margin-right: 165px;
+
+
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-areas: "a a a a a b";
+}
+
+.header-block-one {
+    grid-area: a;
+    text-align: start;
+}
+
+.header-block-two {
+    display: flex;
+    grid-area: b;
+    margin: auto auto;
+}
+
+#project-title {
+    font-weight: 900;
+    color: #25282A;
+    font-size: 36px;
+    line-height: 36px;
+}
+
+#project-description {
+    font-size: 14px;
+    line-height: 18px;
+    color: #999999;
+}
+
+.logos {
+    margin-left: 5px;
+    margin-top: 8px;
+    height: 45px;
+}
