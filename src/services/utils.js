@@ -1,6 +1,6 @@
-import { connect, Contract, keyStores, WalletConnection, KeyPair } from 'near-api-js'
-import { BrowserLocalStorageKeyStore } from 'near-api-js/lib/key_stores';
+import { connect, Contract, keyStores, KeyPair } from 'near-api-js'
 //const nearConfig = getConfig(process.env.NODE_ENV || 'development')
+
 const nearConfig = {
   networkId: 'default',
   nodeUrl: 'https://rpc.testnet.near.org',
@@ -12,16 +12,16 @@ const nearConfig = {
 export async function initContract() {    
   const keyStore = new keyStores.InMemoryKeyStore()
   const keyPair = KeyPair.fromString(process.env.CLIENT_PRIVATE_KEY)
+  //sets key in memory
   await keyStore.setKey(nearConfig.networkId, nearConfig.contractName, keyPair)
   const near = await connect(Object.assign({ deps: { keyStore: keyStore} }, nearConfig))
-  const nearLink = await near.account('near-link.joshford.testnet')
+  const nearLink = await near.account(nearConfig.contractName)
+  window.near = near
 
-  console.log('key_pair', keyPair)
-  console.log('key_store', keyStore)
-
-  // window.walletConnection = new WalletConnection(near)
-  // window.accountId = window.walletConnection.getAccountId()
-
+  window.nearLinkAcct = await near.account(nearConfig.contractName)
+  console.log('window.nearLinkAccount: ', window.nearLinkAcct)
+  console.log('near-link accountID', window.nearLinkAcct.accountId)
+  
   window.nearLinkContract = await new Contract(nearLink, nearConfig.contractName, 
       {
         viewMethods: ['get_balance', 'get_allowance' ],
@@ -32,7 +32,8 @@ export async function initContract() {
   window.oracleContract = await new Contract(
     await near.account('oracle.joshford.testnet'), 
     'oracle.joshford.testnet', 
-      { viewMethods: [
+      { 
+        viewMethods: [
           'is_authorized', 
           'get_requests_summary', 
           'get_requests',
@@ -47,8 +48,7 @@ export async function initContract() {
       }
     )
 }
-// attached to the form used to update the greeting
-// in utils because it works with a vanilla JS or a React approach
+
 export async function onSubmit(event) {
   event.preventDefault()
   // get elements from the form using their id attribute

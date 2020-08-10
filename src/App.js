@@ -24,9 +24,9 @@ export default function App() {
   const [buttonDisabled, setButtonDisabled] = useState(true)
 
   const handleSubmit = () => {
-    makeTransfer(baseAcct);
-    // getAccountBalance(baseAcct);
-    // getAccountBalance(clientAcct);
+    // makeTransfer(baseAcct);
+    getAccountBalance(clientAcct);
+    getAccountBalance('near-link.joshford.testnet');
     // getAccountBalance(oracleAcct);
     // getAllowance(baseAcct)
     // isOracleAuthorized();
