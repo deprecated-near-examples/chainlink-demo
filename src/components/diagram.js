@@ -55,7 +55,25 @@ const Diagram = () => {
             <img src={state.tenthImage} alt="Oracle"/>
             </div>
         </div>
+
+        <div className="explainer">
+            <img src={state.explainerbackground} alt="ExplainerBackground" className="explainer-background"/>
+            <div className="explainer-one-content">
+                <h4>1. Alice’s contract allowance <br></br> is set to cover tx fees</h4>
+                <p>Here’s more detail on this part if needed.</p>
+                <div className="explainer-button">
+                    Expand
+                    <img src={state.glass} alt="Glass" className="glass"/>
+                </div>
+            </div>
+            <div className="nearkat-one">
+                <img src={state.nearkatone} alt="NEARKAT"/>
+            </div>
+            <div className="step-one">
+                <img src={state.stepone} alt="Step-one"/>
+            </div>
         </div>
+    </div>
     );
 };
 

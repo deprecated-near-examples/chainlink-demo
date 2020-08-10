@@ -1,5 +1,9 @@
 import React, { useReducer } from "react";
 import divider from "../assets/divider.png";
+import glass from "../assets/glass.png";
+import explainerbackground from "../assets/explainer-background.png";
+import nearkatone from "../assets/nearkat-one.png";
+import stepone from "../assets/step-one.png";
 import transferten from "../assets/transfer-ten.png";
 import aliceone from "../assets/alice-one.png";
 import bobone from "../assets/bob-one.png";
@@ -37,14 +41,14 @@ const initialState = {
    bobTokens: 0,
 
    divider: divider,
+   glass: glass,
+   explainerbackground: explainerbackground,
+   nearkatone: nearkatone,
+   stepone: stepone,
    transferten: transferten,
    oracleExplainer: oracleExplainer,
 
 };
-
-const DiagramStateContext = React.createContext(initialState);
-const DiagramDispatchContext = React.createContext(initialState);
-
 
 function diagramReducer(state, action) {
   switch (action.type) {
@@ -52,9 +56,9 @@ function diagramReducer(state, action) {
       return {
         ...state,
         aliceTokens: 40,
-        firsttoparrow: action.firsttoparrowtwo,
-        secondImage: action.arrowtwo,
-        fourthImage: action.bobtwo,
+        firsttoparrow: firsttoparrowtwo,
+        secondImage: arrowtwo,
+        fourthImage: bobtwo,
       };
     case 'secondImageChange':
       // the second change goes here
@@ -62,6 +66,9 @@ function diagramReducer(state, action) {
       throw new Error();
   }
 }
+
+const DiagramStateContext = React.createContext();
+const DiagramDispatchContext = React.createContext();
 
 function DiagramProvider ({children}) {
 
@@ -87,7 +94,7 @@ function useDiagramState() {
 function useDiagramDispatch() {
   const context = React.useContext(DiagramDispatchContext)
    if (context === undefined) {
-     throw new Error('useDiagramDispatch must be used within a DiagramProvider')
+     throw new Error('useDiagramDispatch must be used within a DiagramProvider');
    }
   return context
 }

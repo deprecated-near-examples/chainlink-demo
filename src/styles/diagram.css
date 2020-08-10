@@ -115,3 +115,51 @@
 #second-arrow, #fourth-arrow, #long-arrow-two {
     margin-top: 16px;
 }
+
+.explainer-background {
+    position: absolute;
+    margin-top: -40px;
+    z-index: -1;
+}
+
+.explainer-one-content {
+    margin: 32px;
+}
+
+.explainer-one-content h4 {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 28px;
+    color: #25282A;
+}
+
+.explainer-one-content p {
+    font-size: 14px;
+    color: #666666;
+}
+
+.glass {
+    margin-left: 8px;
+    height: 16px;
+    width: 16px;
+}
+
+.explainer-button {
+    display: flex;
+    justify-content: start;
+    font-size: 14px;
+    color: #0071CE;
+}
+
+.nearkat-one {
+    position: absolute;
+    margin-top: -216px;
+    margin-left: 260px;
+}
+
+.step-one {
+    position: absolute;
+    margin-top: -160px;
+    margin-left: -22px;
+}
+
