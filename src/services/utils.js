@@ -1,4 +1,4 @@
-import { connect, Contract, keyStores, WalletConnection, KeyPair} from 'near-api-js'
+import { connect, Contract, keyStores, WalletConnection, KeyPair } from 'near-api-js'
 import { BrowserLocalStorageKeyStore } from 'near-api-js/lib/key_stores';
 //const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 const nearConfig = {
@@ -12,15 +12,15 @@ const nearConfig = {
 export async function initContract() {    
   const keyStore = new keyStores.InMemoryKeyStore()
   const keyPair = KeyPair.fromString(process.env.CLIENT_PRIVATE_KEY)
+  await keyStore.setKey(nearConfig.networkId, nearConfig.contractName, keyPair)
   const near = await connect(Object.assign({ deps: { keyStore: keyStore} }, nearConfig))
   const nearLink = await near.account('near-link.joshford.testnet')
-  await keyStore.setKey(nearConfig.networkId, nearConfig.contractName, keyPair)
 
   console.log('key_pair', keyPair)
   console.log('key_store', keyStore)
 
-  window.walletConnection = new WalletConnection(near)
-  window.accountId = window.walletConnection.getAccountId()
+  // window.walletConnection = new WalletConnection(near)
+  // window.accountId = window.walletConnection.getAccountId()
 
   window.nearLinkContract = await new Contract(nearLink, nearConfig.contractName, 
       {

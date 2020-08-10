@@ -13,10 +13,8 @@ export function makeTransfer(baseAcct){
       new_owner_id: `client.${baseAcct}`,
       amount: "50",
     }, max_gas, storagePayment)
-
-    .then(result => 
-      console.log(`Transfer done `, result)
-    )
+    .then(result => console.log(`Transfer done `, result)
+  )
 }
 
 //NEAR-LINK view functions
@@ -76,5 +74,5 @@ export function checkWithdrawableTokens(){
     .get_withdrawable_tokens()
     .then(result => 
       console.log('withdrawable tokens amt: ', result)
-      )
+    )
 }
