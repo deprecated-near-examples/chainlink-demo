@@ -1,8 +1,12 @@
 import 'regenerator-runtime/runtime'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { logout, onSubmit } from './services/utils'
-import getConfig from './services/config'
 import SignIn from './components/signIn'
+import Header from './components/header'
+import Search from './components/search'
+import Diagram from './components/diagram'
+import Signout from './components/signout'
+import {DiagramProvider} from './components/DiagramState'
 import { 
   getAccountBalance, 
   isOracleAuthorized, 
@@ -39,19 +43,25 @@ export default function App() {
     // getOracleRequests(baseAcct);
     // checkWithdrawableTokens();
   }
+  
+
+
+export default function App() {
 
   // if (!window.walletConnection.isSignedIn()) return <SignIn/>
   
   return (
-    <>
-      <main>
-        <button onClick={handleSubmit}>
-          TEST
-        </button>
-      </main>
-      <button className="link" onClick={logout}>
-        Sign out
-      </button>
-    </>
+    <div className="App">
+
+        <Header/>
+
+      <DiagramProvider>
+          <Search/>
+          <Diagram/>
+      </DiagramProvider>
+
+      <Signout />
+    
+    </div>
   )
 }

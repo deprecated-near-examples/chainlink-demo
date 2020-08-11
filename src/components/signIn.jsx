@@ -1,9 +1,10 @@
 import React from 'react'
 import { login } from '../services/utils'
-
-export default function signIn() {
+import '../styles/signin.css'
+ 
+function SignIn() {
   return (
-    <main>
+    <div className="signin">
       <h1>Welcome to NEAR!</h1>
       <p>
         To make use of the NEAR blockchain, you need to sign in. The button
@@ -21,6 +22,8 @@ export default function signIn() {
       <p style={{ textAlign: 'center', marginTop: '2.5em' }}>
         <button onClick={login}>Sign in</button>
       </p>
-    </main>
+    </div>
   )
 }
+
+export default (SignIn);
