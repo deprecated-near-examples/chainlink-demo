@@ -3,13 +3,9 @@ import "../styles/search.css";
 import alice from "../assets/alice.png";
 import bob from "../assets/bob.png";
 import { handleSubmit } from "./contractCalls";
-import { useDiagramDispatch, changeImages } from "./DiagramState";
-
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");
-
-  const dispatch = useDiagramDispatch();
 
   const handleSearchInputChanges = e => {
     setSearchValue(e.target.value);
@@ -21,12 +17,12 @@ const Search = () => {
 
   const callSearchFunction = e => {
     e.preventDefault();
-    dispatch({type: 'firstImageChange'});
     resetInputField();
   };
 
   const contractAmount = 50;
   const balance = 2000;
+  const searchResult = "0.23";
 
   return (
     <div className="search-box">
@@ -42,6 +38,10 @@ const Search = () => {
 
           <input onClick={callSearchFunction} type="submit" value="Check" />
         </form>
+        <div className="search-result">
+          <p>{searchResult}</p>
+        </div>
+        <div className="border"></div>
       </div>
       <div className="search-box-two">
         <img src={alice} alt="Alice" className="person"/>
@@ -49,6 +49,7 @@ const Search = () => {
       </div>
       <div className="search-box-three">
         <p>Contract Allowance: <br></br> <strong id="bold-two">{contractAmount}</strong> of <strong id="bold">{balance}</strong></p>
+        <div className="border"></div>
       </div>
       <div className="search-box-four">
         <img src={bob} alt="Bob" className="person"/>

@@ -4,6 +4,7 @@
     font-weight: normal;
     margin: auto auto;
     max-height: 72px;
+    min-width: 1153px;
     max-width: 1153px;
 }
 
@@ -48,6 +49,8 @@
     display: flex;
     justify-content: center;
     position: absolute;
+    z-index: -10;
+   min-width: 1153px;
 }
 
 .middle-header div {
@@ -76,7 +79,7 @@
     grid-area: a;
 }
 
-.contract-box-one p {
+.contract-box-one p, .bobtokens-inactive, .bobtokens-active {
     font-weight: 900;
     font-size: 24px;
     line-height: 28px;
@@ -84,6 +87,10 @@
     color: #24272A;
     margin-top: -104px;
     margin-left: 16px;
+}
+
+.bobtokens-inactive {
+    opacity: 0;
 }
 
 .contract-box-two {
@@ -114,6 +121,22 @@
 
 #second-arrow, #fourth-arrow, #long-arrow-two {
     margin-top: 16px;
+}
+
+.explainer-two {
+    margin-left: 132px;
+}
+
+.explainer-three {
+    margin-left: 285px;
+}
+
+.explainer-four {
+    margin-left: 690px;
+}
+
+.explainer-five {
+    margin-left: 391px;
 }
 
 .explainer-background {
@@ -163,3 +186,30 @@
     margin-left: -22px;
 }
 
+.transfer-ten-inactive {
+    position: absolute;
+    margin-left: 176px;
+    margin-top: 24px;
+    opacity: 0;
+}
+
+.transfer-ten-active {
+    position: absolute;
+    margin-left: 176px;
+    margin-top: 24px;
+    opacity: 1;
+}
+
+.bob-contract-lock-inactive {
+    position: absolute;
+    margin-left: 176px;
+    margin-top: 24px;
+    opacity: 0;
+}
+
+.bob-contract-lock-active {
+    position: absolute;
+    margin-left: 260px;
+    margin-top: 24px;
+    opacity: 1;
+}

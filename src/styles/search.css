@@ -4,7 +4,7 @@
     font-weight: normal;
     margin: auto auto;
     max-height: 72px;
-    max-width: 1153px;
+    width: 1153px;
 
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -25,8 +25,17 @@
 }
 
 .search-box-one {
+  max-height: 72px;
+  display: flex;
   grid-area: a;
   border-right: 4px solid #E6E6E6;
+}
+
+.search-result p {
+  margin-left: 16px;
+  margin-top: 16px;
+  font-weight: 900;
+  font-size: 36px;
 }
 
 .search-box-two {
@@ -38,6 +47,8 @@
   display: flex;
   grid-area: c;
   border-right: 4px solid #E6E6E6;
+  padding-right: 8px;
+  margin: auto auto;
 }
 
 .search-box-four {

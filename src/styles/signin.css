@@ -1,0 +1,27 @@
+.signin {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    margin: 24px 50px;
+    max-height: 72px;
+    min-width: 500px;
+    max-width: 1248px;
+    color: #25282A;
+}
+
+.signin button {
+    width: 94px;
+    height: 45px;   
+    background: #8FD6BD;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+  }
+  
+.signin button:hover {
+    background-color: #00C08B;
+}

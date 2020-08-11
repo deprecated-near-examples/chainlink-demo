@@ -3,9 +3,8 @@
     font-style: normal;
     margin: 24px auto;
     max-height: 72px;
-    margin-left: 165px;
-    margin-right: 165px;
-
+    min-width: 1153px;
+    max-width: 1248px;
 
     display: grid;
     grid-template-columns: repeat(6, 1fr);

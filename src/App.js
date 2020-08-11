@@ -5,9 +5,8 @@ import SignIn from './components/signIn'
 import Header from './components/header'
 import Search from './components/search'
 import Diagram from './components/diagram'
+import Signout from './components/signout'
 import {DiagramProvider} from './components/DiagramState'
-
-//import './styles/global.css';
 
 export default function App() {
 
@@ -16,22 +15,14 @@ export default function App() {
   return (
     <div className="App">
 
-      <div>
         <Header/>
-      </div>
 
       <DiagramProvider>
-        <div>
           <Search/>
-        </div>
-        <div>
           <Diagram/>
-        </div>
       </DiagramProvider>
 
-      <button className="link" onClick={logout}>
-        Sign out
-      </button>
+      <Signout />
     
     </div>
   )
