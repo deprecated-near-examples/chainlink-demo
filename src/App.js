@@ -27,17 +27,7 @@ export default function App() {
     "new_owner_id": "client.joshford.testnet",
     "amount": "1"
   }
-  const handleSubmit = () => {
-    transfer(transferArgs);
-   // getAccountBalance(baseAcct);
-    // getAccountBalance('near-link.joshford.testnet');
-    // getAccountBalance(oracleAcct);
-    // getAllowance(baseAcct)
-    // isOracleAuthorized();
-    // getOracleRequestSummary();
-    // getOracleRequests(baseAcct);
-    // checkWithdrawableTokens();
-  }
+
   
   return (
     <div className="App">

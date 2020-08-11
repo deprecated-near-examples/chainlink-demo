@@ -12,7 +12,7 @@ function ChangeDiagramState() {
             updateDiagram();
         }
         if (count === 7) {
-            setCount(count - 6);
+            setCount(count - 7);
             updateDiagram();
         }
         console.log(count);

@@ -63,6 +63,18 @@ export async function initContract() {
 
 }
 
+const handleSubmit = () => {
+  transfer(transferArgs);
+ // getAccountBalance(baseAcct);
+  // getAccountBalance('near-link.joshford.testnet');
+  // getAccountBalance(oracleAcct);
+  // getAllowance(baseAcct)
+  // isOracleAuthorized();
+  // getOracleRequestSummary();
+  // getOracleRequests(baseAcct);
+  // checkWithdrawableTokens();
+}
+
 export async function onSubmit(event) {
   event.preventDefault()
   // get elements from the form using their id attribute

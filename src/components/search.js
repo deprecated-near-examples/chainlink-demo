@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import "../styles/search.css";
 import alice from "../assets/alice.png";
 import bob from "../assets/bob.png";
-import { handleSubmit } from "./contractCalls";
+import { handleSubmit } from "../services/utils";
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");

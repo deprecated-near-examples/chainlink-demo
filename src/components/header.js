@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/header.css";
 import nearlogo from "../assets/nearlogo.png";
 import chainlinklogo from "../assets/chainlinklogo.png";
-import { handleSubmit } from "./contractCalls";
+import { handleSubmit } from "../services/utils";
 
 const Header = () => {
 
