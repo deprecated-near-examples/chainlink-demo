@@ -1,7 +1,7 @@
 import 'regenerator-runtime/runtime'
 import React from 'react'
 import Header from './components/Header'
-import Search from './components/search'
+import Search from './components/Search'
 import Diagram from './components/diagram'
 import { DiagramProvider } from './components/DiagramState'
 
