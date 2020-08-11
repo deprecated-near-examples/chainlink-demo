@@ -3,7 +3,7 @@ import "../styles/diagramstatechange.css";
 import { useDiagramDispatch } from "./DiagramState";
 
 function ChangeDiagramState() {
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(1);
     const dispatch = useDiagramDispatch();
     
     const incrementCounter = () => {
