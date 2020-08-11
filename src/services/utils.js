@@ -63,6 +63,11 @@ export async function initContract() {
 
 }
 
+const transferArgs = {
+  "new_owner_id": "client.joshford.testnet",
+  "amount": "1"
+}
+
 const handleSubmit = () => {
   transfer(transferArgs);
  // getAccountBalance(baseAcct);
