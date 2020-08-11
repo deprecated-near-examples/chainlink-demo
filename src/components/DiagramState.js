@@ -132,8 +132,9 @@ function diagramReducer(state, action) {
         bobtokenscss: "bobtokens-active",
         bobcontractlockcss: "bob-contract-lock-active",
         explainercss: "explainer-five",   
-        desciption: `Price ${result} is returned to Oracle Contract`,
+        desciption: "Price PLACEHOLDER is returned to Oracle Contract",
       }
+      //`Price ${result} is returned to Oracle Contract`
     case 'fifthImageChange':
       return {
         ...initialState,
