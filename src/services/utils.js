@@ -1,8 +1,9 @@
 import { connect, Contract, keyStores, KeyPair } from 'near-api-js'
+import { functionCall } from 'near-api-js/lib/transaction';
 //const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 
 const nearConfig = {
-  networkId: 'default',
+  networkId: 'testnet',
   nodeUrl: 'https://rpc.testnet.near.org',
   contractName: "near-link.joshford.testnet",
   walletUrl: 'https://wallet.testnet.near.org',
@@ -11,23 +12,35 @@ const nearConfig = {
 
 export async function initContract() {    
   const keyStore = new keyStores.InMemoryKeyStore()
-  const keyPair = KeyPair.fromString(process.env.CLIENT_PRIVATE_KEY)
+  // const keyPair = KeyPair.fromString(process.env.CLIENT_PRIVATE_KEY)
+  const keyPair = KeyPair.fromString(process.env.NEARLINK_PRIVATE_KEY)
   //sets key in memory
   await keyStore.setKey(nearConfig.networkId, nearConfig.contractName, keyPair)
   const near = await connect(Object.assign({ deps: { keyStore: keyStore} }, nearConfig))
-  const nearLink = await near.account(nearConfig.contractName)
   window.near = near
 
   window.nearLinkAcct = await near.account(nearConfig.contractName)
   console.log('window.nearLinkAccount: ', window.nearLinkAcct)
   console.log('near-link accountID', window.nearLinkAcct.accountId)
+
+  // const transferArgs = {
+  //   "new_owner_id": "joshford.testnet",
+  //   "amount": "1" // because numbers can be enormous and JavaScript sux we send most amounts as strings
+  // }
+  // await window.nearLinkAcct.functionCall(
+  //   window.nearLinkAcct.accountId,
+  //   'transfer',
+  //   transferArgs,
+  //   null,
+  //   '36500000000000000000000'
+  // )
   
-  window.nearLinkContract = await new Contract(nearLink, nearConfig.contractName, 
-      {
-        viewMethods: ['get_balance', 'get_allowance' ],
-        changeMethods: [ 'transfer', 'inc_allowance', 'transfer_from' ],
-      }
-    )
+  // window.nearLinkContract = await new Contract(nearLink, nearConfig.contractName, 
+  //     {
+  //       viewMethods: ['get_balance', 'get_allowance' ],
+  //       changeMethods: [ 'transfer', 'inc_allowance', 'transfer_from' ],
+  //     }
+  //   )
   
   window.oracleContract = await new Contract(
     await near.account('oracle.joshford.testnet'), 
@@ -47,6 +60,7 @@ export async function initContract() {
         ],
       }
     )
+
 }
 
 export async function onSubmit(event) {

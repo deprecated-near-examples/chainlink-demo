@@ -10,7 +10,8 @@ import {
   getOracleRequests, 
   getAllowance,
   checkWithdrawableTokens,
-  makeTransfer} from './services/contractMethods'
+  makeTransfer,
+  transfer} from './services/contractMethods'
 import './global.css'
 
 const { networkId } = getConfig(process.env.NODE_ENV || 'development')
@@ -23,10 +24,14 @@ export default function App() {
   const [greeting, setGreeting] = useState()
   const [buttonDisabled, setButtonDisabled] = useState(true)
 
+  const transferArgs = {
+    "new_owner_id": "client.joshford.testnet",
+    "amount": "1" // because numbers can be enormous and JavaScript sux we send most amounts as strings
+  }
   const handleSubmit = () => {
-    // makeTransfer(baseAcct);
-    getAccountBalance(clientAcct);
-    getAccountBalance('near-link.joshford.testnet');
+    transfer(transferArgs);
+   // getAccountBalance(baseAcct);
+    // getAccountBalance('near-link.joshford.testnet');
     // getAccountBalance(oracleAcct);
     // getAllowance(baseAcct)
     // isOracleAuthorized();
