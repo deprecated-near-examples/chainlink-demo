@@ -1,4 +1,33 @@
-//NEAR-LINK Functions
+import Big from 'big.js'
+import { utils } from 'near-api-js';
+
+const max_gas = Big(3).times(10 ** 14).toFixed()
+const storagePayment = utils.format.parseNearAmount('.0365')
+
+//NEAR-LINK change functions
+export function makeTransfer(ownerAcct, newOwnerAcct){
+  // await near.account('near-link.joshford.testnet')
+  window.nearLinkContract
+    .transfer_from({
+      owner_id: ownerAcct,
+      new_owner_id: newOwnerAcct,
+      amount: "1",
+    }, max_gas, storagePayment)
+    .then(result => console.log(`Transfer done `, result)
+  )
+}
+
+export async function transfer(transferArgs){
+  await window.nearLinkAcct.functionCall(
+    window.nearLinkAcct.accountId,
+    'transfer',
+    transferArgs,
+    null,
+    '36500000000000000000000'
+  )
+}
+
+//NEAR-LINK view functions
 export function getAccountBalance(acct){
   window.nearLinkContract
     .get_balance({ 
@@ -20,7 +49,7 @@ export function getAllowance(baseAcct){
     )
 }
 
-//Oracle Functions
+//Oracle view functions
 export function isOracleAuthorized(baseAcct){
   window.oracleContract
     .is_authorized({ 
@@ -55,5 +84,5 @@ export function checkWithdrawableTokens(){
     .get_withdrawable_tokens()
     .then(result => 
       console.log('withdrawable tokens amt: ', result)
-      )
+    )
 }

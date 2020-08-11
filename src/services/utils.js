@@ -1,33 +1,52 @@
-import { connect, Contract, keyStores, WalletConnection } from 'near-api-js'
-import getConfig from './config'
+import { connect, Contract, keyStores, KeyPair } from 'near-api-js'
+import { functionCall } from 'near-api-js/lib/transaction';
 //const nearConfig = getConfig(process.env.NODE_ENV || 'development')
+
 const nearConfig = {
-  networkId: 'default',
+  networkId: 'testnet',
   nodeUrl: 'https://rpc.testnet.near.org',
   contractName: "near-link.joshford.testnet",
   walletUrl: 'https://wallet.testnet.near.org',
   helperUrl: 'https://helper.testnet.near.org'
 };
-// Initialize contract & set global variables
-export async function initContract() {
-  // Initialize connection to the NEAR testnet
-  const near = await connect(Object.assign({ deps: { keyStore: new keyStores.BrowserLocalStorageKeyStore() } }, nearConfig))
-  // Initializing Wallet based Account. It can work with NEAR testnet wallet that
-  // is hosted at https://wallet.testnet.near.org
-  window.walletConnection = new WalletConnection(near)
-  // Getting the Account ID. If still unauthorized, it's just empty string
-  window.accountId = window.walletConnection.getAccountId()
-  // Initializing our contract APIs by contract name and configuration
-  window.nearLinkContract = await new Contract(
-    window.walletConnection.account(), nearConfig.contractName, {
-      viewMethods: ['get_balance', 'get_allowance' ],
-      changeMethods: [ 'transfer', 'inc_allowance' ],
-  })
+
+export async function initContract() {    
+  const keyStore = new keyStores.InMemoryKeyStore()
+  // const keyPair = KeyPair.fromString(process.env.CLIENT_PRIVATE_KEY)
+  const keyPair = KeyPair.fromString(process.env.NEARLINK_PRIVATE_KEY)
+  //sets key in memory
+  await keyStore.setKey(nearConfig.networkId, nearConfig.contractName, keyPair)
+  const near = await connect(Object.assign({ deps: { keyStore: keyStore} }, nearConfig))
+  window.near = near
+
+  window.nearLinkAcct = await near.account(nearConfig.contractName)
+  console.log('window.nearLinkAccount: ', window.nearLinkAcct)
+  console.log('near-link accountID', window.nearLinkAcct.accountId)
+
+  // const transferArgs = {
+  //   "new_owner_id": "joshford.testnet",
+  //   "amount": "1" // because numbers can be enormous and JavaScript sux we send most amounts as strings
+  // }
+  // await window.nearLinkAcct.functionCall(
+  //   window.nearLinkAcct.accountId,
+  //   'transfer',
+  //   transferArgs,
+  //   null,
+  //   '36500000000000000000000'
+  // )
+  
+  // window.nearLinkContract = await new Contract(nearLink, nearConfig.contractName, 
+  //     {
+  //       viewMethods: ['get_balance', 'get_allowance' ],
+  //       changeMethods: [ 'transfer', 'inc_allowance', 'transfer_from' ],
+  //     }
+  //   )
   
   window.oracleContract = await new Contract(
-    window.walletConnection.account(), 
+    await near.account('oracle.joshford.testnet'), 
     'oracle.joshford.testnet', 
-      { viewMethods: [
+      { 
+        viewMethods: [
           'is_authorized', 
           'get_requests_summary', 
           'get_requests',
@@ -38,11 +57,12 @@ export async function initContract() {
           'add_authorization',
           'fulfill_request',
           'request'
-         ],
-  })
+        ],
+      }
+    )
+
 }
-// attached to the form used to update the greeting
-// in utils because it works with a vanilla JS or a React approach
+
 export async function onSubmit(event) {
   event.preventDefault()
   // get elements from the form using their id attribute
