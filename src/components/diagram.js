@@ -1,7 +1,7 @@
 
 import React from "react";
 import "../styles/diagram.css";
-import ChangeDiagramState from './changeDiagramState'
+import ChangeDiagramState from './ChangeDiagramState'
 import {useDiagramState} from "./DiagramState";
 
 const Diagram = () => {

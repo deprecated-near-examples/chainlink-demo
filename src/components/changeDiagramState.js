@@ -3,7 +3,6 @@ import "../styles/diagramstatechange.css";
 import { useDiagramDispatch } from "./DiagramState";
 
 function ChangeDiagramState() {
-
     const [count, setCount] = useState(0);
     const dispatch = useDiagramDispatch();
     
@@ -32,33 +31,13 @@ function ChangeDiagramState() {
     };
 
     const updateDiagram = () => {
-        if (count === 0){
-            dispatch({type: 'initialState'});
-        }
-        else if (count === 1)
-        {
-            dispatch({type: 'firstImageChange'});
-        }
-        else if (count === 2)
-        {
-            dispatch({type: 'secondImageChange'});
-        }
-        else if (count === 3)
-        {
-            dispatch({type: 'thirdImageChange'});
-        }
-        else if (count === 4)
-        {
-            dispatch({type: 'fourthImageChange'});
-        }
-        else if (count === 5)
-        {
-            dispatch({type: 'fifthImageChange'});
-        }
-        else if (count === 6)
-        {
-            dispatch({type: 'sixthImageChange'});
-        }
+        if (count === 0) dispatch({type: 'initialState'});
+        if (count === 1) dispatch({type: 'firstImageChange'});
+        if (count === 2) dispatch({type: 'secondImageChange'});
+        if (count === 3) dispatch({type: 'thirdImageChange'});
+        if (count === 4) dispatch({type: 'fourthImageChange'});
+        if (count === 5) dispatch({type: 'fifthImageChange'});
+        if (count === 6) dispatch({type: 'sixthImageChange'});
     }
     
     return (
