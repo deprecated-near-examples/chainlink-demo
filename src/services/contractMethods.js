@@ -6,7 +6,7 @@ const storagePayment = utils.format.parseNearAmount('.0365')
 
 //NEAR-LINK change functions
 export function makeTransfer(ownerAcct, newOwnerAcct){
-  // await near.account('near-link.joshford.testnet')
+  // await near.account('near-link.dev.testnet')
   window.nearLinkContract
     .transfer_from({
       owner_id: ownerAcct,
@@ -20,7 +20,7 @@ export function makeTransfer(ownerAcct, newOwnerAcct){
 export async function transfer(transferArgs){
   console.log('transferring... ', transferArgs.amount )
   await window.clientAcct.functionCall(
-    'client.joshford.testnet',
+    'client.dev.testnet',
     'transfer',
     transferArgs,
     '300000000000000'

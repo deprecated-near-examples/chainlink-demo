@@ -1,14 +1,40 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import "../styles/search.css";
 import alice from "../assets/alice.png";
 import bob from "../assets/bob.png";
-import { handleSubmit } from "../services/utils";
+import { convertArgs } from "../services/utils";
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");
-  const handleSearchInputChanges = e => {
+  const [curNonce, setCurNonce] = useState(0);
+
+  const handleChange = e => {
     setSearchValue(e.target.value);
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const token_search = convertArgs(searchValue.toUpperCase());
+    const result = await window.clientAcct.functionCall(
+      'client.dev.testnet',
+      'demo_token_price',
+      {
+        symbol: token_search,
+        spec_id: "dW5pcXVlIHNwZWMgaWQ="
+      },
+      '300000000000000'
+    )
+    const requestNonce = atob(result.status.SuccessValue).replace(/['"]+/g, '')
+    setCurNonce(requestNonce)
+
+    const result2 = await window.clientAcct.functionCall(
+
+    )
+  }
+
+
+
+  console.log(curNonce)
 
   // const resetInputField = () => {
   //   setSearchValue("");
@@ -30,7 +56,7 @@ const Search = () => {
         <form>
           <input
             value={searchValue}
-            onChange={handleSearchInputChanges}
+            onChange={handleChange}
             type="text"
             placeholder="Enter Token(e.g. BAT)"
             className="search"

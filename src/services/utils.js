@@ -7,7 +7,7 @@ import transfer from '../services/contractMethods'
 const nearConfig = {
   networkId: 'testnet',
   nodeUrl: 'https://rpc.testnet.near.org',
-  contractName: 'client.joshford.testnet',
+  contractName: 'client.dev.testnet',
   walletUrl: 'https://wallet.testnet.near.org',
   helperUrl: 'https://helper.testnet.near.org'
 };
@@ -16,40 +16,22 @@ export async function initContract() {
   const keyStore = new keyStores.InMemoryKeyStore()
   const keyPair = KeyPair.fromString(process.env.CLIENT_PRIVATE_KEY)
   console.log(keyPair)
-    // const keyPair = KeyPair.fromString(process.env.)
   //sets key in memory
   await keyStore.setKey(nearConfig.networkId, nearConfig.contractName, keyPair)
   const near = await connect(Object.assign({ deps: { keyStore: keyStore } }, nearConfig))
   window.near = near
 
-  window.clientAcct = await near.account('client.joshford.testnet')
+  window.clientAcct = await near.account('client.dev.testnet')
 
 }
 
-const convertArgs = (token) => {
+export function convertArgs(tokenSymbol) {
   const obj = {
-    get: `https://min-api.cryptocompare.com/data/price?fsym=${token}&tsyms=USD`,
+    get: `https://min-api.cryptocompare.com/data/price?fsym=${tokenSymbol}&tsyms=USD`,
     path: 'USD',
     times: 100
   }
   return btoa(JSON.stringify(obj))
-}
-
-const token_search = convertArgs('ETH');
-
-export const handleSubmit = async (e) => {
-  e.preventDefault()
-  //transfer(transferArgs);
-  console.log('token_search', token_search)
-  await window.clientAcct.functionCall(
-    'client.joshford.testnet',
-    'demo_token_price',
-    {
-      symbol: token_search,
-      spec_id: "dW5pcXVlIHNwZWMgaWQ="
-    },
-    '300000000000000'
-  )
 }
 
 export async function onSubmit(event) {
