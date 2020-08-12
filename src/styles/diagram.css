@@ -1,0 +1,215 @@
+.diagram {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    margin: auto auto;
+    max-height: 72px;
+    min-width: 1153px;
+    max-width: 1153px;
+}
+
+.first-top-arrow, .second-top-arrow {
+    position: absolute;
+}
+
+.first-top-arrow {
+    margin-left: 68px;
+}
+
+.second-top-arrow {
+    margin-left: 103px;
+}
+
+.oracle-explainer {
+    display: flex;
+    justify-content: end;
+}
+
+.oracle-explainer img {
+    width: 47px;
+    height: 13px;
+    align-self: center;
+    margin: auto 16px;
+}
+
+.oracle-explainer p {
+    color: #999999;
+    font-size: 12px;
+    line-height: 14px;
+    width: 128px;
+}
+
+.middle-header {
+    margin-top: 22px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    z-index: -10;
+   min-width: 1153px;
+}
+
+.middle-header div {
+    margin-left: 13px;
+    margin-right: 13px;
+}
+
+.middle-header p {
+    font-size: 18px;
+    line-height: 32px;
+    color: #24272A;
+    margin-top: 40px;
+}
+
+.contract-box {
+    margin-top: 26px;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas: "a b c d d e f g";
+    justify-content: center;
+    align-items: center;
+}
+
+.contract-box-one {
+    grid-area: a;
+}
+
+.contract-box-one p, .bobtokens-inactive, .bobtokens-active {
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 28px;
+    position: absolute;
+    color: #24272A;
+    margin-top: -104px;
+    margin-left: 16px;
+}
+
+.bobtokens-inactive {
+    opacity: 0;
+}
+
+.contract-box-two {
+    grid-area: b;
+    margin: auto auto;
+}
+
+.contract-box-three {
+    grid-area: c;
+}
+
+.contract-box-four {
+    grid-area: d;
+}
+
+.contract-box-five {
+    grid-area: e;
+    margin: auto auto;
+}
+
+.contract-box-six {
+    grid-area: f;
+}
+
+.contract-box-seven {
+    grid-area: g;
+}
+
+#second-arrow, #fourth-arrow, #long-arrow-two {
+    margin-top: 16px;
+}
+
+.explainer-two {
+    margin-left: 132px;
+}
+
+.explainer-three {
+    margin-left: 285px;
+}
+
+.explainer-four {
+    margin-left: 690px;
+}
+
+.explainer-five {
+    margin-left: 391px;
+}
+
+.explainer-background {
+    position: absolute;
+    margin-top: -40px;
+    z-index: -1;
+}
+
+.explainer-one-content {
+    margin: 32px;
+}
+
+.explainer-one-content h4 {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 28px;
+    color: #25282A;
+}
+
+.explainer-one-content p {
+    font-size: 14px;
+    color: #666666;
+}
+
+.glass {
+    margin-left: 8px;
+    height: 16px;
+    width: 16px;
+}
+
+.explainer-button {
+    display: flex;
+    justify-content: start;
+    font-size: 14px;
+    color: #0071CE;
+}
+
+.nearkat-one {
+    position: absolute;
+    margin-top: -216px;
+    margin-left: 260px;
+}
+
+.step-one {
+    position: absolute;
+    margin-top: -160px;
+    margin-left: -22px;
+}
+
+.transfer-ten-inactive {
+    position: absolute;
+    margin-left: 176px;
+    margin-top: 24px;
+    opacity: 0;
+}
+
+.transfer-ten-active {
+    position: absolute;
+    margin-left: 176px;
+    margin-top: 24px;
+    opacity: 1;
+}
+
+.bob-contract-lock-inactive {
+    position: absolute;
+    margin-left: 176px;
+    margin-top: 24px;
+    opacity: 0;
+}
+
+.bob-contract-lock-active {
+    position: absolute;
+    margin-left: 260px;
+    margin-top: 24px;
+    opacity: 1;
+}
