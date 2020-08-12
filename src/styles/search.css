@@ -3,7 +3,7 @@
     font-style: normal;
     font-weight: normal;
     margin: auto auto;
-    max-height: 72px;
+    height: 72px;
     width: 1153px;
 
     display: grid;
@@ -39,6 +39,7 @@
 }
 
 .search-box-two {
+  margin-left: 8px;
   display: flex;
   grid-area: b;
 }
@@ -54,6 +55,7 @@
 .search-box-four {
   display: flex;
   grid-area: d;
+  margin: auto auto;
 }
 
 .search {
@@ -78,6 +80,7 @@
     cursor: pointer;
     border-radius: 5px;
     border: none;
+    outline:none;
   }
 
   input[type="text"] {
@@ -90,10 +93,13 @@
   
   input[type="submit"]:hover {
     background-color: #00C08B;
+    border: none;
+    outline:none;
   }
 
   .person {
-    margin: 5px;
+    margin-top: 8px;
+    margin-right: 8px;
     width: 45px;
     height: 45px;
   }
@@ -107,4 +113,8 @@
     color: white;
     padding: 1px;
     border-radius: 4px;
+  }
+
+  button:active {
+    border: none;
   }

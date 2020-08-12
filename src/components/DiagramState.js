@@ -1,8 +1,11 @@
 import React, { useReducer } from "react";
 import divider from "../assets/divider.png";
 import glass from "../assets/glass.png";
-import explainerbackground from "../assets/explainer-background.png";
+import explainerbackgroundone from "../assets/explainer-background.png";
+import explainerbackgroundtwo from "../assets/explainerbackgroundtwo.png";
+import explainerbackgroundthree from "../assets/explainerbackgroundthree.png";
 import nearkatone from "../assets/nearkat-one.png";
+import nearkattwo from "../assets/nearkat-two.png";
 import stepone from "../assets/step-one.png";
 import steptwo from "../assets/step-two.png";
 import stepthree from "../assets/step-three.png";
@@ -32,6 +35,7 @@ import firsttoparrowone from "../assets/first-top-arrow-one.png";
 import firsttoparrowtwo from "../assets/first-top-arrow-two.png";
 import secondtoparrowone from "../assets/second-top-arrow-one.png";
 import secondtoparrowtwo from "../assets/second-top-arrow-two.png";
+import {searchResult} from "./Search";
 
 const initialState = { 
   // Naming Image Placeholder
@@ -52,20 +56,31 @@ const initialState = {
   // Variables to hold token amount per contract
    aliceTokens: 50,
    bobTokens: 0,
+  
+   // css variables
    bobtokenscss: "bobtokens-inactive",
    transfertencss: "transfer-ten-inactive",
    bobcontractlockcss: "bob-contract-lock-inactive",
    explainercss: "explainer-one",
-   desciption: "1. Alice’s contract allowance \n is set to cover tx fees",
+   stepcss: "step-one",
+   descriptioncss: "description-one",
+   explainerbuttoncss: "explainer-button",
+   desciption: `Alice’s contract allowance is set to cover tx fees`,
+   longDescription: 'More information on the smart contract processes will go here.',
+   learnmorecss: "learn-more-one",
 
    divider: divider,
    glass: glass,
-   explainerbackground: explainerbackground,
+   explainerbackground: explainerbackgroundone,
+   explainerbackgroundtwo: explainerbackgroundtwo,
    nearkatone: nearkatone,
+   nearkattwo: nearkattwo,
    step: stepone,
    transferten: transferten,
    oracleExplainer: oracleExplainer,
    bobcontractlock: bobcontractlock,
+
+   result: searchResult,
 };
 
 function diagramReducer(state, action) {
@@ -88,6 +103,7 @@ function diagramReducer(state, action) {
     case 'secondImageChange':
       return {
         ...initialState,
+        aliceTokens: 40,
         bobTokens: 10,
         fourthImage: bobtwo,
         transfertencss: "transfer-ten-inactive",
@@ -108,6 +124,7 @@ function diagramReducer(state, action) {
         tenthImage: oracletwo,
         ninethImage: arrowtwootherdirection,
         fourthImage: bobtwo,
+        aliceTokens: 40,
         bobTokens: 10,
         firsttoparrow: firsttoparrowtwo,
         secondImage: arrowone,
@@ -123,6 +140,7 @@ function diagramReducer(state, action) {
         ...initialState,
         tenthImage: oracletwo,
         fourthImage: bobtwo,
+        aliceTokens: 40,
         bobTokens: 10,
         firsttoparrow: firsttoparrowtwo,
         secondImage: arrowone,
@@ -132,7 +150,7 @@ function diagramReducer(state, action) {
         bobtokenscss: "bobtokens-active",
         bobcontractlockcss: "bob-contract-lock-active",
         explainercss: "explainer-five",   
-        desciption: "Price PLACEHOLDER is returned to Oracle Contract",
+        desciption: `Price is returned to Oracle Contract`,
       }
       //`Price ${result} is returned to Oracle Contract`
     case 'fifthImageChange':
@@ -140,6 +158,7 @@ function diagramReducer(state, action) {
         ...initialState,
         tenthImage: oracletwo,
         fourthImage: bobtwo,
+        aliceTokens: 40,
         bobTokens: 10,
         firsttoparrow: firsttoparrowtwo,
         secondImage: arrowone,
@@ -149,20 +168,26 @@ function diagramReducer(state, action) {
         bobtokenscss: "bobtokens-active",
         bobcontractlockcss: "bob-contract-lock-active",
         bobcontractlock: bobcontractunlock,
-        desciption: "Price ($0.26) is returned to Alice’s Contract",
+        desciption: `Price is returned to Alice’s Contract`,
       }
     case 'sixthImageChange':
       return {
         ...initialState,
         tenthImage: oracletwo,
         fourthImage: bobtwo,
+        aliceTokens: 40,
         bobTokens: 10,
         firsttoparrow: firsttoparrowtwo,
         secondtoparrow: secondtoparrowtwo,
         seventhImage: robottwo,
+        explainerbackground: explainerbackgroundthree,
+        descriptioncss: "description-two",
+        learnmorecss:"learn-more-two",
+        explainerbuttoncss: "explainer-button-two",
+        stepcss: "step-two",
         bobtokenscss: "bobtokens-active",
         bobcontractlockcss: "bob-contract-lock-active",
-        desciption: "Price ($0.26) is returned to Alice’s Contract",
+        desciption: `Learn more about using Chainlink on NEAR`,
       }
     default:
       return initialState;

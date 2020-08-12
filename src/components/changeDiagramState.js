@@ -7,29 +7,27 @@ function ChangeDiagramState() {
     const dispatch = useDiagramDispatch();
     
     const incrementCounter = () => {
-      console.log('increment count', count)
         if (count < 7) {
             setCount(count + 1);
             updateDiagram();
         }
-        if (count === 7) {
+        else if (count === 7) {
             setCount(count - 7);
             updateDiagram();
         }
-        console.log(count);
     };
 
-    const decrementCounter = () => {
-      console.log('decrement count', count)
-        if (count > 0){
-            setCount(count - 1);
-        }
-        if (count === 0) {
-            setCount(count + 7);
-            updateDiagram();
-        }
-        console.log(count);
-    };
+    // const decrementCounter = () => {
+    //   console.log('decrement count', count)
+    //     if (count > 0){
+    //         setCount(count - 1);
+    //     }
+    //     if (count === 0) {
+    //         setCount(count + 7);
+    //         updateDiagram();
+    //     }
+    //     console.log(count);
+    // };
 
     const updateDiagram = () => {
         if (count === 0) dispatch({type: 'initialState'});
@@ -43,12 +41,12 @@ function ChangeDiagramState() {
     
     return (
     <div className="counter">
-      <button onClick={decrementCounter}>
-        Back
-      </button>
       <button onClick={incrementCounter}>
-        Forward
+        Next
       </button>
+      {/* <button onClick={incrementCounter}>
+        Forward
+      </button> */}
     </div>
   );
 }

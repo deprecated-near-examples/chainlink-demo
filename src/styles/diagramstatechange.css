@@ -1,9 +1,8 @@
 .counter {
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin-top: 168px;
-    width: 1153px;
+    margin-top: 504px;
+    z-index: 5;
 }
 
 .counter button {
@@ -18,9 +17,12 @@
     cursor: pointer;
     border-radius: 5px;
     border: none;
-    margin: 16px;
+    outline:none;
+    z-index: 5;
 }
 
 .counter button:hover {
     background-color: #00C08B;
+    border: none;
+    outline:none;
 }

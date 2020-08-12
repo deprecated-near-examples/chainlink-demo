@@ -5,8 +5,9 @@ import bob from "../assets/bob.png";
 import { convertArgs } from "../services/utils";
 
 const Search = () => {
+
   const [searchValue, setSearchValue] = useState("");
-  const [searchResult, setSearchResult] = useState("")
+  const [searchResult, setSearchResult] = useState("0.0")
   const [curNonce, setCurNonce] = useState(0);
 
   let timer;
@@ -20,7 +21,7 @@ const Search = () => {
 
   const fetchNonceAnswer = async (nonce) => {
     const result = await window.clientAcct.viewFunction(
-      'client.dev.testnet',
+      'client.example.testnet',
       'get_received_val',
       { nonce: nonce.toString() }
     )
@@ -34,7 +35,6 @@ const Search = () => {
     
   }
 
-
   const handleChange = e => {
     setSearchValue(e.target.value);
   };
@@ -43,7 +43,7 @@ const Search = () => {
     e.preventDefault()
     const token_search = convertArgs(searchValue.toUpperCase());
     const result = await window.clientAcct.functionCall(
-      'client.dev.testnet',
+      'client.example.testnet',
       'demo_token_price',
       {
         symbol: token_search,
@@ -69,7 +69,6 @@ const Search = () => {
 
   const contractAmount = 50;
   const balance = 2000;
- 
 
   return (
     <div className="search-box">
@@ -98,9 +97,9 @@ const Search = () => {
 
       <div className="search-box-three">
         <p>Contract Allowance: <br></br> 
-          <strong id="bold-two">{contractAmount}</strong> 
-          of 
-          <strong id="bold">{balance}</strong>
+          <strong id="bold-two"> {contractAmount}</strong> 
+           of  
+          <strong id="bold"> {balance} </strong>
         </p>
         <div className="border"></div>
       </div>
@@ -109,9 +108,8 @@ const Search = () => {
         <img src={bob} alt="Bob" className="person"/>
         <p><strong id="bold">Bob</strong> owns Oracle Contract & Node</p>
       </div>
-
     </div>
   );
 };
 
-export default Search;
+export default (Search);
