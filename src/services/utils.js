@@ -1,66 +1,37 @@
 import { connect, Contract, keyStores, KeyPair } from 'near-api-js'
 import { functionCall } from 'near-api-js/lib/transaction';
+import transfer from '../services/contractMethods'
+
 //const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 
 const nearConfig = {
   networkId: 'testnet',
   nodeUrl: 'https://rpc.testnet.near.org',
-  contractName: "near-link.joshford.testnet",
+  contractName: 'client.dev.testnet',
   walletUrl: 'https://wallet.testnet.near.org',
   helperUrl: 'https://helper.testnet.near.org'
 };
 
 export async function initContract() {    
   const keyStore = new keyStores.InMemoryKeyStore()
-  // const keyPair = KeyPair.fromString(process.env.CLIENT_PRIVATE_KEY)
-  const keyPair = KeyPair.fromString(process.env.NEARLINK_PRIVATE_KEY)
+  const keyPair = KeyPair.fromString(process.env.CLIENT_PRIVATE_KEY)
+  console.log(keyPair)
   //sets key in memory
   await keyStore.setKey(nearConfig.networkId, nearConfig.contractName, keyPair)
-  const near = await connect(Object.assign({ deps: { keyStore: keyStore} }, nearConfig))
+  const near = await connect(Object.assign({ deps: { keyStore: keyStore } }, nearConfig))
   window.near = near
 
-  window.nearLinkAcct = await near.account(nearConfig.contractName)
-  console.log('window.nearLinkAccount: ', window.nearLinkAcct)
-  console.log('near-link accountID', window.nearLinkAcct.accountId)
+  window.clientAcct = await near.account('client.dev.testnet')
 
-  // const transferArgs = {
-  //   "new_owner_id": "joshford.testnet",
-  //   "amount": "1" // because numbers can be enormous and JavaScript sux we send most amounts as strings
-  // }
-  // await window.nearLinkAcct.functionCall(
-  //   window.nearLinkAcct.accountId,
-  //   'transfer',
-  //   transferArgs,
-  //   null,
-  //   '36500000000000000000000'
-  // )
-  
-  // window.nearLinkContract = await new Contract(nearLink, nearConfig.contractName, 
-  //     {
-  //       viewMethods: ['get_balance', 'get_allowance' ],
-  //       changeMethods: [ 'transfer', 'inc_allowance', 'transfer_from' ],
-  //     }
-  //   )
-  
-  window.oracleContract = await new Contract(
-    await near.account('oracle.joshford.testnet'), 
-    'oracle.joshford.testnet', 
-      { 
-        viewMethods: [
-          'is_authorized', 
-          'get_requests_summary', 
-          'get_requests',
-          'get_all_requests',
-          'get_withdrawable_tokens' 
-        ],
-        changeMethods: [ 
-          'add_authorization',
-          'fulfill_request',
-          'request'
-        ],
-      }
-    )
+}
 
+export function convertArgs(tokenSymbol) {
+  const obj = {
+    get: `https://min-api.cryptocompare.com/data/price?fsym=${tokenSymbol}&tsyms=USD`,
+    path: 'USD',
+    times: 100
+  }
+  return btoa(JSON.stringify(obj))
 }
 
 export async function onSubmit(event) {
