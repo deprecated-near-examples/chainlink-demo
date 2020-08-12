@@ -6,10 +6,10 @@ import { convertArgs } from "../services/utils";
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");
+  const [searchResult, setSearchResult] = useState("")
   const [curNonce, setCurNonce] = useState(0);
 
   let timer;
-
   const timedFetchLatest = async (nonce) => {
     // timer = setInterval(await fetchNonceAnswer(), 500)
       await fetchNonceAnswer(nonce);
@@ -24,11 +24,14 @@ const Search = () => {
       'get_received_val',
       { nonce: nonce.toString() }
     )
+    console.log(result)
     if (result !== '-1') {
       console.log('clearing out timer')
-      clearTimeout(timer) 
+      console.log(result)
+      setSearchResult(result)
+      clearTimeout(timer)
     }
-    console.log(result)
+    
   }
 
 
@@ -66,7 +69,7 @@ const Search = () => {
 
   const contractAmount = 50;
   const balance = 2000;
-  const searchResult = "0.23";
+ 
 
   return (
     <div className="search-box">
