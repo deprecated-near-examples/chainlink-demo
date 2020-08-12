@@ -10,14 +10,14 @@ const Search = () => {
     setSearchValue(e.target.value);
   };
 
-  const resetInputField = () => {
-    setSearchValue("");
-  };
+  // const resetInputField = () => {
+  //   setSearchValue("");
+  // };
 
-  const callSearchFunction = e => {
-    e.preventDefault();
-    resetInputField();
-  };
+  // const callSearchFunction = e => {
+  //   e.preventDefault();
+  //   resetInputField();
+  // };
 
   const contractAmount = 50;
   const balance = 2000;
@@ -25,7 +25,7 @@ const Search = () => {
 
   return (
     <div className="search-box">
-      
+
       <div className="search-box-one">
         <form>
           <input
@@ -35,7 +35,7 @@ const Search = () => {
             placeholder="Enter Token(e.g. BAT)"
             className="search"
           />
-          <input onClick={callSearchFunction} type="submit" value="Check" />
+          <input onClick={handleSubmit} type="submit" value="Check" />
         </form>
         <div className="search-result">
           <p>{searchResult}</p>

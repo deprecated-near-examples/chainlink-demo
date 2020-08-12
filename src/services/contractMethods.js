@@ -18,12 +18,12 @@ export function makeTransfer(ownerAcct, newOwnerAcct){
 }
 
 export async function transfer(transferArgs){
-  await window.nearLinkAcct.functionCall(
-    window.nearLinkAcct.accountId,
+  console.log('transferring... ', transferArgs.amount )
+  await window.clientAcct.functionCall(
+    'client.joshford.testnet',
     'transfer',
     transferArgs,
-    null,
-    '36500000000000000000000'
+    '300000000000000'
   )
 }
 
