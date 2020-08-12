@@ -7,6 +7,7 @@ function ChangeDiagramState() {
     const dispatch = useDiagramDispatch();
     
     const incrementCounter = () => {
+      console.log('increment count', count)
         if (count < 7) {
             setCount(count + 1);
             updateDiagram();
@@ -19,6 +20,7 @@ function ChangeDiagramState() {
     };
 
     const decrementCounter = () => {
+      console.log('decrement count', count)
         if (count > 0){
             setCount(count - 1);
         }
@@ -27,7 +29,6 @@ function ChangeDiagramState() {
             updateDiagram();
         }
         console.log(count);
-        updateDiagram();
     };
 
     const updateDiagram = () => {

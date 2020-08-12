@@ -8,6 +8,30 @@ const Search = () => {
   const [searchValue, setSearchValue] = useState("");
   const [curNonce, setCurNonce] = useState(0);
 
+  let timer;
+
+  const timedFetchLatest = async (nonce) => {
+    // timer = setInterval(await fetchNonceAnswer(), 500)
+      await fetchNonceAnswer(nonce);
+      if (timer !== null) {
+        timer = setTimeout(timedFetchLatest(nonce), 500);
+    }
+  };
+
+  const fetchNonceAnswer = async (nonce) => {
+    const result = await window.clientAcct.viewFunction(
+      'client.dev.testnet',
+      'get_received_val',
+      { nonce: nonce.toString() }
+    )
+    if (result !== '-1') {
+      console.log('clearing out timer')
+      clearTimeout(timer) 
+    }
+    console.log(result)
+  }
+
+
   const handleChange = e => {
     setSearchValue(e.target.value);
   };
@@ -25,14 +49,9 @@ const Search = () => {
       '300000000000000'
     )
     const requestNonce = atob(result.status.SuccessValue).replace(/['"]+/g, '')
-    setCurNonce(requestNonce)
-
-    const result2 = await window.clientAcct.functionCall(
-
-    )
+    console.log('requestNonce: ', requestNonce)
+    timedFetchLatest(requestNonce);
   }
-
-
 
   console.log(curNonce)
 
