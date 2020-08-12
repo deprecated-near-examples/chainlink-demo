@@ -7,7 +7,7 @@ import transfer from '../services/contractMethods'
 const nearConfig = {
   networkId: 'testnet',
   nodeUrl: 'https://rpc.testnet.near.org',
-  contractName: 'client.dev.testnet',
+  contractName: 'client.example.testnet',
   walletUrl: 'https://wallet.testnet.near.org',
   helperUrl: 'https://helper.testnet.near.org'
 };
@@ -21,7 +21,7 @@ export async function initContract() {
   const near = await connect(Object.assign({ deps: { keyStore: keyStore } }, nearConfig))
   window.near = near
 
-  window.clientAcct = await near.account('client.dev.testnet')
+  window.clientAcct = await near.account('client.example.testnet')
 
 }
 
