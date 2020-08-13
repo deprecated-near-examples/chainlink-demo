@@ -24,7 +24,7 @@ const Search = () => {
 
   const fetchNonceAnswer = async (nonce) => {
     const result = await window.clientAcct.viewFunction(
-      `$client.${process.env.ACCOUNT_ID}.testnet`,
+      `client.${process.env.ACCOUNT_ID}.testnet`,
       'get_received_val',
       { nonce: nonce.toString() }
     )
@@ -49,7 +49,7 @@ const Search = () => {
     e.preventDefault()
     const token_search = convertArgs(searchValue.toUpperCase())
     const result = await window.clientAcct.functionCall(
-      `$client.${process.env.ACCOUNT_ID}.testnet`,
+      `client.${process.env.ACCOUNT_ID}.testnet`,
       'demo_token_price',
       {
         symbol: token_search,
