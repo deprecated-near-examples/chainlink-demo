@@ -6,7 +6,6 @@
     max-height: 72px;
     min-width: 1153px;
     max-width: 1153px;
-    z-index: 2;
 }
 
 .first-top-arrow, .second-top-arrow {
@@ -54,7 +53,7 @@
     justify-content: center;
     position: absolute;
     z-index: -10;
-   min-width: 1153px;
+    min-width: 1153px;
 }
 
 .middle-header div {
@@ -146,12 +145,14 @@
 .explainer-background {
     position: absolute;
     margin-top: -40px;
-    z-index: -1;
+    z-index: 5;
 }
 
 .explainer-one-content {
     margin: 32px;
     width: 350px;
+    position: relative;
+    z-index: 10;
 }
 
 .explainer-one-content h4 {
@@ -161,13 +162,9 @@
     color: #25282A;
 }
 
-.description-one {
+.description {
     font-size: 14px;
     color: #666666;
-}
-
-.description-two {
-    opacity: 0;
 }
 
 .glass {
@@ -178,16 +175,12 @@
 
 .explainer-button {
     display: flex;
-    justify-content: start;
     font-size: 14px;
     color: #0071CE;
 }
 
-.explainer-button-two {
-    display: flex;
-    justify-content: start;
-    font-size: 14px;
-    opacity: 0;
+.explainer-button p {
+    margin-top: 0px;
 }
 
 .explainer-button:hover {
@@ -195,9 +188,9 @@
     cursor: pointer;
 }
 
-.learn-more-two {
+.learn-more {
     position: absolute;
-    margin-top: -48px;
+    margin-top: 0px;
     width: 210px;
     height: 45px;
     background-color: #6AD1E3;
@@ -211,17 +204,14 @@
     opacity: 1;
     border: none;
     outline:none;
+    transition: all 0.5s;
 }
 
-.learn-more-two:hover {
+.learn-more:hover {
     background-color: #0071CE;
     cursor: pointer;
     border: none;
     outline:none;
-}
-
-.learn-more-one {
-    opacity: 0;
 }
 
 .nearkat-one {

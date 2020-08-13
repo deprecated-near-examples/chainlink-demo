@@ -1,8 +1,13 @@
+
+
+.counter-gap {
+    margin-top: 504px;
+}
+
 .counter {
     display: flex;
     justify-content: center;
-    margin-top: 504px;
-    z-index: 5;
+    position: relative;
 }
 
 .counter button {
@@ -18,7 +23,7 @@
     border-radius: 5px;
     border: none;
     outline:none;
-    z-index: 5;
+    transition: all 0.5s;
 }
 
 .counter button:hover {
