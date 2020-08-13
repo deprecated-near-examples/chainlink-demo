@@ -1,34 +1,34 @@
 
-import React, {useState} from "react";
-import "../styles/diagram.css";
-import { useDiagramState } from "./DiagramState";
+import React, {useState} from 'react'
+import '../styles/diagram.css'
+import { useDiagramState } from './DiagramState'
 
 const Diagram = () => {
-    const state = useDiagramState();
+    const state = useDiagramState()
 
-    const [active, setActive] = useState(false);
-    const [button, setButton] = useState("Expand");
-    const [explainerBackground, setExplainerBackground] = useState(state.explainerbackground);
-    const [nearkat, setNearKat] = useState(state.nearkatone);
-    const [nearkatcss, setNearKatcss] = useState("nearkat-one");
-    const [description, setDescription] = useState("Here’s more detail on this part if needed");
+    const [active, setActive] = useState(false)
+    const [button, setButton] = useState("Expand")
+    const [explainerBackground, setExplainerBackground] = useState(state.explainerbackground)
+    const [nearkat, setNearKat] = useState(state.nearkatone)
+    const [nearkatcss, setNearKatcss] = useState("nearkat-one")
+    const [description, setDescription] = useState("Here’s more detail on this part if needed")
 
     const expandExplainer = () => {
         if (active === false){
-            setButton("Show Less");
-            setDescription(state.longDescription);
-            setExplainerBackground(state.explainerbackgroundtwo);
-            setNearKat(state.nearkattwo);
-            setNearKatcss("nearkat-two");
-            setActive(true);
+            setButton("Show Less")
+            setDescription(state.longDescription)
+            setExplainerBackground(state.explainerbackgroundtwo)
+            setNearKat(state.nearkattwo)
+            setNearKatcss("nearkat-two")
+            setActive(true)
          }
         else if (active === true){
            setButton("Expand");
-           setDescription("Here’s more detail on this part if needed");
-           setExplainerBackground(state.explainerbackground);
-           setNearKat(state.nearkatone);
-           setNearKatcss("nearkat-one");
-           setActive(false);    
+           setDescription("Here’s more detail on this part if needed")
+           setExplainerBackground(state.explainerbackground)
+           setNearKat(state.nearkatone)
+           setNearKatcss("nearkat-one")
+           setActive(false)
         }
     }
 
@@ -108,20 +108,25 @@ const Diagram = () => {
                     <img src={nearkat} alt="NEARKAT" className={nearkatcss}/>
                     <img src={state.step} alt="Step" className={state.stepcss}/>
                     <h4>{state.desciption}</h4>
-                    <p className={state.descriptioncss}>{description}</p>
-                    <div className={state.explainerbuttoncss} onClick={expandExplainer}>
-                        {button}
-                        <img 
-                            src={state.glass} 
-                            alt="Glass" 
-                            className="glass"
-                        />
+                    <div className="explainer-content">
+                        {state.descriptionstate ? 
+                            <div>
+                                <p className="description" >{description}</p>
+                                    <div className="explainer-button" onClick={expandExplainer}>
+                                        <p>{button}</p>
+                                        <img 
+                                            src={state.glass} 
+                                            alt="Glass" 
+                                            className="glass"
+                                        />
+                                    </div>
+                            </div>
+                       : <button className="learn-more">Learn More</button> }
                     </div>
-                    <button className={state.learnmorecss}>Learn More</button>
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Diagram;
+export default Diagram

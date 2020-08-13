@@ -1,8 +1,7 @@
-import React from "react";
-import "../styles/header.css";
-import nearlogo from "../assets/nearlogo.png";
-import chainlinklogo from "../assets/chainlinklogo.png";
-import { handleSubmit } from "../services/utils";
+import React from 'react'
+import '../styles/header.css'
+import nearlogo from '../assets/nearlogo.png'
+import chainlinklogo from '../assets/chainlinklogo.png'
 
 const Header = () => {
 
@@ -24,7 +23,7 @@ const Header = () => {
       </div>
 
     </div>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

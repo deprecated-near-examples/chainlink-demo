@@ -7,8 +7,8 @@
     width: 1153px;
 
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-areas: "a a a b c d";
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas: "a a b b";
     grid-template-rows: minmax(0, 1fr);
     justify-content: left;
     align-items: center;
@@ -36,26 +36,21 @@
   margin-top: 16px;
   font-weight: 900;
   font-size: 36px;
+  color: #24272A;
 }
 
 .search-box-two {
-  margin-left: 8px;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 16px;
   grid-area: b;
 }
 
-.search-box-three {
+.alice-box, .bob-box {
   display: flex;
-  grid-area: c;
-  border-right: 4px solid #E6E6E6;
-  padding-right: 8px;
-  margin: auto auto;
-}
-
-.search-box-four {
-  display: flex;
-  grid-area: d;
-  margin: auto auto;
+  width: 250px;
+  margin-right: 16px;
 }
 
 .search {
@@ -81,6 +76,7 @@
     border-radius: 5px;
     border: none;
     outline:none;
+    transition: all 0.5s;
   }
 
   input[type="text"] {
@@ -91,17 +87,20 @@
     color: #24272A;
   }
   
-  input[type="submit"]:hover {
+  .submit-button:hover {
     background-color: #00C08B;
     border: none;
     outline:none;
   }
 
-  .person {
-    margin-top: 8px;
+  .alice, .bob {
     margin-right: 8px;
     width: 45px;
     height: 45px;
+  }
+
+  .bob {
+    margin-top: 8px;
   }
 
   #bold {
@@ -117,4 +116,9 @@
 
   button:active {
     border: none;
+    transition: 0.5s;
+  }
+
+  .spinner {
+    margin-top: -8px;
   }

@@ -1,21 +1,24 @@
-import React, { useState } from "react";
-import "../styles/search.css";
-import alice from "../assets/alice.png";
-import bob from "../assets/bob.png";
-import { convertArgs } from "../services/utils";
+import React, { useState } from 'react'
+import '../styles/search.css'
+import alice from '../assets/alice.png'
+import bob from '../assets/bob.png'
+import spinner from '../assets/spinner.gif'
+import { convertArgs } from '../services/utils'
 
 const Search = () => {
 
-  const [searchValue, setSearchValue] = useState("");
-  const [searchResult, setSearchResult] = useState("0.0")
-  const [curNonce, setCurNonce] = useState(0);
+  const [searchValue, setSearchValue] = useState("")
+  const [searchResult, setSearchResult] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [submitButtoncss, setButtonCss] = useState("submit-button")
+  const [curNonce, setCurNonce] = useState(0)
 
   let timer;
   const timedFetchLatest = async (nonce) => {
     // timer = setInterval(await fetchNonceAnswer(), 500)
-      await fetchNonceAnswer(nonce);
+      await fetchNonceAnswer(nonce)
       if (timer !== null) {
-        timer = setTimeout(timedFetchLatest(nonce), 500);
+        timer = setTimeout(timedFetchLatest(nonce), 500)
     }
   };
 
@@ -31,44 +34,35 @@ const Search = () => {
       console.log(result)
       setSearchResult(result)
       clearTimeout(timer)
+      setLoading(false)
+      setButtonCss("submit-button")
     }
     
   }
 
   const handleChange = e => {
-    setSearchValue(e.target.value);
+    setSearchValue(e.target.value)
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const token_search = convertArgs(searchValue.toUpperCase());
-    const result = await window.clientAcct.functionCall(
-      'client.example.testnet',
-      'demo_token_price',
-      {
-        symbol: token_search,
-        spec_id: "dW5pcXVlIHNwZWMgaWQ="
-      },
-      '300000000000000'
-    )
+    setButtonCss("")
+     e.preventDefault()
+     const token_search = convertArgs(searchValue.toUpperCase())
+     const result = await window.clientAcct.functionCall(
+       'client.example.testnet',
+       'demo_token_price',
+       {
+         symbol: token_search,
+         spec_id: "dW5pcXVlIHNwZWMgaWQ="
+       },
+       '300000000000000'
+     ).then(setLoading(true));
     const requestNonce = atob(result.status.SuccessValue).replace(/['"]+/g, '')
     console.log('requestNonce: ', requestNonce)
-    timedFetchLatest(requestNonce);
+    timedFetchLatest(requestNonce)
   }
 
   console.log(curNonce)
-
-  // const resetInputField = () => {
-  //   setSearchValue("");
-  // };
-
-  // const callSearchFunction = e => {
-  //   e.preventDefault();
-  //   resetInputField();
-  // };
-
-  const contractAmount = 50;
-  const balance = 2000;
 
   return (
     <div className="search-box">
@@ -82,34 +76,26 @@ const Search = () => {
             placeholder="Enter Token(e.g. BAT)"
             className="search"
           />
-          <input onClick={handleSubmit} type="submit" value="Check" />
+          <input onClick={handleSubmit} type="submit" value="Check" disabled={loading} className={submitButtoncss} />
         </form>
         <div className="search-result">
-          <p>{searchResult}</p>
+          {loading ? <img src={spinner} className="spinner"/> : <p>{searchResult}</p>}
         </div>
         <div className="border"></div>
       </div>
 
       <div className="search-box-two">
-        <img src={alice} alt="Alice" className="person"/>
-        <p><strong id="bold">Alice</strong> owns Client Contract</p>
-      </div>
-
-      <div className="search-box-three">
-        <p>Contract Allowance: <br></br> 
-          <strong id="bold-two"> {contractAmount}</strong> 
-           of  
-          <strong id="bold"> {balance} </strong>
-        </p>
-        <div className="border"></div>
-      </div>
-
-      <div className="search-box-four">
-        <img src={bob} alt="Bob" className="person"/>
-        <p><strong id="bold">Bob</strong> owns Oracle Contract & Node</p>
+        <div className="alice-box">
+          <img src={alice} alt="Alice" className="alice"/>
+          <p><strong id="bold">Alice</strong> owns Client Contract</p>
+       </div>
+        <div className="bob-box">
+          <img src={bob} alt="Bob" className="bob"/>
+          <p><strong id="bold">Bob</strong> owns Oracle Contract & Node</p>
+        </div>
       </div>
     </div>
   );
 };
 
-export default (Search);
+export default Search
