@@ -15,15 +15,20 @@ const Search = () => {
 
 
 const fetchNonceAnswer = async (nonce) => {
-    const result = await window.clientAcct.viewFunction(
+    let result = await window.clientAcct.viewFunction(
       `client.${process.env.ACCOUNT_ID}.testnet`,
       'get_received_val',
       { nonce: nonce.toString() }
     )
-    console.log(result)
+    console.log('Checking for result...')
     if (result !== '-1') {
-      console.log('clearing out timer')
-      console.log(result)
+      result = `$${
+        Number(result)
+          .toFixed(2)
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        }`
+      console.log('Result: ', result)
       setSearchResult(result)
       setLoading(false)
       setButtonCss("submit-button")
@@ -48,11 +53,10 @@ const fetchNonceAnswer = async (nonce) => {
       '300000000000000'
     ).then(setLoading(true));
     const requestNonce = atob(result.status.SuccessValue).replace(/['"]+/g, '')
+    setCurNonce(requestNonce)
     console.log('requestNonce: ', requestNonce)
     fetchNonceAnswer(requestNonce)
   }
-
-  console.log(curNonce)
 
   return (
     <div className="search-box">
