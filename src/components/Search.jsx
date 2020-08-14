@@ -13,16 +13,8 @@ const Search = () => {
   const [submitButtoncss, setButtonCss] = useState("submit-button")
   const [curNonce, setCurNonce] = useState(0)
 
-  let timer;
-  const timedFetchLatest = async (nonce) => {
-    // timer = setInterval(await fetchNonceAnswer(), 500)
-      await fetchNonceAnswer(nonce)
-      if (timer !== null) {
-        timer = setTimeout(timedFetchLatest(nonce), 500)
-    }
-  };
 
-  const fetchNonceAnswer = async (nonce) => {
+const fetchNonceAnswer = async (nonce) => {
     const result = await window.clientAcct.viewFunction(
       `client.${process.env.ACCOUNT_ID}.testnet`,
       'get_received_val',
@@ -33,11 +25,9 @@ const Search = () => {
       console.log('clearing out timer')
       console.log(result)
       setSearchResult(result)
-      clearTimeout(timer)
       setLoading(false)
       setButtonCss("submit-button")
-    }
-    
+    } else await fetchNonceAnswer(nonce)
   }
 
   const handleChange = e => {
@@ -59,7 +49,7 @@ const Search = () => {
     ).then(setLoading(true));
     const requestNonce = atob(result.status.SuccessValue).replace(/['"]+/g, '')
     console.log('requestNonce: ', requestNonce)
-    timedFetchLatest(requestNonce)
+    fetchNonceAnswer(requestNonce)
   }
 
   console.log(curNonce)
