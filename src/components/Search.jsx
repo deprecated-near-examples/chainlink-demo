@@ -13,18 +13,10 @@ const Search = () => {
   const [submitButtoncss, setButtonCss] = useState("submit-button")
   const [curNonce, setCurNonce] = useState(0)
 
-  let timer;
-  const timedFetchLatest = async (nonce) => {
-    // timer = setInterval(await fetchNonceAnswer(), 500)
-      await fetchNonceAnswer(nonce)
-      if (timer !== null) {
-        timer = setTimeout(timedFetchLatest(nonce), 500)
-    }
-  };
 
-  const fetchNonceAnswer = async (nonce) => {
+const fetchNonceAnswer = async (nonce) => {
     const result = await window.clientAcct.viewFunction(
-      'client.example.testnet',
+      `client.${process.env.ACCOUNT_ID}.testnet`,
       'get_received_val',
       { nonce: nonce.toString() }
     )
@@ -33,11 +25,9 @@ const Search = () => {
       console.log('clearing out timer')
       console.log(result)
       setSearchResult(result)
-      clearTimeout(timer)
       setLoading(false)
       setButtonCss("submit-button")
-    }
-    
+    } else await fetchNonceAnswer(nonce)
   }
 
   const handleChange = e => {
@@ -46,20 +36,20 @@ const Search = () => {
 
   const handleSubmit = async (e) => {
     setButtonCss("")
-     e.preventDefault()
-     const token_search = convertArgs(searchValue.toUpperCase())
-     const result = await window.clientAcct.functionCall(
-       'client.example.testnet',
-       'demo_token_price',
-       {
-         symbol: token_search,
-         spec_id: "dW5pcXVlIHNwZWMgaWQ="
-       },
-       '300000000000000'
-     ).then(setLoading(true));
+    e.preventDefault()
+    const token_search = convertArgs(searchValue.toUpperCase())
+    const result = await window.clientAcct.functionCall(
+      `client.${process.env.ACCOUNT_ID}.testnet`,
+      'demo_token_price',
+      {
+        symbol: token_search,
+        spec_id: "dW5pcXVlIHNwZWMgaWQ="
+      },
+      '300000000000000'
+    ).then(setLoading(true));
     const requestNonce = atob(result.status.SuccessValue).replace(/['"]+/g, '')
     console.log('requestNonce: ', requestNonce)
-    timedFetchLatest(requestNonce)
+    fetchNonceAnswer(requestNonce)
   }
 
   console.log(curNonce)
@@ -88,7 +78,7 @@ const Search = () => {
         <div className="alice-box">
           <img src={alice} alt="Alice" className="alice"/>
           <p><strong id="bold">Alice</strong> owns Client Contract</p>
-       </div>
+      </div>
         <div className="bob-box">
           <img src={bob} alt="Bob" className="bob"/>
           <p><strong id="bold">Bob</strong> owns Oracle Contract & Node</p>
