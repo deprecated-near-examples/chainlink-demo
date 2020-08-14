@@ -6,31 +6,34 @@ import spinner from '../assets/spinner.gif'
 import { convertArgs } from '../services/utils'
 
 const Search = () => {
-
   const [searchValue, setSearchValue] = useState("")
   const [searchResult, setSearchResult] = useState("")
   const [loading, setLoading] = useState(false)
-  const [submitButtoncss, setButtonCss] = useState("submit-button")
+  const [submitButtonCss, setButtonCss] = useState("submit-button")
   const [curNonce, setCurNonce] = useState(0)
 
+  const fetchNonceAnswer = async (nonce) => {
+      let result = await window.clientAcct.viewFunction(
+        `client.${process.env.ACCOUNT_ID}.testnet`,
+        'get_received_val',
+        { nonce: nonce.toString() }
+      )
+      console.log('Checking for result...')
+      if (result !== '-1') {
+        result = `$${
+          Number(result)
+            .toFixed(2)
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+          }`
+        console.log('Result: ', result)
+        setSearchResult(result)
+        setLoading(false)
+        setButtonCss("submit-button")
+      } else await fetchNonceAnswer(nonce)
+    }
 
-const fetchNonceAnswer = async (nonce) => {
-    const result = await window.clientAcct.viewFunction(
-      `client.${process.env.ACCOUNT_ID}.testnet`,
-      'get_received_val',
-      { nonce: nonce.toString() }
-    )
-    console.log(result)
-    if (result !== '-1') {
-      console.log('clearing out timer')
-      console.log(result)
-      setSearchResult(result)
-      setLoading(false)
-      setButtonCss("submit-button")
-    } else await fetchNonceAnswer(nonce)
-  }
-
-  const handleChange = e => {
+  const handleChange = (e) => {
     setSearchValue(e.target.value)
   };
 
@@ -48,11 +51,10 @@ const fetchNonceAnswer = async (nonce) => {
       '300000000000000'
     ).then(setLoading(true));
     const requestNonce = atob(result.status.SuccessValue).replace(/['"]+/g, '')
+    setCurNonce(requestNonce)
     console.log('requestNonce: ', requestNonce)
     fetchNonceAnswer(requestNonce)
   }
-
-  console.log(curNonce)
 
   return (
     <div className="search-box">
@@ -66,7 +68,12 @@ const fetchNonceAnswer = async (nonce) => {
             placeholder="Enter Token(e.g. BAT)"
             className="search"
           />
-          <input onClick={handleSubmit} type="submit" value="Check" disabled={loading} className={submitButtoncss} />
+          <input 
+            onClick={handleSubmit} 
+            type="submit" value="Check" 
+            disabled={loading} 
+            className={submitButtonCss} /
+          >
         </form>
         <div className="search-result">
           {loading ? <img src={spinner} className="spinner"/> : <p>{searchResult}</p>}
