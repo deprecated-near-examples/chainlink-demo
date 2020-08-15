@@ -50373,81 +50373,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.keyStores = __importStar(require("./key_stores/browser-index"));
 __exportStar(require("./common-index"), exports);
 
-},{"./key_stores/browser-index":"../node_modules/near-api-js/lib/key_stores/browser-index.js","./common-index":"../node_modules/near-api-js/lib/common-index.js"}],"services/contractMethods.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.transfer = transfer;
-exports.getAccountBalance = getAccountBalance;
-exports.getAllowance = getAllowance;
-exports.isOracleAuthorized = isOracleAuthorized;
-exports.getOracleRequestSummary = getOracleRequestSummary;
-exports.getOracleRequests = getOracleRequests;
-exports.checkWithdrawableTokens = checkWithdrawableTokens;
-
-var _nearApiJs = require("near-api-js");
-
-// import Big from 'big.js'
-// const max_gas = Big(3).times(10 ** 14).toFixed()
-const storagePayment = _nearApiJs.utils.format.parseNearAmount('.0365'); // //NEAR-LINK change functions
-// export function makeTransfer(ownerAcct, newOwnerAcct){
-//   // await near.account('near-link.dev.testnet')
-//   window.nearLinkContract
-//     .transfer_from({
-//       owner_id: ownerAcct,
-//       new_owner_id: newOwnerAcct,
-//       amount: "1",
-//     }, max_gas, storagePayment)
-//     .then(result => console.log(`Transfer done `, result)
-//   )
-// }
-
-
-async function transfer(transferArgs) {
-  console.log('transferring... ', transferArgs.amount);
-  await window.clientAcct.functionCall('client.dev.testnet', 'transfer', transferArgs, '300000000000000');
-} //NEAR-LINK view functions
-
-
-function getAccountBalance(acct) {
-  window.nearLinkContract.get_balance({
-    owner_id: acct
-  }).then(result => console.log(`${acct} balance: `, result));
-}
-
-function getAllowance(baseAcct) {
-  window.nearLinkContract.get_allowance({
-    owner_id: `client.${baseAcct}`,
-    escrow_account_id: `oracle.${baseAcct}`
-  }).then(result => console.log(`oracle.${baseAcct} allowance: `, result));
-} //Oracle view functions
-
-
-function isOracleAuthorized(baseAcct) {
-  window.oracleContract.is_authorized({
-    node: `oracle-node.${baseAcct}`
-  }).then(result => console.log('oracle authorized? ', result));
-}
-
-function getOracleRequestSummary() {
-  window.oracleContract.get_requests_summary({
-    max_num_accounts: '10'
-  }).then(result => console.log('oracle request summary: ', result));
-}
-
-function getOracleRequests(baseAcct) {
-  window.oracleContract.get_requests({
-    account: `client.${baseAcct}`,
-    max_requests: "10"
-  }).then(result => console.log(result));
-}
-
-function checkWithdrawableTokens() {
-  window.oracleContract.get_withdrawable_tokens().then(result => console.log('withdrawable tokens amt: ', result));
-}
-},{"near-api-js":"../node_modules/near-api-js/lib/browser-index.js"}],"services/utils.js":[function(require,module,exports) {
+},{"./key_stores/browser-index":"../node_modules/near-api-js/lib/key_stores/browser-index.js","./common-index":"../node_modules/near-api-js/lib/common-index.js"}],"services/utils.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -50455,19 +50381,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.initContract = initContract;
 exports.convertArgs = convertArgs;
-exports.onSubmit = onSubmit;
-exports.logout = logout;
-exports.login = login;
 
 var _nearApiJs = require("near-api-js");
 
-var _transaction = require("near-api-js/lib/transaction");
-
-var _contractMethods = _interopRequireDefault(require("../services/contractMethods"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 const nearConfig = {
   networkId: 'testnet',
   nodeUrl: 'https://rpc.testnet.near.org',
@@ -50479,9 +50395,8 @@ const nearConfig = {
 async function initContract() {
   const keyStore = new _nearApiJs.keyStores.InMemoryKeyStore();
 
-  const keyPair = _nearApiJs.KeyPair.fromString("ed25519:5rQVxhqXxK24qUZPpafhVW6kVp7ncCY78PK7rNbCgtXASH8sgTAg44xF3C2VmoP7ZdZxQc558EWAvcua7n9r4WmJ");
+  const keyPair = _nearApiJs.KeyPair.fromString("ed25519:5rQVxhqXxK24qUZPpafhVW6kVp7ncCY78PK7rNbCgtXASH8sgTAg44xF3C2VmoP7ZdZxQc558EWAvcua7n9r4WmJ"); //sets key in memory
 
-  console.log(keyPair); //sets key in memory
 
   await keyStore.setKey(nearConfig.networkId, nearConfig.contractName, keyPair);
   const near = await (0, _nearApiJs.connect)(Object.assign({
@@ -50501,47 +50416,7 @@ function convertArgs(tokenSymbol) {
   };
   return btoa(JSON.stringify(obj));
 }
-
-async function onSubmit(event) {
-  event.preventDefault(); // get elements from the form using their id attribute
-
-  const {
-    fieldset,
-    greeting
-  } = event.target.elements; // disable the form while the value gets updated on-chain
-
-  fieldset.disabled = true;
-
-  try {
-    // make an update call to the smart contract
-    let balance = await contract.get_balance({
-      // pass the value that the user entered in the greeting field
-      owner_id: window.accountId
-    });
-    console.log(balance);
-  } catch (e) {
-    alert('Something went wrong! ' + 'Maybe you need to sign out and back in? ' + 'Check your browser console for more info.');
-    throw e;
-  } finally {
-    // re-enable the form, whether the call succeeded or failed
-    fieldset.disabled = false;
-  }
-}
-
-function logout() {
-  window.walletConnection.signOut(); // reload page
-
-  window.location.replace(window.location.origin + window.location.pathname);
-}
-
-function login() {
-  // Allow the current app to make calls to the specified contract on the
-  // user's behalf.
-  // This works by creating a new access key for the user's account and storing
-  // the private key in localStorage.
-  window.walletConnection.requestSignIn(nearConfig.contractName);
-}
-},{"near-api-js":"../node_modules/near-api-js/lib/browser-index.js","near-api-js/lib/transaction":"../node_modules/near-api-js/lib/transaction.js","../services/contractMethods":"services/contractMethods.js"}],"components/Search.jsx":[function(require,module,exports) {
+},{"near-api-js":"../node_modules/near-api-js/lib/browser-index.js"}],"components/Search.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -50575,7 +50450,7 @@ const Search = () => {
   const [curNonce, setCurNonce] = (0, _react.useState)(0);
 
   const fetchNonceAnswer = async nonce => {
-    let result = await window.clientAcct.viewFunction(`client.${"dev"}.testnet`, 'get_received_val', {
+    let result = await window.clientAcct.viewFunction('client.dev.testnet', 'get_received_val', {
       nonce: nonce.toString()
     });
     console.log('Checking for result...');
@@ -50597,7 +50472,7 @@ const Search = () => {
     setButtonCss("");
     e.preventDefault();
     const token_search = (0, _utils.convertArgs)(searchValue.toUpperCase());
-    const result = await window.clientAcct.functionCall(`client.${"dev"}.testnet`, 'demo_token_price', {
+    const result = await window.clientAcct.functionCall('client.dev.testnet', 'demo_token_price', {
       symbol: token_search,
       spec_id: "dW5pcXVlIHNwZWMgaWQ="
     }, '300000000000000').then(setLoading(true));
@@ -51318,7 +51193,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56225" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56617" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
