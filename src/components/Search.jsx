@@ -55,19 +55,19 @@ const Search = () => {
     console.log('requestNonce: ', requestNonce)
     fetchNonceAnswer(requestNonce)
   }
-
+  console.log(searchValue)
   return (
     <div className="search-box">
-
+  
       <div className="search-box-one">
         <form>
-          <input
-            value={searchValue}
-            onChange={handleChange}
-            type="text"
-            placeholder="Enter Token(e.g. BAT)"
-            className="search"
-          />
+          <select name="tokenSymbol" className="search" id="tokenSymbol" onChange={handleChange}>
+            <option value="" default hidden>Select token</option>
+            <option value="BAT" >Basic Attention Token</option>
+            <option value="BTC">Bitcoin</option>
+            <option value="ETH">Ethereum</option>
+            <option value="LINK">Chainlink</option>
+          </select>
           <input 
             onClick={handleSubmit} 
             type="submit" value="Check" 
