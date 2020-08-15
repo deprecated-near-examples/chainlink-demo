@@ -50482,17 +50482,29 @@ const Search = () => {
     fetchNonceAnswer(requestNonce);
   };
 
+  console.log(searchValue);
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "search-box"
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "search-box-one"
-  }, /*#__PURE__*/_react.default.createElement("form", null, /*#__PURE__*/_react.default.createElement("input", {
-    value: searchValue,
-    onChange: handleChange,
-    type: "text",
-    placeholder: "Enter Token(e.g. BAT)",
-    className: "search"
-  }), /*#__PURE__*/_react.default.createElement("input", {
+  }, /*#__PURE__*/_react.default.createElement("form", null, /*#__PURE__*/_react.default.createElement("select", {
+    name: "tokenSymbol",
+    className: "search",
+    id: "tokenSymbol",
+    onChange: handleChange
+  }, /*#__PURE__*/_react.default.createElement("option", {
+    value: "",
+    default: true,
+    hidden: true
+  }, "Select token"), /*#__PURE__*/_react.default.createElement("option", {
+    value: "BAT"
+  }, "Basic Attention Token"), /*#__PURE__*/_react.default.createElement("option", {
+    value: "BTC"
+  }, "Bitcoin"), /*#__PURE__*/_react.default.createElement("option", {
+    value: "ETH"
+  }, "Ethereum"), /*#__PURE__*/_react.default.createElement("option", {
+    value: "LINK"
+  }, "Chainlink")), /*#__PURE__*/_react.default.createElement("input", {
     onClick: handleSubmit,
     type: "submit",
     value: "Check",
