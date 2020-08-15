@@ -1,21 +1,21 @@
-import Big from 'big.js'
+// import Big from 'big.js'
 import { utils } from 'near-api-js';
 
-const max_gas = Big(3).times(10 ** 14).toFixed()
+// const max_gas = Big(3).times(10 ** 14).toFixed()
 const storagePayment = utils.format.parseNearAmount('.0365')
 
-//NEAR-LINK change functions
-export function makeTransfer(ownerAcct, newOwnerAcct){
-  // await near.account('near-link.dev.testnet')
-  window.nearLinkContract
-    .transfer_from({
-      owner_id: ownerAcct,
-      new_owner_id: newOwnerAcct,
-      amount: "1",
-    }, max_gas, storagePayment)
-    .then(result => console.log(`Transfer done `, result)
-  )
-}
+// //NEAR-LINK change functions
+// export function makeTransfer(ownerAcct, newOwnerAcct){
+//   // await near.account('near-link.dev.testnet')
+//   window.nearLinkContract
+//     .transfer_from({
+//       owner_id: ownerAcct,
+//       new_owner_id: newOwnerAcct,
+//       amount: "1",
+//     }, max_gas, storagePayment)
+//     .then(result => console.log(`Transfer done `, result)
+//   )
+// }
 
 export async function transfer(transferArgs){
   console.log('transferring... ', transferArgs.amount )
