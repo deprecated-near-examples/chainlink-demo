@@ -4,8 +4,10 @@
   "license": "UNLICENSED",
   "scripts": {
     "start": "echo The app is starting! It will automatically open in your browser when ready && env-cmd -f ./neardev/dev-account.env parcel src/index.html --open",
+    "build:web": "parcel build src/index.html --public-url ./",
     "dev": "nodemon --watch assembly -e ts --exec \"npm run start\"",
-    "test": "asp --nologo && npm run build:contract && jest test --runInBand"
+    "test": "asp --nologo && npm run build:contract && jest test --runInBand",
+    "deploy": "yarn build:web && gh-pages -d dist/"
   },
   "devDependencies": {
     "@babel/core": "^7.10.4",
