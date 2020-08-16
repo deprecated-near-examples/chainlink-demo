@@ -3,14 +3,15 @@ import '../styles/search.css'
 import alice from '../assets/alice.png'
 import bob from '../assets/bob.png'
 import spinner from '../assets/spinner.gif'
-import { convertArgs } from '../services/utils'
+import { convertArgs, getBlock } from '../services/utils'
 
 const Search = () => {
-  const [searchValue, setSearchValue] = useState("")
-  const [searchResult, setSearchResult] = useState("")
-  const [loading, setLoading] = useState(false)
-  const [submitButtonCss, setButtonCss] = useState("submit-button")
-  const [curNonce, setCurNonce] = useState(0)
+  const [searchValue, setSearchValue] = useState("");
+  const [searchResult, setSearchResult] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [submitButtonCss, setButtonCss] = useState("submit-button");
+  const [blockId, setBlockId] = useState("");
+  const [curNonce, setCurNonce] = useState(0);
 
   const fetchNonceAnswer = async (nonce) => {
       let result = await window.clientAcct.viewFunction(
@@ -27,6 +28,8 @@ const Search = () => {
             .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
           }`
         console.log('Result: ', result)
+        // const blockDetails = getBlock('JBV5m47nkQgZgFqGfBADE3ytbsa9kJjzJEvsRxEKiv6u')
+        // console.log('block details: ', blockDetails)
         setSearchResult(result)
         setLoading(false)
         setButtonCss("submit-button")
@@ -51,6 +54,11 @@ const Search = () => {
       '300000000000000'
     ).then(setLoading(true));
     const requestNonce = atob(result.status.SuccessValue).replace(/['"]+/g, '')
+
+    console.log('result', result)
+    console.log('transaction_ID', result.transaction.hash)
+    console.log('Block_ID', result.transaction_outcome.id)
+    setBlockId(result.transaction_outcome.id)
     setCurNonce(requestNonce)
     console.log('requestNonce: ', requestNonce)
     fetchNonceAnswer(requestNonce)

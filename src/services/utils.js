@@ -27,3 +27,22 @@ export function convertArgs(tokenSymbol) {
   }
   return btoa(JSON.stringify(obj))
 }
+
+
+export async function getBlock(blockHash) {
+  const config = {
+    networkId: 'default',
+    nodeUrl: 'https://rpc.testnet.near.org',
+    walletUrl: 'https://wallet.testnet.near.org',
+  }
+
+  const near = await connect(Object.assign(config, { deps: { keyStore: new keyStores.InMemoryKeyStore() }}));
+  // const blockInfoByHeight = await near.connection.provider.block({
+  //   blockId: 12406248,
+  // })
+  // console.log('blockInfoByHeight', blockInfoByHeight)
+  const blockInfoByHash = await near.connection.provider.block({
+    blockId: blockHash,
+  })
+  console.log('blockInfoByHash', blockInfoByHash)
+};
