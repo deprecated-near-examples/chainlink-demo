@@ -4,7 +4,7 @@ import alice from '../assets/alice.png'
 import bob from '../assets/bob.png'
 import spinner from '../assets/spinner.gif'
 import { convertArgs, getBlock } from '../services/utils'
-import { demoTokenPrice } from '../services/contractMethods'
+import { demoTokenPrice, getReceivedVal } from '../services/contractMethods'
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -15,11 +15,7 @@ const Search = () => {
   const [curNonce, setCurNonce] = useState(0);
 
   const fetchNonceAnswer = async (nonce) => {
-      let result = await window.clientAcct.viewFunction(
-        'client.omg.testnet',
-        'get_received_val',
-        { nonce: nonce.toString() }
-      )
+      let result = await getReceivedVal(nonce);
       console.log('Checking for result...')
       if (result !== '-1') {
         result = `$${
@@ -51,9 +47,7 @@ const Search = () => {
     setButtonCss("")
     e.preventDefault()
     const token_search = convertArgs(searchValue.toUpperCase())
-    const result = await demoTokenPrice(token_search)
-      .then(setLoading(true))
-  
+    const result = await demoTokenPrice(token_search).then(setLoading(true))
     const requestNonce = atob(result.status.SuccessValue).replace(/['"]+/g, '')
 
     console.log('result', result)

@@ -10,6 +10,15 @@ export async function demoTokenPrice(tokenSearch){
   )
 }
 
+export async function getReceivedVal(nonce){
+  return await window.clientAcct.viewFunction(
+    'client.omg.testnet',
+    'get_received_val',
+    { nonce: nonce.toString() }
+  )
+}
+
+
 
 
 //NEAR-LINK view functions
