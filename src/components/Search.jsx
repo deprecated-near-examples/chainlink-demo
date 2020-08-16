@@ -4,7 +4,7 @@ import alice from '../assets/alice.png'
 import bob from '../assets/bob.png'
 import spinner from '../assets/spinner.gif'
 import { convertArgs, getBlock } from '../services/utils'
-import { demoTokenPrice, getReceivedVal } from '../services/contractMethods'
+import { demoTokenPrice, getReceivedVal, formatResult } from '../services/contractMethods'
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -18,12 +18,7 @@ const Search = () => {
       let result = await getReceivedVal(nonce);
       console.log('Checking for result...')
       if (result !== '-1') {
-        result = `$${
-          Number(result)
-            .toFixed(2)
-            .toString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-          }`
+        result = formatResult(result)
         console.log('Result: ', result)
         // console.log('blockIDDDDD', blockHash)
         // console.log('curNonce', curNonce)

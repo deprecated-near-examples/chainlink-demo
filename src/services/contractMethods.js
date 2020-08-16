@@ -18,7 +18,14 @@ export async function getReceivedVal(nonce){
   )
 }
 
-
+export function formatResult(result){
+  return `$${
+    Number(result)
+      .toFixed(2)
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }`
+}
 
 
 //NEAR-LINK view functions
