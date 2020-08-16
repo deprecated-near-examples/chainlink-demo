@@ -19,7 +19,7 @@ export async function getBlockByID(blockID){
       .connection.provider.block({
         blockId: blockID,
     })
-  console.log(`BlockInfo for ${blockID}`, blockInfoByHeight)
+  console.log(`BlockInfo for ID #${blockID}`, blockInfoByHeight)
 }
 
 export function getFormattedNonce(result){

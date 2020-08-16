@@ -9,6 +9,7 @@ import {
   formatResult, 
   getFormattedNonce, 
   getLatestBlock,
+
   getBlockByID } from '../services/contractMethods'
 
 const Search = () => {
