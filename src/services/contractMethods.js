@@ -1,31 +1,72 @@
-// import Big from 'big.js'
-import { utils } from 'near-api-js';
+export async function getLatestBlock(){
+  const latestHash = (await window.near
+    .connection.provider.status())
+    .sync_info.latest_block_hash;
+  return await window.near
+    .connection.provider.block(latestHash);
+}
 
-// const max_gas = Big(3).times(10 ** 14).toFixed()
-const storagePayment = utils.format.parseNearAmount('.0365')
+export async function getBlockByHash(blockHash) {
+  const blockInfoByHash = await window.near
+    .connection.provider.block({
+      blockId: blockHash,
+  })
+  console.log(`BlockInfo for ${blockHash} :`, blockInfoByHash)
+};
 
-// //NEAR-LINK change functions
-// export function makeTransfer(ownerAcct, newOwnerAcct){
-//   // await near.account('near-link.dev.testnet')
-//   window.nearLinkContract
-//     .transfer_from({
-//       owner_id: ownerAcct,
-//       new_owner_id: newOwnerAcct,
-//       amount: "1",
-//     }, max_gas, storagePayment)
-//     .then(result => console.log(`Transfer done `, result)
-//   )
-// }
+export async function getBlockByID(blockID){
+    const blockInfoByHeight = await window.near
+      .connection.provider.block({
+        blockId: blockID,
+    })
+  console.log(`BlockInfo for ID #${blockID}`, blockInfoByHeight)
+}
 
-export async function transfer(transferArgs){
-  console.log('transferring... ', transferArgs.amount )
-  await window.clientAcct.functionCall(
-    'client.dev.testnet',
-    'transfer',
-    transferArgs,
+export function getFormattedNonce(result){
+  return atob(result.status.SuccessValue)
+    .replace(/['"]+/g, '')
+}
+
+export function convertArgs(tokenSymbol, CUR = 'USD') {
+  const URL = 'https://min-api.cryptocompare.com/data/price?fsym='
+  const obj = {
+    get: `${URL}${tokenSymbol}&tsyms=${CUR}`,
+    path: 'USD',
+    times: 100
+  }
+  return btoa(JSON.stringify(obj))
+}
+
+export async function callClient(searchValue){
+  const tokenSearch = convertArgs(searchValue.toUpperCase())
+  return await window.clientAcct.functionCall(
+    'client.check.testnet',
+    'demo_token_price',
+    {
+      symbol: tokenSearch,
+      spec_id: "dW5pcXVlIHNwZWMgaWQ="
+    },
     '300000000000000'
   )
 }
+
+export async function getReceivedVal(nonce){
+  return await window.clientAcct.viewFunction(
+    'client.check.testnet',
+    'get_received_val',
+    { nonce: nonce.toString() }
+  )
+}
+
+export function formatResult(result){
+  return `$${
+    Number(result)
+      .toFixed(2)
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }`
+}
+
 
 //NEAR-LINK view functions
 export function getAccountBalance(acct){
@@ -34,8 +75,7 @@ export function getAccountBalance(acct){
       owner_id: acct
     })
     .then(result => 
-      console.log(`${acct} balance: `, result)
-      )
+      console.log(`${acct} balance: `, result))
 }
 
 export function getAllowance(baseAcct){
@@ -56,8 +96,7 @@ export function isOracleAuthorized(baseAcct){
       node: `oracle-node.${baseAcct}`
     })
     .then(result => 
-      console.log('oracle authorized? ', result)
-      )
+      console.log('oracle authorized? ', result))
 }
 
 export function getOracleRequestSummary(){
@@ -66,8 +105,7 @@ export function getOracleRequestSummary(){
       max_num_accounts: '10'
     })
     .then(result => 
-      console.log('oracle request summary: ', result)
-      )
+      console.log('oracle request summary: ', result))
 }     
 
 export function getOracleRequests(baseAcct){
@@ -83,6 +121,5 @@ export function checkWithdrawableTokens(){
   window.oracleContract 
     .get_withdrawable_tokens()
     .then(result => 
-      console.log('withdrawable tokens amt: ', result)
-    )
+      console.log('withdrawable tokens amt: ', result))
 }
