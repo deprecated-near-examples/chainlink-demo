@@ -4,7 +4,7 @@ import alice from '../assets/alice.png'
 import bob from '../assets/bob.png'
 import spinner from '../assets/spinner.gif'
 import { getBlock } from '../services/utils'
-import { demoTokenPrice, getReceivedVal, formatResult, getFormattedNonce } from '../services/contractMethods'
+import { callClient, getReceivedVal, formatResult, getFormattedNonce, getLatestHash } from '../services/contractMethods'
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -14,26 +14,6 @@ const Search = () => {
   const [blockHash, setBlockHash] = useState("");
   const [curNonce, setCurNonce] = useState(0);
 
-  const fetchNonceAnswer = async (nonce) => {
-      let result = await getReceivedVal(nonce);
-      console.log('Checking for result...')
-      if (result !== '-1') {
-        result = formatResult(result)
-        console.log('Result: ', result)
-        // console.log('blockIDDDDD', blockHash)
-        // console.log('curNonce', curNonce)
-        const latestHash = (await window.near.connection.provider.status()).sync_info.latest_block_hash;
-        const latestBlock = await window.near.connection.provider.block(latestHash);
-        console.log('latest hash: ', latestHash)
-        console.log('latest block: ', latestBlock)
-        // const blockDetails = await getBlock(blockHash)
-        // console.log('block details: ', blockDetails)
-        setSearchResult(result)
-        setLoading(false)
-        setButtonCss("submit-button")
-      } else await fetchNonceAnswer(nonce)
-    }
-
   const handleChange = (e) => {
     setSearchValue(e.target.value)
   };
@@ -41,20 +21,42 @@ const Search = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setButtonCss("")
-    const result = await demoTokenPrice(searchValue).then(setLoading(true));
+    const result = await callClient(searchValue).then(setLoading(true));
     const requestNonce = getFormattedNonce(result);
+
     console.log('result', result)
     console.log('transaction_ID', result.transaction.hash)
     console.log('Block HASH',  result.receipts_outcome[0].block_hash)
+
     setBlockHash(result.receipts_outcome[0].block_hash)
+    setCurNonce(requestNonce)
+    fetchNonceAnswer(requestNonce)
     const blockDetails = await getBlock(result.receipts_outcome[0].block_hash)
     console.log('block details: ', blockDetails)
-    setCurNonce(requestNonce)
     console.log('requestNonce: ', requestNonce)
-    fetchNonceAnswer(requestNonce)
+
   }
 
-  console.log(searchValue)
+  const fetchNonceAnswer = async (nonce) => {
+      let result = await getReceivedVal(nonce);
+      console.log('Checking for result...')
+      
+      if (result !== '-1') {
+        result = formatResult(result)
+        const latestHash = await getLatestHash();
+        const latestBlock = await window.near.connection.provider.block(latestHash);
+
+        setSearchResult(result)
+        setLoading(false)
+        setButtonCss("submit-button")
+
+        console.log('Result: ', result)
+        console.log('latest hash: ', latestHash)
+        console.log('latest block: ', latestBlock)
+
+      } else await fetchNonceAnswer(nonce)
+    }
+
   return (
     <div className="search-box">
   

@@ -1,3 +1,8 @@
+export async function getLatestHash(){
+  return (await window.near.connection.provider.status())
+  .sync_info.latest_block_hash;
+}
+
 export function getFormattedNonce(result){
   return atob(result.status.SuccessValue)
     .replace(/['"]+/g, '')
@@ -12,7 +17,7 @@ export function convertArgs(tokenSymbol) {
   return btoa(JSON.stringify(obj))
 }
 
-export async function demoTokenPrice(searchValue){
+export async function callClient(searchValue){
   const tokenSearch = convertArgs(searchValue.toUpperCase())
   return await window.clientAcct.functionCall(
     'client.omg.testnet',
