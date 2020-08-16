@@ -8,8 +8,8 @@ import {
   getReceivedVal, 
   formatResult, 
   getFormattedNonce, 
-  getLatestBlock, 
-  getBlock } from '../services/contractMethods'
+  getLatestBlock,
+  getBlockByID } from '../services/contractMethods'
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -25,19 +25,18 @@ const Search = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setButtonCss("")
+    setButtonCss("");
     const result = await callClient(searchValue).then(setLoading(true));
     const requestNonce = getFormattedNonce(result);
 
     console.log('Request Nonce: ', requestNonce);
     console.log('RESULT: ', result);
-    console.log('Transaction ID: ', result.transaction.hash);
-    console.log('Block Hash: ',  result.receipts_outcome[0].block_hash);
 
     setBlockHash(result.receipts_outcome[0].block_hash);
     setCurNonce(requestNonce);
     fetchNonceAnswer(requestNonce);
-    const blockDetails = await getBlock(result.receipts_outcome[0].block_hash);
+    await getLatestBlock()
+      .then(res => window.firstBlock = res.header.height)
   }
 
   const fetchNonceAnswer = async (nonce) => {
@@ -46,14 +45,28 @@ const Search = () => {
 
       if (result !== '-1') {
         result = formatResult(result)
-        const latestBlock = await getLatestBlock();
+        const finalBlock = await getLatestBlock();
         setSearchResult(result);
         setLoading(false);
         setButtonCss("submit-button");
 
         console.log('Result: ', result);
-        console.log('Latest Hash: ', latestBlock.header.hash);
-        console.log('Latest Block: ', latestBlock);
+        console.log('Final block details: ', finalBlock);
+        console.log('First block ID: ', window.firstBlock);
+        console.log('Final block ID: ', finalBlock.header.height);
+
+        const firstBlockID = window.firstBlock
+        const lastBlockID = finalBlock.header.height
+
+        const blockArr = [];
+        for (let i = firstBlockID; i <= lastBlockID; i++) {
+          blockArr.push(i)
+        }
+        console.log(blockArr)
+
+        const blockResults = Promise.all(blockArr.map(block => {
+          return getBlockByID(block);
+        }))
 
       } else await fetchNonceAnswer(nonce);
     }

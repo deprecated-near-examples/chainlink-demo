@@ -11,21 +11,10 @@ const nearConfig = {
 export async function initContract() {    
   const keyStore = new keyStores.InMemoryKeyStore()
   const keyPair = KeyPair.fromString(process.env.CLIENT_PRIVATE_KEY)
+  console.log(keyPair)
   //sets key in memory
   await keyStore.setKey(nearConfig.networkId, nearConfig.contractName, keyPair)
   const near = await connect(Object.assign({ deps: { keyStore: keyStore } }, nearConfig))
   window.near = near
   window.clientAcct = await near.account(`client.${process.env.ACCOUNT_ID}.testnet`)
-
 }
-
-export function convertArgs(tokenSymbol) {
-  const obj = {
-    get: `https://min-api.cryptocompare.com/data/price?fsym=${tokenSymbol}&tsyms=USD`,
-    path: 'USD',
-    times: 100
-  }
-  return btoa(JSON.stringify(obj))
-}
-
-
