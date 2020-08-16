@@ -1,6 +1,9 @@
-export async function getLatestHash(){
-  return (await window.near.connection.provider.status())
-  .sync_info.latest_block_hash;
+export async function getLatestBlock(){
+  const latestHash = (await window.near
+    .connection.provider.status())
+    .sync_info.latest_block_hash;
+  return await window.near
+    .connection.provider.block(latestHash);
 }
 
 export function getFormattedNonce(result){

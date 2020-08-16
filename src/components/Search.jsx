@@ -4,7 +4,7 @@ import alice from '../assets/alice.png'
 import bob from '../assets/bob.png'
 import spinner from '../assets/spinner.gif'
 import { getBlock } from '../services/utils'
-import { callClient, getReceivedVal, formatResult, getFormattedNonce, getLatestHash } from '../services/contractMethods'
+import { callClient, getReceivedVal, formatResult, getFormattedNonce, getLatestHash, getLatestBlock } from '../services/contractMethods'
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -40,18 +40,16 @@ const Search = () => {
   const fetchNonceAnswer = async (nonce) => {
       let result = await getReceivedVal(nonce);
       console.log('Checking for result...')
-      
+
       if (result !== '-1') {
         result = formatResult(result)
-        const latestHash = await getLatestHash();
-        const latestBlock = await window.near.connection.provider.block(latestHash);
-
+        const latestBlock = await getLatestBlock();
         setSearchResult(result)
         setLoading(false)
         setButtonCss("submit-button")
 
         console.log('Result: ', result)
-        console.log('latest hash: ', latestHash)
+        console.log('latest hash: ', latestBlock.header.hash)
         console.log('latest block: ', latestBlock)
 
       } else await fetchNonceAnswer(nonce)
