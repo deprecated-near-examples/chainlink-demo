@@ -4,18 +4,19 @@ import alice from '../assets/alice.png'
 import bob from '../assets/bob.png'
 import spinner from '../assets/spinner.gif'
 import { convertArgs, getBlock } from '../services/utils'
+import { demoTokenPrice } from '../services/contractMethods'
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");
   const [searchResult, setSearchResult] = useState("");
   const [loading, setLoading] = useState(false);
   const [submitButtonCss, setButtonCss] = useState("submit-button");
-  const [blockId, setBlockId] = useState("");
+  const [blockHash, setBlockHash] = useState("");
   const [curNonce, setCurNonce] = useState(0);
 
   const fetchNonceAnswer = async (nonce) => {
       let result = await window.clientAcct.viewFunction(
-        'client.dev.testnet',
+        'client.omg.testnet',
         'get_received_val',
         { nonce: nonce.toString() }
       )
@@ -28,7 +29,13 @@ const Search = () => {
             .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
           }`
         console.log('Result: ', result)
-        // const blockDetails = getBlock('JBV5m47nkQgZgFqGfBADE3ytbsa9kJjzJEvsRxEKiv6u')
+        // console.log('blockIDDDDD', blockHash)
+        // console.log('curNonce', curNonce)
+        const latestHash = (await window.near.connection.provider.status()).sync_info.latest_block_hash;
+        const latestBlock = await window.near.connection.provider.block(latestHash);
+        console.log('latest hash: ', latestHash)
+        console.log('latest block: ', latestBlock)
+        // const blockDetails = await getBlock(blockHash)
         // console.log('block details: ', blockDetails)
         setSearchResult(result)
         setLoading(false)
@@ -44,25 +51,22 @@ const Search = () => {
     setButtonCss("")
     e.preventDefault()
     const token_search = convertArgs(searchValue.toUpperCase())
-    const result = await window.clientAcct.functionCall(
-      'client.dev.testnet',
-      'demo_token_price',
-      {
-        symbol: token_search,
-        spec_id: "dW5pcXVlIHNwZWMgaWQ="
-      },
-      '300000000000000'
-    ).then(setLoading(true));
+    const result = await demoTokenPrice(token_search)
+      .then(setLoading(true))
+  
     const requestNonce = atob(result.status.SuccessValue).replace(/['"]+/g, '')
 
     console.log('result', result)
     console.log('transaction_ID', result.transaction.hash)
-    console.log('Block_ID', result.transaction_outcome.id)
-    setBlockId(result.transaction_outcome.id)
+    console.log('Block HASH',  result.receipts_outcome[0].block_hash)
+    setBlockHash(result.receipts_outcome[0].block_hash)
+    const blockDetails = await getBlock(result.receipts_outcome[0].block_hash)
+    console.log('block details: ', blockDetails)
     setCurNonce(requestNonce)
     console.log('requestNonce: ', requestNonce)
     fetchNonceAnswer(requestNonce)
   }
+
   console.log(searchValue)
   return (
     <div className="search-box">
