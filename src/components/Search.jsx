@@ -68,15 +68,17 @@ const Search = () => {
             <option value="ETH">Ethereum</option>
             <option value="LINK">Chainlink</option>
           </select>
-          <input 
-            onClick={handleSubmit} 
-            type="submit" value="Check" 
-            disabled={loading} 
-            className={submitButtonCss} /
-          >
+          { loading ? null
+            : <input 
+                onClick={handleSubmit} 
+                type="submit" value="Check" 
+                disabled={loading} 
+                className={submitButtonCss} 
+              />
+          }
         </form>
         <div className="search-result">
-          {loading ? <img src={spinner} className="spinner"/> : <p>{searchResult}</p>}
+          { loading ? <img src={spinner} className="spinner"/> : <p>{searchResult}</p> }
         </div>
         <div className="border"></div>
       </div>
