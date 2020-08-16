@@ -6,6 +6,17 @@ export async function getLatestBlock(){
     .connection.provider.block(latestHash);
 }
 
+export async function getBlock(blockHash) {
+  // const blockInfoByHeight = await near.connection.provider.block({
+  //   blockId: 12406248,
+  // })
+  // console.log('blockInfoByHeight', blockInfoByHeight)
+  const blockInfoByHash = await window.near.connection.provider.block({
+    blockId: blockHash,
+  })
+  console.log('blockInfoByHash', blockInfoByHash)
+};
+
 export function getFormattedNonce(result){
   return atob(result.status.SuccessValue)
     .replace(/['"]+/g, '')

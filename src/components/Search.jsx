@@ -3,8 +3,7 @@ import '../styles/search.css'
 import alice from '../assets/alice.png'
 import bob from '../assets/bob.png'
 import spinner from '../assets/spinner.gif'
-import { getBlock } from '../services/utils'
-import { callClient, getReceivedVal, formatResult, getFormattedNonce, getLatestHash, getLatestBlock } from '../services/contractMethods'
+import { callClient, getReceivedVal, formatResult, getFormattedNonce, getLatestHash, getLatestBlock, getBlock } from '../services/contractMethods'
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -24,6 +23,7 @@ const Search = () => {
     const result = await callClient(searchValue).then(setLoading(true));
     const requestNonce = getFormattedNonce(result);
 
+    console.log('requestNonce: ', requestNonce)
     console.log('result', result)
     console.log('transaction_ID', result.transaction.hash)
     console.log('Block HASH',  result.receipts_outcome[0].block_hash)
@@ -32,9 +32,6 @@ const Search = () => {
     setCurNonce(requestNonce)
     fetchNonceAnswer(requestNonce)
     const blockDetails = await getBlock(result.receipts_outcome[0].block_hash)
-    console.log('block details: ', blockDetails)
-    console.log('requestNonce: ', requestNonce)
-
   }
 
   const fetchNonceAnswer = async (nonce) => {
