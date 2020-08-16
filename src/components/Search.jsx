@@ -3,7 +3,7 @@ import '../styles/search.css'
 import alice from '../assets/alice.png'
 import bob from '../assets/bob.png'
 import spinner from '../assets/spinner.gif'
-import { convertArgs, getBlock } from '../services/utils'
+import { getBlock } from '../services/utils'
 import { demoTokenPrice, getReceivedVal, formatResult } from '../services/contractMethods'
 
 const Search = () => {
@@ -41,8 +41,8 @@ const Search = () => {
   const handleSubmit = async (e) => {
     setButtonCss("")
     e.preventDefault()
-    const token_search = convertArgs(searchValue.toUpperCase())
-    const result = await demoTokenPrice(token_search).then(setLoading(true))
+    // const token_search = convertArgs(searchValue.toUpperCase())
+    const result = await demoTokenPrice(searchValue).then(setLoading(true))
     const requestNonce = atob(result.status.SuccessValue).replace(/['"]+/g, '')
 
     console.log('result', result)

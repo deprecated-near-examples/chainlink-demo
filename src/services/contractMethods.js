@@ -1,4 +1,14 @@
-export async function demoTokenPrice(tokenSearch){
+export function convertArgs(tokenSymbol) {
+  const obj = {
+    get: `https://min-api.cryptocompare.com/data/price?fsym=${tokenSymbol}&tsyms=USD`,
+    path: 'USD',
+    times: 100
+  }
+  return btoa(JSON.stringify(obj))
+}
+
+export async function demoTokenPrice(searchValue){
+  const tokenSearch = convertArgs(searchValue.toUpperCase())
   return await window.clientAcct.functionCall(
     'client.omg.testnet',
     'demo_token_price',
