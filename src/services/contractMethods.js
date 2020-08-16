@@ -14,7 +14,7 @@ export async function getBlock(blockHash) {
   const blockInfoByHash = await window.near.connection.provider.block({
     blockId: blockHash,
   })
-  console.log('blockInfoByHash', blockInfoByHash)
+  console.log('Block Info by Hash: ', blockInfoByHash)
 };
 
 export function getFormattedNonce(result){

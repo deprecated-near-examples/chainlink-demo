@@ -3,7 +3,13 @@ import '../styles/search.css'
 import alice from '../assets/alice.png'
 import bob from '../assets/bob.png'
 import spinner from '../assets/spinner.gif'
-import { callClient, getReceivedVal, formatResult, getFormattedNonce, getLatestHash, getLatestBlock, getBlock } from '../services/contractMethods'
+import { 
+  callClient, 
+  getReceivedVal, 
+  formatResult, 
+  getFormattedNonce, 
+  getLatestBlock, 
+  getBlock } from '../services/contractMethods'
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -14,8 +20,8 @@ const Search = () => {
   const [curNonce, setCurNonce] = useState(0);
 
   const handleChange = (e) => {
-    setSearchValue(e.target.value)
-  };
+    setSearchValue(e.target.value);
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -23,33 +29,33 @@ const Search = () => {
     const result = await callClient(searchValue).then(setLoading(true));
     const requestNonce = getFormattedNonce(result);
 
-    console.log('requestNonce: ', requestNonce)
-    console.log('result', result)
-    console.log('transaction_ID', result.transaction.hash)
-    console.log('Block HASH',  result.receipts_outcome[0].block_hash)
+    console.log('Request Nonce: ', requestNonce);
+    console.log('RESULT: ', result);
+    console.log('Transaction ID: ', result.transaction.hash);
+    console.log('Block Hash: ',  result.receipts_outcome[0].block_hash);
 
-    setBlockHash(result.receipts_outcome[0].block_hash)
-    setCurNonce(requestNonce)
-    fetchNonceAnswer(requestNonce)
-    const blockDetails = await getBlock(result.receipts_outcome[0].block_hash)
+    setBlockHash(result.receipts_outcome[0].block_hash);
+    setCurNonce(requestNonce);
+    fetchNonceAnswer(requestNonce);
+    const blockDetails = await getBlock(result.receipts_outcome[0].block_hash);
   }
 
   const fetchNonceAnswer = async (nonce) => {
       let result = await getReceivedVal(nonce);
-      console.log('Checking for result...')
+      console.log('Checking for result...');
 
       if (result !== '-1') {
         result = formatResult(result)
         const latestBlock = await getLatestBlock();
-        setSearchResult(result)
-        setLoading(false)
-        setButtonCss("submit-button")
+        setSearchResult(result);
+        setLoading(false);
+        setButtonCss("submit-button");
 
-        console.log('Result: ', result)
-        console.log('latest hash: ', latestBlock.header.hash)
-        console.log('latest block: ', latestBlock)
+        console.log('Result: ', result);
+        console.log('Latest Hash: ', latestBlock.header.hash);
+        console.log('Latest Block: ', latestBlock);
 
-      } else await fetchNonceAnswer(nonce)
+      } else await fetchNonceAnswer(nonce);
     }
 
   return (
@@ -57,7 +63,12 @@ const Search = () => {
   
       <div className="search-box-one">
         <form>
-          <select name="tokenSymbol" className="search" id="tokenSymbol" onChange={handleChange}>
+          <select 
+            name="tokenSymbol" 
+            className="search" 
+            id="tokenSymbol" 
+            onChange={handleChange}
+          >
             <option value="" default hidden>Select token</option>
             <option value="BAT" >Basic Attention Token</option>
             <option value="BTC">Bitcoin</option>
@@ -72,7 +83,10 @@ const Search = () => {
           >
         </form>
         <div className="search-result">
-          {loading ? <img src={spinner} className="spinner"/> : <p>{searchResult}</p>}
+          { loading 
+            ? <img src={spinner} className="spinner"/> 
+            : <p>{searchResult}</p>
+          }
         </div>
         <div className="border"></div>
       </div>
@@ -80,15 +94,19 @@ const Search = () => {
       <div className="search-box-two">
         <div className="alice-box">
           <img src={alice} alt="Alice" className="alice"/>
-          <p><strong id="bold">Alice</strong> owns Client Contract</p>
+          <p>
+            <strong id="bold">Alice</strong> owns Client Contract
+          </p>
       </div>
         <div className="bob-box">
           <img src={bob} alt="Bob" className="bob"/>
-          <p><strong id="bold">Bob</strong> owns Oracle Contract & Node</p>
+          <p>
+            <strong id="bold">Bob</strong> owns Oracle Contract & Node
+          </p>
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default Search
