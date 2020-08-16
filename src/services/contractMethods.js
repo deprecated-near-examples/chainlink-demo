@@ -1,3 +1,8 @@
+export function getFormattedNonce(result){
+  return atob(result.status.SuccessValue)
+    .replace(/['"]+/g, '')
+}
+
 export function convertArgs(tokenSymbol) {
   const obj = {
     get: `https://min-api.cryptocompare.com/data/price?fsym=${tokenSymbol}&tsyms=USD`,

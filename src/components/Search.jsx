@@ -4,7 +4,7 @@ import alice from '../assets/alice.png'
 import bob from '../assets/bob.png'
 import spinner from '../assets/spinner.gif'
 import { getBlock } from '../services/utils'
-import { demoTokenPrice, getReceivedVal, formatResult } from '../services/contractMethods'
+import { demoTokenPrice, getReceivedVal, formatResult, getFormattedNonce } from '../services/contractMethods'
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -39,12 +39,10 @@ const Search = () => {
   };
 
   const handleSubmit = async (e) => {
-    setButtonCss("")
     e.preventDefault()
-    // const token_search = convertArgs(searchValue.toUpperCase())
-    const result = await demoTokenPrice(searchValue).then(setLoading(true))
-    const requestNonce = atob(result.status.SuccessValue).replace(/['"]+/g, '')
-
+    setButtonCss("")
+    const result = await demoTokenPrice(searchValue).then(setLoading(true));
+    const requestNonce = getFormattedNonce(result);
     console.log('result', result)
     console.log('transaction_ID', result.transaction.hash)
     console.log('Block HASH',  result.receipts_outcome[0].block_hash)
