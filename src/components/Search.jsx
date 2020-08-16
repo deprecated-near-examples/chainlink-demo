@@ -6,7 +6,7 @@ import spinner from '../assets/spinner.gif'
 import { convertArgs } from '../services/utils'
 
 const Search = () => {
-  const [searchValue, setSearchValue] = useState("")
+  const [searchValue, setSearchValue] = useState(null)
   const [searchResult, setSearchResult] = useState("")
   const [loading, setLoading] = useState(false)
   const [submitButtonCss, setButtonCss] = useState("submit-button")
@@ -68,7 +68,7 @@ const Search = () => {
             <option value="ETH">Ethereum</option>
             <option value="LINK">Chainlink</option>
           </select>
-          { loading ? null
+          { loading || (searchValue === null) ? null
             : <input 
                 onClick={handleSubmit} 
                 type="submit" value="Check" 
