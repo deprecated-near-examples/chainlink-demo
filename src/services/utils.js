@@ -48,8 +48,8 @@ export async function getTransactions(firstBlock, lastBlock){
   const transactions = []
   chunkDetails.map(chunk => {
     chunk.transactions?.map(txs => {
-      if(txs.signer_id.includes('oracle-node.development.testnet') 
-      || txs.signer_id.includes('client.development.testnet')) {
+      if(txs.signer_id.includes('oracle-node.help.testnet') 
+      || txs.signer_id.includes('client.help.testnet')) {
         transactions.push(txs);
       } 
     });

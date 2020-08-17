@@ -31,10 +31,9 @@
 }
 
 .search-result p {
+  margin-top: 20px;
   margin-left: 16px;
-  margin-top: 16px;
-  font-weight: 900;
-  font-size: 36px;
+  font-size: 28px;
   color: #24272A;
 }
 
@@ -72,11 +71,17 @@
   padding: 4px;
 }
 
-select {
+.search {
   font-family: 'Inter', sans-serif;
   font-size: 20px;
   border: none;
-  outline:none;
+  outline: none;
+  appearance: none;
+  -moz-appearance: none;
+  cursor: pointer; 
+  border-radius: 3px; 
+  border: none;
+
 }
   
   input[type="submit"] {
@@ -95,12 +100,14 @@ select {
     transition: all 0.5s;
   }
 
-  input[type="option"] {
-    margin-left: 8px;
+  #option {
+    margin: 8px;
+    padding: 4px;
     padding-left: 8px;
     font-size: 18px;
     line-height: 32px;
     color: #24272A;
+    border: none;
   }
   
   .submit-button:hover {

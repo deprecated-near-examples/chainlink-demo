@@ -3,7 +3,6 @@
     font-style: normal;
     font-weight: normal;
     margin: auto auto;
-    max-height: 72px;
     min-width: 1153px;
     max-width: 1153px;
 }
@@ -142,9 +141,14 @@
     margin-left: 391px;
 }
 
+.explainer-seven {
+    margin-bottom: 122px;
+}
+
 .explainer-background {
     position: absolute;
     margin-top: -40px;
+    margin-bottom: 300px;
     z-index: 5;
 }
 

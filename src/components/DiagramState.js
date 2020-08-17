@@ -56,13 +56,13 @@ const initialState = {
    aliceTokens: 50,
    bobTokens: 0,
    descriptionstate: true,
-   diagramVisibility: true,
+   diagramVisibility: false,
   
    // css variables
    bobtokenscss: "bobtokens-inactive",
    transfertencss: "transfer-ten-inactive",
    bobcontractlockcss: "bob-contract-lock-inactive",
-   explainercss: "explainer-one",
+   explainercss: "",
    stepcss: "step-one",
    desciption: `Alice’s contract allowance is set to cover tx fees`,
    longDescription: 'More information on the smart contract processes will go here.',
@@ -190,6 +190,7 @@ function diagramReducer(state, action) {
         secondtoparrow: secondtoparrowtwo,
         seventhImage: robottwo,
         explainerbackground: explainerbackgroundthree,
+        explainercss: "explainer-seven",
         explainerbuttoncss: "explainer-button-two",
         stepcss: "step-two",
         bobtokenscss: "bobtokens-active",

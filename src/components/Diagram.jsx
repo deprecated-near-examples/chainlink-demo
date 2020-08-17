@@ -2,6 +2,7 @@
 import React, {useState} from 'react'
 import '../styles/diagram.css'
 import DiagramOverlay from './diagramOverlay'
+import ChangeDiagramState from './changeDiagramState'
 import { useDiagramState } from './DiagramState'
 
 const Diagram = () => {
@@ -128,6 +129,7 @@ const Diagram = () => {
                         </div>
                     </div>
                 </div>
+                <ChangeDiagramState/>
             </div> : <DiagramOverlay/>}
         </div>
     )

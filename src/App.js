@@ -3,7 +3,6 @@ import React, {useState} from 'react'
 import Header from './components/Header'
 import Search from './components/Search'
 import Diagram from './components/Diagram'
-import ChangeDiagramState from './components/changeDiagramState';
 import { DiagramProvider } from './components/DiagramState'
 
 function App() {
@@ -14,7 +13,6 @@ function App() {
       <DiagramProvider>
           <Search/>
           <Diagram/>
-          <ChangeDiagramState/>
       </DiagramProvider>
     </div>
   )
