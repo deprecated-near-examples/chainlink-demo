@@ -21,14 +21,17 @@
 }
 
 .oracle-explainer {
-    display: flex;
+    display: grid;
     justify-content: end;
+}
+
+.oracle-explainer div {
+    display: flex;
 }
 
 .oracle-explainer img {
     width: 47px;
     height: 13px;
-    align-self: center;
     margin: auto 16px;
 }
 
@@ -50,7 +53,7 @@
     justify-content: center;
     position: absolute;
     z-index: -10;
-   min-width: 1153px;
+    min-width: 1153px;
 }
 
 .middle-header div {
@@ -142,11 +145,14 @@
 .explainer-background {
     position: absolute;
     margin-top: -40px;
-    z-index: -1;
+    z-index: 5;
 }
 
 .explainer-one-content {
     margin: 32px;
+    width: 350px;
+    position: relative;
+    z-index: 10;
 }
 
 .explainer-one-content h4 {
@@ -156,7 +162,7 @@
     color: #25282A;
 }
 
-.explainer-one-content p {
+.description {
     font-size: 14px;
     color: #666666;
 }
@@ -169,21 +175,68 @@
 
 .explainer-button {
     display: flex;
-    justify-content: start;
     font-size: 14px;
     color: #0071CE;
 }
 
+.explainer-button p {
+    margin-top: 0px;
+}
+
+.explainer-button:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.learn-more {
+    position: absolute;
+    margin-top: 0px;
+    width: 210px;
+    height: 45px;
+    background-color: #6AD1E3;
+    border-radius: 5px;
+    border:none;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #FFFFFF;
+    opacity: 1;
+    border: none;
+    outline:none;
+    transition: all 0.5s;
+}
+
+.learn-more:hover {
+    background-color: #0071CE;
+    cursor: pointer;
+    border: none;
+    outline:none;
+}
+
 .nearkat-one {
     position: absolute;
-    margin-top: -216px;
-    margin-left: 260px;
+    margin-top: -48px;
+    margin-left: 270px;
+}
+
+.nearkat-two {
+    position: absolute;
+    margin-top: -80px;
+    margin-left: 286px;
 }
 
 .step-one {
     position: absolute;
-    margin-top: -160px;
-    margin-left: -22px;
+    margin-top: 0px;
+    margin-left: -56px;
+}
+
+.step-two {
+    position: absolute;
+    margin-top: 0px;
+    margin-left: -56px;
+    opacity: 0;
 }
 
 .transfer-ten-inactive {

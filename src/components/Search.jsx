@@ -1,114 +1,110 @@
-import React, { useState } from "react";
-import "../styles/search.css";
-import alice from "../assets/alice.png";
-import bob from "../assets/bob.png";
-import { convertArgs } from "../services/utils";
+import React, { useState } from 'react'
+import '../styles/search.css'
+import alice from '../assets/alice.png'
+import bob from '../assets/bob.png'
+import spinner from '../assets/spinner.gif'
+import { 
+  callClient, 
+  getReceivedVal, 
+  formatResult, 
+  getFormattedNonce, 
+  getLatestBlockID } from '../services/contractMethods'
+import { getTransactions } from '../services/utils'
 
 const Search = () => {
-  const [searchValue, setSearchValue] = useState("");
-  const [curNonce, setCurNonce] = useState(0);
-
-  let timer;
-
-  const timedFetchLatest = async (nonce) => {
-    // timer = setInterval(await fetchNonceAnswer(), 500)
-      await fetchNonceAnswer(nonce);
-      if (timer !== null) {
-        timer = setTimeout(timedFetchLatest(nonce), 500);
-    }
-  };
-
-  const fetchNonceAnswer = async (nonce) => {
-    const result = await window.clientAcct.viewFunction(
-      'client.dev.testnet',
-      'get_received_val',
-      { nonce: nonce.toString() }
-    )
-    if (result !== '-1') {
-      console.log('clearing out timer')
-      clearTimeout(timer) 
-    }
-    console.log(result)
-  }
+  const [searchValue, setSearchValue] = useState(null);
+  const [searchResult, setSearchResult] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [submitButtonCss, setButtonCss] = useState("submit-button");
+  // const [blockHash, setBlockHash] = useState("");
+  // const [curNonce, setCurNonce] = useState(0);
 
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setSearchValue(e.target.value);
-  };
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const token_search = convertArgs(searchValue.toUpperCase());
-    const result = await window.clientAcct.functionCall(
-      'client.dev.testnet',
-      'demo_token_price',
-      {
-        symbol: token_search,
-        spec_id: "dW5pcXVlIHNwZWMgaWQ="
-      },
-      '300000000000000'
-    )
-    const requestNonce = atob(result.status.SuccessValue).replace(/['"]+/g, '')
-    console.log('requestNonce: ', requestNonce)
-    timedFetchLatest(requestNonce);
+    setButtonCss("");
+    window.firstBlockID = await getLatestBlockID();
+    const result = await callClient(searchValue).then(setLoading(true));
+    const requestNonce = getFormattedNonce(result);
+
+    console.log('Request Nonce: ', requestNonce);
+
+    // setBlockHash(result.receipts_outcome[0].block_hash);
+    // setCurNonce(requestNonce);
+    fetchNonceAnswer(requestNonce);
   }
 
-  console.log(curNonce)
+  const fetchNonceAnswer = async (nonce) => {
+      let result = await getReceivedVal(nonce);
+      console.log('Checking for result...');
 
-  // const resetInputField = () => {
-  //   setSearchValue("");
-  // };
+      if (result !== '-1') {
+        result = formatResult(result);
+        const finalBlockID = await getLatestBlockID();
+        setSearchResult(result);
+        setLoading(false);
+        setButtonCss("submit-button");
 
-  // const callSearchFunction = e => {
-  //   e.preventDefault();
-  //   resetInputField();
-  // };
+        console.log('FIRST block ID: ', window.firstBlockID);
+        console.log('LAST block ID: ', finalBlockID);
 
-  const contractAmount = 50;
-  const balance = 2000;
-  const searchResult = "0.23";
+        getTransactions(window.firstBlockID, finalBlockID);
+
+      } else setTimeout(async ()=> {
+        await fetchNonceAnswer(nonce)}, 750);
+}
 
   return (
     <div className="search-box">
-
+  
       <div className="search-box-one">
         <form>
-          <input
-            value={searchValue}
+          <select 
+            name="tokenSymbol" 
+            className="search" 
+            id="tokenSymbol" 
             onChange={handleChange}
-            type="text"
-            placeholder="Enter Token(e.g. BAT)"
-            className="search"
+          >
+            <option value="" default hidden>Select token</option>
+            <option value="BAT" >Basic Attention Token</option>
+            <option value="BTC">Bitcoin</option>
+            <option value="ETH">Ethereum</option>
+            <option value="LINK">Chainlink</option>
+          </select>
+          <input 
+            onClick={handleSubmit} 
+            type="submit" value="Check" 
+            disabled={loading || searchValue === null} 
+            className={submitButtonCss} 
           />
-          <input onClick={handleSubmit} type="submit" value="Check" />
+    
         </form>
         <div className="search-result">
-          <p>{searchResult}</p>
+          { loading ? <img src={spinner} className="spinner"/> : <p>{searchResult}</p> }
         </div>
         <div className="border"></div>
       </div>
 
       <div className="search-box-two">
-        <img src={alice} alt="Alice" className="person"/>
-        <p><strong id="bold">Alice</strong> owns Client Contract</p>
+        <div className="alice-box">
+          <img src={alice} alt="Alice" className="alice"/>
+          <p>
+            <strong id="bold">Alice</strong> owns Client Contract
+          </p>
       </div>
-
-      <div className="search-box-three">
-        <p>Contract Allowance: <br></br> 
-          <strong id="bold-two">{contractAmount}</strong> 
-          of 
-          <strong id="bold">{balance}</strong>
-        </p>
-        <div className="border"></div>
+        <div className="bob-box">
+          <img src={bob} alt="Bob" className="bob"/>
+          <p>
+            <strong id="bold">Bob</strong> owns Oracle Contract & Node
+          </p>
+        </div>
       </div>
-
-      <div className="search-box-four">
-        <img src={bob} alt="Bob" className="person"/>
-        <p><strong id="bold">Bob</strong> owns Oracle Contract & Node</p>
-      </div>
-
     </div>
   );
-};
+}
 
-export default Search;
+export default Search

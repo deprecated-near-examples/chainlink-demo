@@ -3,16 +3,15 @@
     font-style: normal;
     font-weight: normal;
     margin: auto auto;
-    max-height: 72px;
+    height: 72px;
     width: 1153px;
 
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-areas: "a a a b c d";
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas: "a a b b";
     grid-template-rows: minmax(0, 1fr);
     justify-content: left;
     align-items: center;
-   
     background: #FFFFFF;
     border: 4px solid #E6E6E6;
     box-sizing: border-box;
@@ -36,24 +35,21 @@
   margin-top: 16px;
   font-weight: 900;
   font-size: 36px;
+  color: #24272A;
 }
 
 .search-box-two {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 16px;
   grid-area: b;
 }
 
-.search-box-three {
+.alice-box, .bob-box {
   display: flex;
-  grid-area: c;
-  border-right: 4px solid #E6E6E6;
-  padding-right: 8px;
-  margin: auto auto;
-}
-
-.search-box-four {
-  display: flex;
-  grid-area: d;
+  width: 250px;
+  margin-right: 16px;
 }
 
 .search {
@@ -64,6 +60,11 @@
     border: 2px solid #E5E5E5;
     box-sizing: border-box;
     border-radius: 5px;
+}
+
+select {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
 }
   
   input[type="submit"] {
@@ -78,6 +79,8 @@
     cursor: pointer;
     border-radius: 5px;
     border: none;
+    outline:none;
+    transition: all 0.5s;
   }
 
   input[type="text"] {
@@ -88,14 +91,20 @@
     color: #24272A;
   }
   
-  input[type="submit"]:hover {
+  .submit-button:hover {
     background-color: #00C08B;
+    border: none;
+    outline:none;
   }
 
-  .person {
-    margin: 5px;
+  .alice, .bob {
+    margin-right: 8px;
     width: 45px;
     height: 45px;
+  }
+
+  .bob {
+    margin-top: 8px;
   }
 
   #bold {
@@ -107,4 +116,13 @@
     color: white;
     padding: 1px;
     border-radius: 4px;
+  }
+
+  button:active {
+    border: none;
+    transition: 0.5s;
+  }
+
+  .spinner {
+    margin-top: -8px;
   }
