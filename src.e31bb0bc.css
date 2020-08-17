@@ -73,10 +73,9 @@
 }
 
 .search-result p {
+  margin-top: 20px;
   margin-left: 16px;
-  margin-top: 16px;
-  font-weight: 900;
-  font-size: 36px;
+  font-size: 28px;
   color: #24272A;
 }
 
@@ -102,16 +101,38 @@
     border: 2px solid #E5E5E5;
     box-sizing: border-box;
     border-radius: 5px;
+    color: #25282A;
 }
 
-select {
+select{
+  padding-left: 10px;
+}
+
+ option[type="option"] {
+  position: relative;
+  line-height: 1;
+  transition: 0.3s ease all;
+  z-index: 2;
+  height: 200px;
+  padding: 4px;
+}
+
+.search {
   font-family: 'Inter', sans-serif;
   font-size: 20px;
+  border: none;
+  outline: none;
+  appearance: none;
+  -moz-appearance: none;
+  cursor: pointer; 
+  border-radius: 3px; 
+  border: none;
+
 }
   
   input[type="submit"] {
     width: 94px;
-    height: 45px;   
+    height: 45px;
     background: #8FD6BD;
     font-weight: bold;
     font-size: 18px;
@@ -125,12 +146,14 @@ select {
     transition: all 0.5s;
   }
 
-  input[type="text"] {
-    margin-left: 8px;
+  #option {
+    margin: 8px;
+    padding: 4px;
     padding-left: 8px;
     font-size: 18px;
     line-height: 32px;
     color: #24272A;
+    border: none;
   }
   
   .submit-button:hover {
@@ -141,12 +164,13 @@ select {
 
   .alice, .bob {
     margin-right: 8px;
-    width: 45px;
-    height: 45px;
+    min-width: 45px;
+    min-height: 45px;
   }
 
   .bob {
     margin-top: 8px;
+    margin-bottom: 8px;
   }
 
   #bold {
@@ -168,12 +192,13 @@ select {
   .spinner {
     margin-top: -8px;
   }
+
+ 
 .diagram {
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: normal;
     margin: auto auto;
-    max-height: 72px;
     min-width: 1153px;
     max-width: 1153px;
 }
@@ -312,9 +337,14 @@ select {
     margin-left: 391px;
 }
 
+.explainer-seven {
+    margin-bottom: 122px;
+}
+
 .explainer-background {
     position: absolute;
     margin-top: -40px;
+    margin-bottom: 300px;
     z-index: 5;
 }
 
@@ -437,21 +467,49 @@ select {
     opacity: 1;
 }
 
+.diagram-overlay {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    justify-content: center;
+    align-items: center;
+    margin: auto auto;
+    max-width: 75%;
+    margin-top: 35px;
+}
 
+.diagram-overlay div {
+    border: 4px solid #E6E6E6;
+    padding: 16px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
 
-.counter-gap {
-    margin-top: 504px;
+.diagram-overlay h1 {
+    text-align: center;
+    font-size: 24px;
+    line-height: 28px;
+    color: #25282A;
+}
+
+.diagram-overlay p {
+    font-size: 18px;
+    line-height: 32px;
+    color: #24272A;
 }
 
 .counter {
-    display: flex;
+    position: absolute;
+    margin-top: 140px;
+    left: 0;
+    right: 0;
+    text-align: center;
     justify-content: center;
-    position: relative;
 }
 
 .counter button {
     width: 94px;
     height: 45px;   
+    margin: 8px;
     background: #8FD6BD;
     font-weight: bold;
     font-size: 18px;
