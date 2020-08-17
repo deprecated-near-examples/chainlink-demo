@@ -20,8 +20,7 @@ export async function initContract() {
   window.clientAcct = await near.account(`client.${process.env.ACCOUNT_ID}.testnet`)
 }
 
-// returns two transactions associated with client call 
-// to oracle. ("demo_token_price" & "fulfill_request")
+// returns two transactions associated with client <> oracle-node call
 export async function getTransactions(firstBlock, lastBlock){
   // creates an array of block IDs based on first and last block
   const blockArr = [];
@@ -51,8 +50,8 @@ export async function getTransactions(firstBlock, lastBlock){
   }));
   
   // checks chunk details for transactions
-  // if there are transactions find ones associated
-  // with our two accounts (oracle & client)
+  // if there are transactions in the chunk 
+  // find ones associated with our two accounts
   const transactions = []
   chunkDetails.map(chunk => {
     chunk.transactions?.map(txs => {
