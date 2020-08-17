@@ -69,7 +69,6 @@ export async function getReceivedVal(nonce){
   )
 }
 
-
 //NEAR-LINK view functions
 export function getAccountBalance(acct){
   window.nearLinkContract
