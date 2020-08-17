@@ -1,6 +1,7 @@
 import { connect, keyStores, KeyPair } from 'near-api-js'
 import { getBlockByID } from './contractUtils';
 
+//configuration for connection to NEAR
 const nearConfig = {
   networkId: 'testnet',
   nodeUrl: 'https://rpc.testnet.near.org',

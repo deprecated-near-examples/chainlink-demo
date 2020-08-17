@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
-import '../styles/search.css'
+
 import alice from '../assets/alice.png'
 import bob from '../assets/bob.png'
 import spinner from '../assets/spinner.gif'
+import '../styles/search.css'
+
 import { 
   callClient, 
-  getReceivedVal, 
   formatResult, 
-  getFormattedNonce, 
-  getLatestBlockID } from '../services/contractUtils'
+  getFormattedNonce,
+  getLatestBlockID,
+  getReceivedVal } from '../services/contractUtils'
 import { getTransactions } from '../services/utils'
 
 const Search = () => {
@@ -29,7 +31,7 @@ const Search = () => {
     const requestNonce = getFormattedNonce(result);
 
     console.log('Request Nonce: ', requestNonce);
-    
+
     fetchNonceAnswer(requestNonce);
   }
 
@@ -43,7 +45,7 @@ const Search = () => {
         setSearchResult(result);
         setLoading(false);
         setButtonCss("submit-button");
-
+        
         console.log('FIRST block ID: ', window.firstBlockID);
         console.log('LAST block ID: ', finalBlockID);
 
