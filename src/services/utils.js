@@ -1,5 +1,5 @@
 import { connect, keyStores, KeyPair } from 'near-api-js'
-import { getBlockByID } from './contractMethods';
+import { getBlockByID } from './contractUtils';
 
 const nearConfig = {
   networkId: 'testnet',
