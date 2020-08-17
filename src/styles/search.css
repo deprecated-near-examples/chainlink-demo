@@ -62,6 +62,10 @@
     color: #25282A;
 }
 
+select{
+  padding-left: 10px;
+}
+
  option[type="option"] {
   position: relative;
   line-height: 1;
@@ -86,7 +90,7 @@
   
   input[type="submit"] {
     width: 94px;
-    height: 45px;   
+    height: 45px;
     background: #8FD6BD;
     font-weight: bold;
     font-size: 18px;
@@ -146,3 +150,5 @@
   .spinner {
     margin-top: -8px;
   }
+
+ 
