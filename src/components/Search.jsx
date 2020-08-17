@@ -12,8 +12,12 @@ import {
   getLatestBlockID,
   getReceivedVal } from '../services/contractUtils'
 import { getTransactions } from '../services/utils'
+import { useDiagramDispatch } from './DiagramState'
+
 
 const Search = () => {
+  const dispatch = useDiagramDispatch()
+
   const [searchValue, setSearchValue] = useState(null);
   const [searchResult, setSearchResult] = useState("");
   const [loading, setLoading] = useState(false);
@@ -46,6 +50,7 @@ const Search = () => {
         setSearchResult(result);
         setLoading(false);
         setButtonCss("submit-button");
+        dispatch({type: 'displayDiagram'});
 
         console.log('FIRST block ID: ', window.firstBlockID);
         console.log('LAST block ID: ', finalBlockID);
@@ -68,11 +73,11 @@ const Search = () => {
             id="tokenSymbol" 
             onChange={handleChange}
           >
-            <option value="" default hidden>Select token</option>
-            <option value="BAT" >Basic Attention Token</option>
-            <option value="BTC">Bitcoin</option>
-            <option value="ETH">Ethereum</option>
-            <option value="LINK">Chainlink</option>
+            <option value="" default hidden id="option">Select token</option>
+            <option value="BAT" id="option">Basic Attention Token</option>
+            <option value="BTC" id="option">Bitcoin</option>
+            <option value="ETH" id="option">Ethereum</option>
+            <option value="LINK" id="option">Chainlink</option>
           </select>
           <input 
             onClick={handleSubmit} 
@@ -83,7 +88,7 @@ const Search = () => {
     
         </form>
         <div className="search-result">
-          { loading ? <img src={spinner} className="spinner"/> : <p>{searchResult}</p> }
+          { loading ? <img src={spinner} className="spinner"/> : <p className="searchResult">{searchResult}</p> }
         </div>
         <div className="border"></div>
       </div>
