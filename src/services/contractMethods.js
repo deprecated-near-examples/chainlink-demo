@@ -1,9 +1,10 @@
-export async function getLatestBlock(){
+export async function getLatestBlockID(){
   const latestHash = (await window.near
     .connection.provider.status())
     .sync_info.latest_block_hash;
-  return await window.near
+  const latestBlock = await window.near
     .connection.provider.block(latestHash);
+  return latestBlock.header.height
 }
 
 export async function getBlockByHash(blockHash) {
@@ -19,7 +20,8 @@ export async function getBlockByID(blockID){
       .connection.provider.block({
         blockId: blockID,
     })
-  console.log(`BlockInfo for ID #${blockID}`, blockInfoByHeight)
+  // console.log(`BlockInfo for ID #${blockID}`, blockInfoByHeight)
+  return blockInfoByHeight
 }
 
 export function getFormattedNonce(result){
@@ -40,7 +42,7 @@ export function convertArgs(tokenSymbol, CUR = 'USD') {
 export async function callClient(searchValue){
   const tokenSearch = convertArgs(searchValue.toUpperCase())
   return await window.clientAcct.functionCall(
-    'client.check.testnet',
+    'client.development.testnet',
     'demo_token_price',
     {
       symbol: tokenSearch,

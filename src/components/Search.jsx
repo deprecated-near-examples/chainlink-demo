@@ -8,9 +8,8 @@ import {
   getReceivedVal, 
   formatResult, 
   getFormattedNonce, 
-  getLatestBlock,
-
-  getBlockByID } from '../services/contractMethods'
+  getLatestBlockID } from '../services/contractMethods'
+import { getTransactions } from '../services/utils'
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState(null);
@@ -27,17 +26,15 @@ const Search = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setButtonCss("");
+    window.firstBlockID = await getLatestBlockID();
     const result = await callClient(searchValue).then(setLoading(true));
     const requestNonce = getFormattedNonce(result);
 
     console.log('Request Nonce: ', requestNonce);
-    console.log('RESULT: ', result);
 
     setBlockHash(result.receipts_outcome[0].block_hash);
     setCurNonce(requestNonce);
     fetchNonceAnswer(requestNonce);
-    await getLatestBlock()
-      .then(res => window.firstBlock = res.header.height)
   }
 
   const fetchNonceAnswer = async (nonce) => {
@@ -45,33 +42,21 @@ const Search = () => {
       console.log('Checking for result...');
 
       if (result !== '-1') {
-        result = formatResult(result)
-        const finalBlock = await getLatestBlock();
+        result = formatResult(result);
+        const finalBlockID = await getLatestBlockID();
         setSearchResult(result);
         setLoading(false);
         setButtonCss("submit-button");
 
-        console.log('Result: ', result);
-        console.log('Final block details: ', finalBlock);
-        console.log('First block ID: ', window.firstBlock);
-        console.log('Final block ID: ', finalBlock.header.height);
+        console.log('FIRST block ID: ', window.firstBlockID);
+        console.log('LAST block ID: ', finalBlockID);
 
-        const firstBlockID = window.firstBlock
-        const lastBlockID = finalBlock.header.height
+        getTransactions(window.firstBlockID, finalBlockID);
 
-        const blockArr = [];
-        for (let i = firstBlockID; i <= lastBlockID; i++) {
-          blockArr.push(i)
-        }
-        console.log(blockArr)
-
-        const blockResults = Promise.all(blockArr.map(block => {
-          return getBlockByID(block);
-        }))
-
-      } else await fetchNonceAnswer(nonce);
-    }
-
+      } else setTimeout(async ()=> {
+        await fetchNonceAnswer(nonce)}, 750);
+}
+  
   return (
     <div className="search-box">
   
@@ -89,14 +74,13 @@ const Search = () => {
             <option value="ETH">Ethereum</option>
             <option value="LINK">Chainlink</option>
           </select>
-          { loading || (searchValue === null) ? null
-            : <input 
-                onClick={handleSubmit} 
-                type="submit" value="Check" 
-                disabled={loading} 
-                className={submitButtonCss} 
-              />
-          }
+          <input 
+            onClick={handleSubmit} 
+            type="submit" value="Check" 
+            disabled={loading || searchValue === null} 
+            className={submitButtonCss} 
+          />
+    
         </form>
         <div className="search-result">
           { loading ? <img src={spinner} className="spinner"/> : <p>{searchResult}</p> }
