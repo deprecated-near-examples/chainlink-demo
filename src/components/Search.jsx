@@ -9,7 +9,6 @@ import {
   formatResult, 
   getFormattedNonce, 
   getLatestBlock,
-
   getBlockByID } from '../services/contractMethods'
 
 const Search = () => {
@@ -52,7 +51,6 @@ const Search = () => {
         setButtonCss("submit-button");
 
         console.log('Result: ', result);
-        console.log('Final block details: ', finalBlock);
         console.log('First block ID: ', window.firstBlock);
         console.log('Final block ID: ', finalBlock.header.height);
 
@@ -63,13 +61,13 @@ const Search = () => {
         for (let i = firstBlockID; i <= lastBlockID; i++) {
           blockArr.push(i)
         }
-        console.log(blockArr)
 
-        const blockResults = Promise.all(blockArr.map(block => {
+        const blockResults = await Promise.all(blockArr.map(block => {
           return getBlockByID(block);
         }))
+        console.log('blockResults', blockResults)
 
-      } else await fetchNonceAnswer(nonce);
+      } else setTimeout(await fetchNonceAnswer(nonce), 1000);
     }
 
   return (
