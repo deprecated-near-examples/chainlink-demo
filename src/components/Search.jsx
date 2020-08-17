@@ -33,8 +33,8 @@ const Search = () => {
 
     console.log('Request Nonce: ', requestNonce);
 
-    setBlockHash(result.receipts_outcome[0].block_hash);
-    setCurNonce(requestNonce);
+    // setBlockHash(result.receipts_outcome[0].block_hash);
+    // setCurNonce(requestNonce);
     fetchNonceAnswer(requestNonce);
   }
 
