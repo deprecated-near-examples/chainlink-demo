@@ -30,7 +30,6 @@ const Search = () => {
     const requestNonce = getFormattedNonce(result);
 
     console.log('Request Nonce: ', requestNonce);
-    console.log('RESULT: ', result);
 
     setBlockHash(result.receipts_outcome[0].block_hash);
     setCurNonce(requestNonce);
@@ -50,7 +49,6 @@ const Search = () => {
         setLoading(false);
         setButtonCss("submit-button");
 
-        console.log('Result: ', result);
         console.log('First block ID: ', window.firstBlock);
         console.log('Final block ID: ', finalBlock.header.height);
 
@@ -61,14 +59,35 @@ const Search = () => {
         for (let i = firstBlockID; i <= lastBlockID; i++) {
           blockArr.push(i)
         }
-
         const blockResults = await Promise.all(blockArr.map(block => {
           return getBlockByID(block);
         }))
         console.log('blockResults', blockResults)
 
+        const chunkArr = [];
+        blockResults.map(block => {
+          block.chunks.map(chunk => {
+            chunkArr.push(chunk.chunk_hash)
+          })
+        })
+        console.log('chunkArr', chunkArr)
+
+        const chunkDetails = await Promise.all(chunkArr.map(chunk => {
+            return window.near.connection.provider.chunk(chunk)
+        }))
+        console.log('chunkDetail', chunkDetails)
+
+        const transactions = []
+        chunkDetails.map(chunk => {
+          chunk.transactions?.map(transaction => {
+            console.log(transaction)
+            if(transaction.signer_id.includes('check.testnet')) transactions.push(transaction)
+          })
+        })
+        console.log(transactions)
       } else setTimeout(await fetchNonceAnswer(nonce), 1000);
-    }
+        
+}
 
   return (
     <div className="search-box">
