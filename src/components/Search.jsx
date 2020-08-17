@@ -19,6 +19,7 @@ const Search = () => {
   // const [blockHash, setBlockHash] = useState("");
   // const [curNonce, setCurNonce] = useState(0);
 
+
   const handleChange = (e) => {
     setSearchValue(e.target.value);
   }
