@@ -13,7 +13,6 @@ const nearConfig = {
 export async function initContract() {    
   const keyStore = new keyStores.InMemoryKeyStore()
   const keyPair = KeyPair.fromString(process.env.CLIENT_PRIVATE_KEY)
-  console.log(keyPair)
   //sets key in memory
   await keyStore.setKey(nearConfig.networkId, nearConfig.contractName, keyPair)
   const near = await connect(Object.assign({ deps: { keyStore: keyStore } }, nearConfig))
@@ -31,8 +30,6 @@ export async function getTransactions(firstBlock, lastBlock){
     blockArr.map(block => {
       return getBlockByID(block);
   }))
-
-  console.log('Block Details: ', blockDetails)
   
   const chunkHashArr = [];
   blockDetails.map(block => {
@@ -47,8 +44,6 @@ export async function getTransactions(firstBlock, lastBlock){
         .connection.provider.chunk(chunk);
   }));
   
-  console.log('chunkDetail', chunkDetails)
-  
   const transactions = []
   chunkDetails.map(chunk => {
     chunk.transactions?.map(txs => {
@@ -59,7 +54,7 @@ export async function getTransactions(firstBlock, lastBlock){
     });
   });
 
- const finalResults = transactions.reduce((acc, curr) => {
+ const matchingTxs = transactions.reduce((acc, curr) => {
     curr.actions.map(action => {
       if((action.FunctionCall.method_name === "fulfill_request") 
       || (action.FunctionCall.method_name === "demo_token_price")){
@@ -67,6 +62,6 @@ export async function getTransactions(firstBlock, lastBlock){
       }  
     }); return acc;
   }, [])
-  
-  console.log(finalResults)
-  }
+  console.log("Transactions: ", matchingTxs)
+  return matchingTxs
+}

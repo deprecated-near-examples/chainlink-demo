@@ -8,7 +8,7 @@ import {
   getReceivedVal, 
   formatResult, 
   getFormattedNonce, 
-  getLatestBlock } from '../services/contractMethods'
+  getLatestBlockID } from '../services/contractMethods'
 import { getTransactions } from '../services/utils'
 
 const Search = () => {
@@ -26,8 +26,7 @@ const Search = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setButtonCss("");
-    await getLatestBlock()
-    .then(res => window.firstBlock = res.header.height);
+    window.firstBlockID = await getLatestBlockID();
     const result = await callClient(searchValue).then(setLoading(true));
     const requestNonce = getFormattedNonce(result);
 
@@ -44,22 +43,18 @@ const Search = () => {
 
       if (result !== '-1') {
         result = formatResult(result);
-        const finalBlock = await getLatestBlock();
+        const finalBlockID = await getLatestBlockID();
         setSearchResult(result);
         setLoading(false);
         setButtonCss("submit-button");
 
-        console.log('FIRST block ID: ', window.firstBlock);
-        console.log('LAST block ID: ', finalBlock.header.height);
+        console.log('FIRST block ID: ', window.firstBlockID);
+        console.log('LAST block ID: ', finalBlockID);
 
-        const firstBlockID = window.firstBlock
-        const lastBlockID = finalBlock.header.height
-
-        getTransactions(firstBlockID, lastBlockID);
+        getTransactions(window.firstBlockID, finalBlockID);
 
       } else setTimeout(async ()=> {
-        await fetchNonceAnswer(nonce)}, 1000);
-        
+        await fetchNonceAnswer(nonce)}, 750);
 }
 
   return (

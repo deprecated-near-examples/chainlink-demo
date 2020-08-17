@@ -1,9 +1,10 @@
-export async function getLatestBlock(){
+export async function getLatestBlockID(){
   const latestHash = (await window.near
     .connection.provider.status())
     .sync_info.latest_block_hash;
-  return await window.near
+  const latestBlock = await window.near
     .connection.provider.block(latestHash);
+  return latestBlock.header.height
 }
 
 export async function getBlockByHash(blockHash) {
