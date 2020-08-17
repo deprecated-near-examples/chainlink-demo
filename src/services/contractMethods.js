@@ -54,7 +54,7 @@ export async function callClient(searchValue){
 
 export async function getReceivedVal(nonce){
   return await window.clientAcct.viewFunction(
-    'client.check.testnet',
+    'client.development.testnet',
     'get_received_val',
     { nonce: nonce.toString() }
   )

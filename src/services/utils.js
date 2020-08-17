@@ -9,6 +9,7 @@ const nearConfig = {
   helperUrl: 'https://helper.testnet.near.org'
 };
 
+
 export async function initContract() {    
   const keyStore = new keyStores.InMemoryKeyStore()
   const keyPair = KeyPair.fromString(process.env.CLIENT_PRIVATE_KEY)
