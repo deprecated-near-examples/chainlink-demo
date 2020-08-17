@@ -60,11 +60,23 @@
     border: 2px solid #E5E5E5;
     box-sizing: border-box;
     border-radius: 5px;
+    color: #25282A;
+}
+
+ option[type="option"] {
+  position: relative;
+  line-height: 1;
+  transition: 0.3s ease all;
+  z-index: 2;
+  height: 200px;
+  padding: 4px;
 }
 
 select {
   font-family: 'Inter', sans-serif;
   font-size: 20px;
+  border: none;
+  outline:none;
 }
   
   input[type="submit"] {
@@ -83,7 +95,7 @@ select {
     transition: all 0.5s;
   }
 
-  input[type="text"] {
+  input[type="option"] {
     margin-left: 8px;
     padding-left: 8px;
     font-size: 18px;
@@ -99,12 +111,13 @@ select {
 
   .alice, .bob {
     margin-right: 8px;
-    width: 45px;
-    height: 45px;
+    min-width: 45px;
+    min-height: 45px;
   }
 
   .bob {
     margin-top: 8px;
+    margin-bottom: 8px;
   }
 
   #bold {
