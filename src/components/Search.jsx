@@ -56,7 +56,7 @@ const Search = () => {
       } else setTimeout(async ()=> {
         await fetchNonceAnswer(nonce)}, 750);
 }
-
+  
   return (
     <div className="search-box">
   
