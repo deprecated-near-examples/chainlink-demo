@@ -20,6 +20,7 @@ const Search = () => {
   const [submitButtonCss, setButtonCss] = useState("submit-button");
 
   const handleChange = (e) => {
+    e.preventDefault()
     setSearchValue(e.target.value);
   }
 
@@ -45,7 +46,7 @@ const Search = () => {
         setSearchResult(result);
         setLoading(false);
         setButtonCss("submit-button");
-        
+
         console.log('FIRST block ID: ', window.firstBlockID);
         console.log('LAST block ID: ', finalBlockID);
 

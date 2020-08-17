@@ -52,7 +52,7 @@ export async function callClient(searchValue){
   const tokenSearch = convertArgs(searchValue.toUpperCase())
   return await window.clientAcct.functionCall(
     'client.development.testnet',
-    'demo_token_price',
+    'get_token_price',
     {
       symbol: tokenSearch,
       spec_id: "dW5pcXVlIHNwZWMgaWQ="

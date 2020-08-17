@@ -68,7 +68,7 @@ export async function getTransactions(firstBlock, lastBlock){
  const matchingTxs = transactions.reduce((acc, curr) => {
     curr.actions.map(action => {
       if((action.FunctionCall.method_name === "fulfill_request") 
-      || (action.FunctionCall.method_name === "demo_token_price")){
+      || (action.FunctionCall.method_name === "get_token_price")){
         acc.push(curr);
       }  
     }); return acc;
