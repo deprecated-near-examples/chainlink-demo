@@ -10,6 +10,7 @@ import {
   getFormattedNonce, 
   getLatestBlock,
   getBlockByID } from '../services/contractMethods'
+import { getTransactions } from '../services/utils'
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState(null);
@@ -26,6 +27,8 @@ const Search = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setButtonCss("");
+    await getLatestBlock()
+    .then(res => window.firstBlock = res.header.height);
     const result = await callClient(searchValue).then(setLoading(true));
     const requestNonce = getFormattedNonce(result);
 
@@ -34,8 +37,6 @@ const Search = () => {
     setBlockHash(result.receipts_outcome[0].block_hash);
     setCurNonce(requestNonce);
     fetchNonceAnswer(requestNonce);
-    await getLatestBlock()
-      .then(res => window.firstBlock = res.header.height)
   }
 
   const fetchNonceAnswer = async (nonce) => {
@@ -43,48 +44,20 @@ const Search = () => {
       console.log('Checking for result...');
 
       if (result !== '-1') {
-        result = formatResult(result)
+        result = formatResult(result);
         const finalBlock = await getLatestBlock();
         setSearchResult(result);
         setLoading(false);
         setButtonCss("submit-button");
 
-        console.log('First block ID: ', window.firstBlock);
-        console.log('Final block ID: ', finalBlock.header.height);
+        console.log('FIRST block ID: ', window.firstBlock);
+        console.log('LAST block ID: ', finalBlock.header.height);
 
         const firstBlockID = window.firstBlock
         const lastBlockID = finalBlock.header.height
 
-        const blockArr = [];
-        for (let i = firstBlockID; i <= lastBlockID; i++) {
-          blockArr.push(i)
-        }
-        const blockResults = await Promise.all(blockArr.map(block => {
-          return getBlockByID(block);
-        }))
-        console.log('blockResults', blockResults)
+        getTransactions(firstBlockID, lastBlockID);
 
-        const chunkArr = [];
-        blockResults.map(block => {
-          block.chunks.map(chunk => {
-            chunkArr.push(chunk.chunk_hash)
-          })
-        })
-        console.log('chunkArr', chunkArr)
-
-        const chunkDetails = await Promise.all(chunkArr.map(chunk => {
-            return window.near.connection.provider.chunk(chunk)
-        }))
-        console.log('chunkDetail', chunkDetails)
-
-        const transactions = []
-        chunkDetails.map(chunk => {
-          chunk.transactions?.map(transaction => {
-            console.log(transaction)
-            if(transaction.signer_id.includes('check.testnet')) transactions.push(transaction)
-          })
-        })
-        console.log(transactions)
       } else setTimeout(await fetchNonceAnswer(nonce), 1000);
         
 }
