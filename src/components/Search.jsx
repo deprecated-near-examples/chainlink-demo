@@ -58,7 +58,8 @@ const Search = () => {
 
         getTransactions(firstBlockID, lastBlockID);
 
-      } else setTimeout(await fetchNonceAnswer(nonce), 1000);
+      } else setTimeout(async ()=> {
+        await fetchNonceAnswer(nonce)}, 1000);
         
 }
 

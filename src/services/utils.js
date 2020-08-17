@@ -27,34 +27,47 @@ export async function getTransactions(firstBlock, lastBlock){
     blockArr.push(i)
   }
 
-  const blockResults = await Promise.all(blockArr.map(block => {
-    return getBlockByID(block);
+  const blockDetails = await Promise.all(
+    blockArr.map(block => {
+      return getBlockByID(block);
   }))
 
-  console.log('blockResults', blockResults);
+  console.log('Block Details: ', blockDetails)
   
-  const chunkArr = [];
-  blockResults.map(block => {
+  const chunkHashArr = [];
+  blockDetails.map(block => {
     block.chunks.map(chunk => {
-      chunkArr.push(chunk.chunk_hash);
+      chunkHashArr.push(chunk.chunk_hash);
     });
   });
   
-  const chunkDetails = await Promise.all(chunkArr.map(chunk => {
-      return window.near.connection.provider.chunk(chunk);
+  const chunkDetails = await Promise.all(
+    chunkHashArr.map(chunk => {
+      return window.near
+        .connection.provider.chunk(chunk);
   }));
   
   console.log('chunkDetail', chunkDetails)
   
   const transactions = []
   chunkDetails.map(chunk => {
-    chunk.transactions?.map(transaction => {
-      console.log(transaction)
-      if(transaction.signer_id.includes('development.testnet')) {
-        transactions.push(transaction);
-      };
+    chunk.transactions?.map(txs => {
+      if(txs.signer_id.includes('oracle-node.development.testnet') 
+      || txs.signer_id.includes('client.development.testnet')) {
+        transactions.push(txs);
+      } 
     });
   });
-  console.log(transactions)
-  }
+
+ const finalResults = transactions.reduce((acc, curr) => {
+   console.log(curr)
+    curr.actions.map(action => {
+      if((action.FunctionCall.method_name === "fulfill_request") 
+      || (action.FunctionCall.method_name === "demo_token_price")){
+        acc.push(curr);
+      }  
+    }); return acc;
+  }, [])
   
+  console.log(finalResults)
+  }
