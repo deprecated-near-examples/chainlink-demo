@@ -51,7 +51,7 @@ export function convertArgs(tokenSymbol, CUR = 'USD') {
 export async function callClient(searchValue){
   const tokenSearch = convertArgs(searchValue.toUpperCase())
   return await window.clientAcct.functionCall(
-    'client.development.testnet',
+    'client.huh.testnet',
     'get_token_price',
     {
       symbol: tokenSearch,
@@ -63,7 +63,7 @@ export async function callClient(searchValue){
 
 export async function getReceivedVal(nonce){
   return await window.clientAcct.viewFunction(
-    'client.development.testnet',
+    'client.huh.testnet',
     'get_received_val',
     { nonce: nonce.toString() }
   )
