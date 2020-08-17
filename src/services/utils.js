@@ -60,7 +60,6 @@ export async function getTransactions(firstBlock, lastBlock){
   });
 
  const finalResults = transactions.reduce((acc, curr) => {
-   console.log(curr)
     curr.actions.map(action => {
       if((action.FunctionCall.method_name === "fulfill_request") 
       || (action.FunctionCall.method_name === "demo_token_price")){

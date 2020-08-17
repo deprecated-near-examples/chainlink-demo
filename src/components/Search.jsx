@@ -8,8 +8,7 @@ import {
   getReceivedVal, 
   formatResult, 
   getFormattedNonce, 
-  getLatestBlock,
-  getBlockByID } from '../services/contractMethods'
+  getLatestBlock } from '../services/contractMethods'
 import { getTransactions } from '../services/utils'
 
 const Search = () => {
