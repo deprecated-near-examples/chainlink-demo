@@ -16,9 +16,6 @@ const Search = () => {
   const [searchResult, setSearchResult] = useState("");
   const [loading, setLoading] = useState(false);
   const [submitButtonCss, setButtonCss] = useState("submit-button");
-  // const [blockHash, setBlockHash] = useState("");
-  // const [curNonce, setCurNonce] = useState(0);
-
 
   const handleChange = (e) => {
     setSearchValue(e.target.value);
@@ -32,9 +29,7 @@ const Search = () => {
     const requestNonce = getFormattedNonce(result);
 
     console.log('Request Nonce: ', requestNonce);
-
-    // setBlockHash(result.receipts_outcome[0].block_hash);
-    // setCurNonce(requestNonce);
+    
     fetchNonceAnswer(requestNonce);
   }
 
