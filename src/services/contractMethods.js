@@ -13,6 +13,7 @@ export async function getBlockByHash(blockHash) {
       blockId: blockHash,
   })
   console.log(`BlockInfo for ${blockHash} :`, blockInfoByHash)
+  return blockInfoByHash
 };
 
 export async function getBlockByID(blockID){
@@ -20,8 +21,16 @@ export async function getBlockByID(blockID){
       .connection.provider.block({
         blockId: blockID,
     })
-  // console.log(`BlockInfo for ID #${blockID}`, blockInfoByHeight)
   return blockInfoByHeight
+}
+
+export function formatResult(result){
+  return `$${
+    Number(result)
+      .toFixed(2)
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }`
 }
 
 export function getFormattedNonce(result){
@@ -58,15 +67,6 @@ export async function getReceivedVal(nonce){
     'get_received_val',
     { nonce: nonce.toString() }
   )
-}
-
-export function formatResult(result){
-  return `$${
-    Number(result)
-      .toFixed(2)
-      .toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-    }`
 }
 
 
