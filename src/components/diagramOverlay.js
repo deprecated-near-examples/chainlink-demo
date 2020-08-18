@@ -5,7 +5,6 @@ const DiagramOverlay = () => {
 
     return (
         <div className="diagram-overlay">
-
             <div>
                 <h1>Welcome to the Chainlink Oracle Demo</h1>
                 <p>
@@ -13,7 +12,6 @@ const DiagramOverlay = () => {
                     We will then display a diagram that will walk you through the process of accessing the price through the Chainlink Oracle.
                 </p>
             </div>
-        
         </div>
     )
 }

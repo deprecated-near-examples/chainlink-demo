@@ -1,22 +1,28 @@
 
 .counter {
-    position: absolute;
-    margin-top: 140px;
+    display: flex;
+    margin-top: 32px;
     left: 0;
     right: 0;
     text-align: center;
     justify-content: center;
 }
 
-.counter button {
+.counter-button {
+    border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: #00C08B;
+    font-weight: bold;
+    font-size: 18px;
+    height: 45px;
     width: 94px;
+    line-height: 22px;
+    outline: none;
+    text-align: center;
     margin: 8px;
-    background: #8FD6BD;
-    cursor: pointer;
 }
 
-.counter button:hover {
-    background-color: #00C08B;
-    border: none;
-    outline:none;
+.counter-button:hover {
+    cursor: pointer;
 }

@@ -62,17 +62,17 @@
     color: #25282A;
 }
 
+.search:disabled {
+  cursor: default;
+}
+
 select{
   padding-left: 10px;
 }
 
- option[type="option"] {
-  position: relative;
-  line-height: 1;
-  transition: 0.3s ease all;
-  z-index: 2;
-  height: 200px;
-  padding: 4px;
+#option {
+  font-size: 18px;
+  color: #24272A;
 }
 
 .search {
@@ -84,84 +84,63 @@ select{
   -moz-appearance: none;
   cursor: pointer; 
   border-radius: 3px; 
-  border: none;
-
 }
 
 select {
   font-family: 'Inter', sans-serif;
   font-size: 20px;
 }
-  
-  input[type="submit"] {
-    width: 94px;
-  }
 
-  .styled-button {
-      border-radius: 5px;
-      border: none;
-      color: white;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 18px;
-      height: 45px;
-      line-height: 22px;
-      opacity: 1;
-      outline:none;
-      text-align: center;
-      transition: all 0.5s;
-  }
-
-  .styled-button-disabled:hover {
-      cursor: not-allowed;
-  }
-
-
-  #option {
-    margin: 8px;
-    padding: 4px;
-    padding-left: 8px;
-    font-size: 18px;
-    line-height: 32px;
-    color: #24272A;
+.submit-button {
+    border-radius: 5px;
     border: none;
-  }
-
-  .submit-button-disabled:hover {
-      cursor: not-allowed;
-  }
-
-  .alice, .bob {
-    margin-right: 8px;
-    min-width: 45px;
-    min-height: 45px;
-  }
-
-  .bob {
-    margin-top: 8px;
-    margin-bottom: 8px;
-  }
-
-  .bob {
-    margin-top: 8px;
-  }
-
-  #bold {
-    color: #24272A;
-  }
-
-  #bold-two {
-    background-color: black;
     color: white;
-    padding: 1px;
-    border-radius: 4px;
-  }
+    background-color: #00C08B;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 18px;
+    height: 45px;
+    width: 94px;
+    line-height: 22px;
+    outline:none;
+    text-align: center;
+}
 
-  button:active {
-    border: none;
-    transition: 0.5s;
-  }
+.submit-button:disabled {
+    cursor: default;
+}
 
-  .spinner {
-    margin-top: -8px;
-  }
+.alice, .bob {
+  margin-right: 8px;
+  min-width: 45px;
+  min-height: 45px;
+}
+
+.bob {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.bob {
+  margin-top: 8px;
+}
+
+#bold {
+  color: #24272A;
+}
+
+#bold-two {
+  background-color: black;
+  color: white;
+  padding: 1px;
+  border-radius: 4px;
+}
+
+button:active {
+  border: none;
+  transition: 0.5s;
+}
+
+.spinner {
+  margin-top: -8px;
+}
