@@ -3,7 +3,7 @@ const bs58 = require('bs58');
 
 const nearAcct = process.env.NEAR_ACCT
 
-export async function getLatestBlockID(){
+export async function getLatestBlockID() {
   const near = await getNear();
   const latestHash = (await near
     .connection.provider.status())
@@ -32,8 +32,20 @@ export async function getBlockByID(blockID){
   return blockInfoByHeight
 }
 
+export async function getReceiptsFromAccountPrefix(txObj, prefix, step) {
+  const matchingTxs = txObj.receipts_outcome.filter(r => {
+    return r.outcome.executor_id === `${prefix}.${nearAcct}` && r.outcome.logs.length !== 0
+  })
+  window.nearSteps[step] = matchingTxs
+}
+
+export async function getTransaction(hash, subaccountPrefix) {
+  const near = await getNear();
+  return await near.connection.provider.txStatus(bs58.decode(hash), `${subaccountPrefix}.${nearAcct}`);
+}
+
 // returns two transactions associated with client <> oracle-node call
-export async function getTransactions(firstBlock, lastBlock){
+export async function getTransactions(firstBlock, lastBlock) {
   const near = await getNear();
 
   // creates an array of block IDs based on first and last block
@@ -92,7 +104,10 @@ export async function getTransactions(firstBlock, lastBlock){
       }
     }); return acc;
   }, [])
+  // Note: at this point should be only one transaction
   console.log("Transactions: ", matchingTxs)
+  const txObj = await getTransaction(matchingTxs[0].hash, 'oracle-node');
+  await getReceiptsFromAccountPrefix(txObj, 'client', 6)
 
   const txsLinks = matchingTxs.map(txs => (({
     method: txs.actions[0].FunctionCall.method_name,
