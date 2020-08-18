@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import '../styles/diagramstatechange.css'
 import { useDiagramDispatch } from './DiagramState'
+import StyledButton from "./StyledButton";
 
 function ChangeDiagramState() {
     const [count, setCount] = useState(1)
@@ -10,15 +11,24 @@ function ChangeDiagramState() {
         if (count < 7) {
             setCount(count + 1)
             updateDiagram()
-        }
-        else if (count === 7) {
-            setCount(count - 7)
-            updateDiagram()
+            if (count === 6) {
+              setCount(count - 6 )
+            }
         }
     };
 
+  //   const decrementCounter = () => {
+  //     if (count >= 0) {
+  //         setCount(count - 1)
+  //         updateDiagram()
+  //         if (count === 0) {
+  //           setCount(count + 6 )
+  //         }
+  //     }
+  // };
+
     const updateDiagram = () => {
-        if (count === 0) dispatch({type: 'initialState'})
+        if (count === 0) dispatch({type: 'displayDiagram'})
         if (count === 1) dispatch({type: 'firstImageChange'})
         if (count === 2) dispatch({type: 'secondImageChange'})
         if (count === 3) dispatch({type: 'thirdImageChange'})
@@ -29,11 +39,13 @@ function ChangeDiagramState() {
     
     return (
       <div>
-        <div className="counter-gap"></div>
         <div className="counter">
-          <button onClick={incrementCounter}>
+          {/* <StyledButton onClick={decrementCounter}>
+            Prev
+          </StyledButton> */}
+          <StyledButton onClick={incrementCounter}>
             Next
-          </button>
+          </StyledButton>
         </div>
       </div>
   )

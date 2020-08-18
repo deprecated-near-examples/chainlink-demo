@@ -56,12 +56,13 @@ const initialState = {
    aliceTokens: 50,
    bobTokens: 0,
    descriptionstate: true,
+   diagramVisibility: false,
   
    // css variables
    bobtokenscss: "bobtokens-inactive",
    transfertencss: "transfer-ten-inactive",
    bobcontractlockcss: "bob-contract-lock-inactive",
-   explainercss: "explainer-one",
+   explainercss: "",
    stepcss: "step-one",
    desciption: `Alice’s contract allowance is set to cover tx fees`,
    longDescription: 'More information on the smart contract processes will go here.',
@@ -83,9 +84,15 @@ function diagramReducer(state, action) {
   switch (action.type) {
     case 'initialState':
       return initialState
+    case 'displayDiagram':  
+      return {
+        ...initialState,
+        diagramVisibility: true,
+      }
     case 'firstImageChange':
       return {
         ...initialState,
+        diagramVisibility: true,
         aliceTokens: 40,
         firsttoparrow: firsttoparrowtwo,
         secondImage: arrowtwo,
@@ -95,10 +102,12 @@ function diagramReducer(state, action) {
         transfertencss: "transfer-ten-active",
         explainercss: "explainer-two",   
         desciption: "Contract sends request & tokens to Oracle Contract",
+        longDescription: "",
       };
     case 'secondImageChange':
       return {
         ...initialState,
+        diagramVisibility: true,
         aliceTokens: 40,
         bobTokens: 10,
         fourthImage: bobtwo,
@@ -116,6 +125,7 @@ function diagramReducer(state, action) {
     case 'thirdImageChange':
       return {
         ...initialState,
+        diagramVisibility: true,
         eighthImage: arrowtwo,
         tenthImage: oracletwo,
         ninethImage: arrowtwootherdirection,
@@ -134,6 +144,7 @@ function diagramReducer(state, action) {
     case 'fourthImageChange':
       return {
         ...initialState,
+        diagramVisibility: true,
         tenthImage: oracletwo,
         fourthImage: bobtwo,
         aliceTokens: 40,
@@ -152,6 +163,7 @@ function diagramReducer(state, action) {
     case 'fifthImageChange':
       return {
         ...initialState,
+        diagramVisibility: true,
         tenthImage: oracletwo,
         fourthImage: bobtwo,
         aliceTokens: 40,
@@ -169,6 +181,7 @@ function diagramReducer(state, action) {
     case 'sixthImageChange':
       return {
         ...initialState,
+        diagramVisibility: true,
         tenthImage: oracletwo,
         fourthImage: bobtwo,
         aliceTokens: 40,
@@ -177,6 +190,7 @@ function diagramReducer(state, action) {
         secondtoparrow: secondtoparrowtwo,
         seventhImage: robottwo,
         explainerbackground: explainerbackgroundthree,
+        explainercss: "explainer-seven",
         explainerbuttoncss: "explainer-button-two",
         stepcss: "step-two",
         bobtokenscss: "bobtokens-active",
@@ -185,7 +199,10 @@ function diagramReducer(state, action) {
         descriptionstate: false,
       }
     default:
-      return initialState
+      return {
+        ...initialState,
+        diagramVisibility: true,
+      }
     }
 }
 

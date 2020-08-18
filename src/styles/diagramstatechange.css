@@ -1,29 +1,18 @@
 
-
-.counter-gap {
-    margin-top: 504px;
-}
-
 .counter {
-    display: flex;
+    position: absolute;
+    margin-top: 140px;
+    left: 0;
+    right: 0;
+    text-align: center;
     justify-content: center;
-    position: relative;
 }
 
 .counter button {
     width: 94px;
-    height: 45px;   
+    margin: 8px;
     background: #8FD6BD;
-    font-weight: bold;
-    font-size: 18px;
-    line-height: 22px;
-    text-align: center;
-    color: white;
     cursor: pointer;
-    border-radius: 5px;
-    border: none;
-    outline:none;
-    transition: all 0.5s;
 }
 
 .counter button:hover {

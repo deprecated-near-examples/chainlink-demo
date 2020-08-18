@@ -31,10 +31,9 @@
 }
 
 .search-result p {
+  margin-top: 20px;
   margin-left: 16px;
-  margin-top: 16px;
-  font-weight: 900;
-  font-size: 36px;
+  font-size: 28px;
   color: #24272A;
 }
 
@@ -60,6 +59,33 @@
     border: 2px solid #E5E5E5;
     box-sizing: border-box;
     border-radius: 5px;
+    color: #25282A;
+}
+
+select{
+  padding-left: 10px;
+}
+
+ option[type="option"] {
+  position: relative;
+  line-height: 1;
+  transition: 0.3s ease all;
+  z-index: 2;
+  height: 200px;
+  padding: 4px;
+}
+
+.search {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  border: none;
+  outline: none;
+  appearance: none;
+  -moz-appearance: none;
+  cursor: pointer; 
+  border-radius: 3px; 
+  border: none;
+
 }
 
 select {
@@ -69,38 +95,51 @@ select {
   
   input[type="submit"] {
     width: 94px;
-    height: 45px;   
-    background: #8FD6BD;
-    font-weight: bold;
-    font-size: 18px;
-    line-height: 22px;
-    text-align: center;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-    border: none;
-    outline:none;
-    transition: all 0.5s;
   }
 
-  input[type="text"] {
-    margin-left: 8px;
+  .styled-button {
+      border-radius: 5px;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 18px;
+      height: 45px;
+      line-height: 22px;
+      opacity: 1;
+      outline:none;
+      text-align: center;
+      transition: all 0.5s;
+  }
+
+  .styled-button-disabled:hover {
+      cursor: not-allowed;
+  }
+
+
+  #option {
+    margin: 8px;
+    padding: 4px;
     padding-left: 8px;
     font-size: 18px;
     line-height: 32px;
     color: #24272A;
-  }
-  
-  .submit-button:hover {
-    background-color: #00C08B;
     border: none;
-    outline:none;
+  }
+
+  .submit-button-disabled:hover {
+      cursor: not-allowed;
   }
 
   .alice, .bob {
     margin-right: 8px;
-    width: 45px;
-    height: 45px;
+    min-width: 45px;
+    min-height: 45px;
+  }
+
+  .bob {
+    margin-top: 8px;
+    margin-bottom: 8px;
   }
 
   .bob {
