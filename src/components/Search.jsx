@@ -29,9 +29,11 @@ const Search = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const firstBlockID = await getLatestBlockID();
     const result = await callClient(searchValue).then(setLoading(true));
+    window.firstTransactionHash = result.transaction.hash;
+    const firstBlockID = result.transaction_outcome.block_hash;
     const requestNonce = getFormattedNonce(result);
+    window.nonce = requestNonce;
 
     console.log('Request Nonce: ', requestNonce);
 

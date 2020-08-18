@@ -1,4 +1,5 @@
 import { getClientAcct, getNear } from './utils';
+const bs58 = require('bs58');
 
 const nearAcct = process.env.NEAR_ACCT
 
@@ -37,9 +38,14 @@ export async function getTransactions(firstBlock, lastBlock){
 
   // creates an array of block IDs based on first and last block
   const blockArr = [];
-  for (let i = firstBlock; i <= lastBlock; i++) {
-    blockArr.push(i)
-  }
+  let blockHash = lastBlock;
+  let currentBlock;
+  do {
+    currentBlock = await getBlockByID(blockHash);
+    blockArr.push(currentBlock.header.hash);
+    blockHash = currentBlock.header.prev_hash;
+    console.log('in here');
+  } while (blockHash !== firstBlock)
 
   // returns block details based on ID's in array
   const blockDetails = await Promise.all(
@@ -58,9 +64,8 @@ export async function getTransactions(firstBlock, lastBlock){
   // returns chunk details based from the array of hashes
   const chunkDetails = await Promise.all(
     chunkHashArr.map(chunk => {
-      return near
-        .connection.provider.chunk(chunk);
-    }));
+      return near.connection.provider.chunk(chunk);
+  }));
 
   // checks chunk details for transactions
   // if there are transactions in the chunk
@@ -68,8 +73,7 @@ export async function getTransactions(firstBlock, lastBlock){
   const transactions = []
   chunkDetails.map(chunk => {
     chunk.transactions?.map(txs => {
-      if(txs.signer_id.includes(`oracle-node.${nearAcct}`)
-        || txs.signer_id.includes(`client.${nearAcct}`)) {
+      if(txs.signer_id.includes(`oracle-node.${nearAcct}`)) {
         transactions.push(txs);
       }
     });
@@ -79,9 +83,13 @@ export async function getTransactions(firstBlock, lastBlock){
   // so we return only transactions that contain these two methods
   const matchingTxs = transactions.reduce((acc, curr) => {
     curr.actions.map(action => {
-      if((action.FunctionCall.method_name === "fulfill_request")
-        || (action.FunctionCall.method_name === "get_token_price")){
-        acc.push(curr);
+      if (action.FunctionCall.method_name === "fulfill_request") {
+        const args = action.FunctionCall.args;
+        const base64DecodedArgs = Buffer.from(args, 'base64');
+        const jsonArgs = JSON.parse(base64DecodedArgs.toString());
+        if (jsonArgs.nonce === window.nonce) {
+          acc.push(curr);
+        }
       }
     }); return acc;
   }, [])
@@ -91,6 +99,7 @@ export async function getTransactions(firstBlock, lastBlock){
     method: txs.actions[0].FunctionCall.method_name,
     link: `https://explorer.testnet.near.org/transactions/${txs.hash}`
   })));
+  console.log('txsLinks', txsLinks);
   return txsLinks
 }
 
