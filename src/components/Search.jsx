@@ -55,7 +55,8 @@ const Search = () => {
         console.log('FIRST block ID: ', window.firstBlockID);
         console.log('LAST block ID: ', finalBlockID);
 
-        getTransactions(window.firstBlockID, finalBlockID);
+        window.transactions = await getTransactions(window.firstBlockID, finalBlockID);
+        console.log('window.transactions', window.transactions)
 
       } else setTimeout(async ()=> {
         await fetchNonceAnswer(nonce)

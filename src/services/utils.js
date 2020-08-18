@@ -1,5 +1,6 @@
 import { connect, keyStores, KeyPair } from 'near-api-js'
 import { getBlockByID } from './contractUtils';
+import bs58 from 'bs58'
 
 //configuration for connection to NEAR
 const nearConfig = {
@@ -49,6 +50,8 @@ export async function getTransactions(firstBlock, lastBlock){
       return window.near
         .connection.provider.chunk(chunk);
   }));
+
+  console.log(chunkDetails)
   
   // checks chunk details for transactions
   // if there are transactions in the chunk 
@@ -74,5 +77,10 @@ export async function getTransactions(firstBlock, lastBlock){
     }); return acc;
   }, [])
   console.log("Transactions: ", matchingTxs)
-  return matchingTxs
+
+  const txsLinks = matchingTxs.map(txs => (({
+    method: txs.actions[0].FunctionCall.method_name,
+    link: `https://explorer.testnet.near.org/transactions/${txs.hash}`
+  })));
+  return txsLinks
 }
