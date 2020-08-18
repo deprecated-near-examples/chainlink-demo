@@ -33,7 +33,6 @@ const Search = () => {
     const result = await callClient(searchValue).then(setLoading(true));
     const requestNonce = getFormattedNonce(result);
 
-    console.log('RESULT', result)
     console.log('Request Nonce: ', requestNonce);
 
     fetchNonceAnswer(firstBlockID, requestNonce);
@@ -53,7 +52,8 @@ const Search = () => {
         console.log('FIRST block ID: ', firstBlockID);
         console.log('LAST block ID: ', finalBlockID);
 
-        getTransactions(firstBlockID, finalBlockID);
+        window.transactions = await getTransactions(firstBlockID, finalBlockID);
+        console.log('window.transactions', window.transactions)
 
       } else setTimeout(async ()=> {
         await fetchNonceAnswer(firstBlockID, nonce)

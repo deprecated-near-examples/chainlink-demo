@@ -1,5 +1,7 @@
 import { connect, keyStores, KeyPair } from 'near-api-js'
 const nearAcct = process.env.NEAR_ACCT
+import { getBlockByID } from './contractUtils';
+import bs58 from 'bs58'
 
 //configuration for connection to NEAR
 const nearConfig = {
@@ -21,7 +23,8 @@ async function connectToNear() {
   const keyPair = KeyPair.fromString(process.env.CLIENT_PRIVATE_KEY)
   //sets key in memory
   await keyStore.setKey(nearConfig.networkId, nearConfig.contractName, keyPair)
-  return await connect(Object.assign({ deps: { keyStore: keyStore } }, nearConfig))
+  near = await connect(Object.assign({ deps: { keyStore } }, nearConfig))
+  return near;
 }
 
 export async function getNear() {
@@ -30,7 +33,8 @@ export async function getNear() {
 
 //connect to contract using .env private key
 export async function initContract() {
-  return await (await getNear()).account(`client.${nearAcct}`)
+  clientAcct = await (await getNear()).account(near.config.contractName)
+  return clientAcct;
 }
 
 export async function getClientAcct() {

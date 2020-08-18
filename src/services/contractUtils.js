@@ -86,7 +86,12 @@ export async function getTransactions(firstBlock, lastBlock){
     }); return acc;
   }, [])
   console.log("Transactions: ", matchingTxs)
-  return matchingTxs
+
+  const txsLinks = matchingTxs.map(txs => (({
+    method: txs.actions[0].FunctionCall.method_name,
+    link: `https://explorer.testnet.near.org/transactions/${txs.hash}`
+  })));
+  return txsLinks
 }
 
 export function formatResult(result){

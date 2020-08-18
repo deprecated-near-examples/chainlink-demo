@@ -1,9 +1,7 @@
 import React from 'react'
 import '../styles/diagramOverlay.css'
 
-
 const DiagramOverlay = () => {
-
 
     return (
         <div className="diagram-overlay">
