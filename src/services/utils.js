@@ -18,7 +18,7 @@ export async function initContract() {
   await keyStore.setKey(nearConfig.networkId, nearConfig.contractName, keyPair)
   const near = await connect(Object.assign({ deps: { keyStore: keyStore } }, nearConfig))
   window.near = near
-  window.clientAcct = await near.account(`client.${process.env.NEAR_ACCT}`)
+  window.clientAcct = await near.account(near.config.contractName)
 }
 
 // returns two transactions associated with client <> oracle-node call

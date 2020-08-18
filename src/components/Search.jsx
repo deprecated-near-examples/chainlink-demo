@@ -35,7 +35,6 @@ const Search = () => {
     const result = await callClient(searchValue).then(setLoading(true));
     const requestNonce = getFormattedNonce(result);
 
-    console.log('RESULT', result)
     console.log('Request Nonce: ', requestNonce);
 
     fetchNonceAnswer(requestNonce);
