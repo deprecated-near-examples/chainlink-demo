@@ -5,7 +5,7 @@ import { getBlockByID } from './contractUtils';
 const nearConfig = {
   networkId: 'testnet',
   nodeUrl: 'https://rpc.testnet.near.org',
-  contractName: `client.${process.env.ACCOUNT_ID}.testnet`,
+  contractName: `client.${process.env.NEAR_ACCT}`,
   walletUrl: 'https://wallet.testnet.near.org',
   helperUrl: 'https://helper.testnet.near.org'
 };
@@ -18,7 +18,7 @@ export async function initContract() {
   await keyStore.setKey(nearConfig.networkId, nearConfig.contractName, keyPair)
   const near = await connect(Object.assign({ deps: { keyStore: keyStore } }, nearConfig))
   window.near = near
-  window.clientAcct = await near.account(`client.${process.env.ACCOUNT_ID}.testnet`)
+  window.clientAcct = await near.account(`client.${process.env.NEAR_ACCT}`)
 }
 
 // returns two transactions associated with client <> oracle-node call
