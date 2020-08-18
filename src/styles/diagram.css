@@ -5,6 +5,7 @@
     margin: auto auto;
     min-width: 1153px;
     max-width: 1153px;
+    height: 560px;
 }
 
 .first-top-arrow, .second-top-arrow {
@@ -148,18 +149,19 @@
 .explainer-background {
     position: absolute;
     margin-top: -40px;
-    margin-bottom: 300px;
     z-index: 5;
 }
 
 .explainer-one-content {
     margin: 32px;
     width: 350px;
+    max-height: 456px;
     position: relative;
     z-index: 10;
 }
 
 .explainer-one-content h4 {
+    margin-bottom: 0px;
     font-weight: bold;
     font-size: 20px;
     line-height: 28px;
@@ -167,6 +169,8 @@
 }
 
 .description {
+    font-size: 18px;
+    line-height: 200%;
     font-size: 14px;
     color: #666666;
 }
@@ -177,24 +181,57 @@
     width: 16px;
 }
 
-.explainer-button {
-    display: flex;
+.explorer-link {
+    font-size: 18px;
+    line-height: 200%;
     font-size: 14px;
     color: #0071CE;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    text-decoration: none;
 }
 
 .explainer-button p {
     margin-top: 0px;
 }
 
-.explainer-button:hover {
+.explainer-button {
+    display: flex;
+    font-size: 14px;
+    color: #0071CE;
+}
+
+.explainer-button:hover, .explorer-link:hover {
     text-decoration: underline;
     cursor: pointer;
 }
 
-.learn-more {
+.learn-more-button {
     position: absolute;
-    margin-top: 0px;
+    background-color: #0071CE;
+    color: #ffffff;
+    width: 210px;
+    height: 45px;
+    margin-top: 24px;
+    border-radius: 5px;
+    border: none;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.learn-more-button a, .learn-more-button a:link, .learn-more-button a:visited  {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.explorer-link a, .explorer-link a:link, .explorer-link a:visited {
+    color: #0071CE;
+    text-decoration: none;
+}
+
+.learn-more-button:hover {
+    cursor: pointer;
 }
 
 .nearkat-one {

@@ -2,14 +2,13 @@
 import React, {useState} from 'react'
 import '../styles/diagram.css'
 import DiagramOverlay from './diagramOverlay'
-import ChangeDiagramState from './changeDiagramState'
 import { useDiagramState } from './DiagramState'
-import StyledButton from "./StyledButton";
 
 const Diagram = () => {
     const state = useDiagramState()
 
     const [active, setActive] = useState(false)
+    const [showExplorerLink, setExplorerLink] = useState(false)
     const [button, setButton] = useState("Expand")
     const [explainerBackground, setExplainerBackground] = useState(state.explainerbackground)
     const [nearkat, setNearKat] = useState(state.nearkatone)
@@ -24,6 +23,7 @@ const Diagram = () => {
             setNearKat(state.nearkattwo)
             setNearKatcss("nearkat-two")
             setActive(true)
+            setExplorerLink(true)
          }
         else if (active === true){
            setButton("Expand");
@@ -32,6 +32,7 @@ const Diagram = () => {
            setNearKat(state.nearkatone)
            setNearKatcss("nearkat-one")
            setActive(false)
+           setExplorerLink(false)
         }
     }
 
@@ -117,6 +118,7 @@ const Diagram = () => {
                             {state.descriptionstate ? 
                                 <div>
                                     <p className="description" >{description}</p>
+                                    {showExplorerLink ? <p className="explorer-link"><a href={state.explorerLink} target="_blank">{state.seeExplorerLink}</a></p> : <p></p> }
                                         <div className="explainer-button" onClick={expandExplainer}>
                                             <p>{button}</p>
                                             <img 
@@ -126,11 +128,10 @@ const Diagram = () => {
                                             />
                                         </div>
                                 </div>
-                        : <StyledButton backgroundColorDisabled="#6AD1E3" backgroundColor="#0071CE" className={"learn-more"} width={210}>Learn More</StyledButton> }
+                        : <button className={"learn-more-button"}><a href="https://docs.chain.link/docs/what-is-chainlink" target="_blank" >Learn More</a></button> }
                         </div>
                     </div>
                 </div>
-                <ChangeDiagramState/>
             </div> : <DiagramOverlay/>}
         </div>
     )

@@ -15,7 +15,6 @@ import {
   getTransaction,
   getReceiptsFromAccountPrefix } from '../services/contractUtils'
 import { useDiagramDispatch } from './DiagramState'
-import StyledButton from './StyledButton';
 
 const Search = () => {
   const dispatch = useDiagramDispatch()
@@ -77,6 +76,7 @@ const Search = () => {
             className="search" 
             id="tokenSymbol" 
             onChange={handleChange}
+            disabled={loading}
           >
             <option value="" default hidden id="option">Select token</option>
             <option value="BAT" id="option">Basic Attention Token</option>
@@ -84,13 +84,13 @@ const Search = () => {
             <option value="ETH" id="option">Ethereum</option>
             <option value="LINK" id="option">Chainlink</option>
           </select>
-          <StyledButton
+          <input
             onClick={handleSubmit} 
             type="submit"
             value="Check"
+            className="submit-button"
             disabled={loading || searchValue === null}
           />
-    
         </form>
         <div className="search-result">
           { loading ? <img src={spinner} className="spinner"/> : <p className="searchResult">{searchResult}</p> }
