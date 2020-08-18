@@ -46,7 +46,7 @@ export async function callClient(searchValue){
     'demo_token_price',
     {
       symbol: tokenSearch,
-      spec_id: "dW5pcXVlIHNwZWMgaWQ="
+      spec_id: "ZDJjOWY5MjE4N2YyNGVjMDk1N2NmNTAyMGMwN2FmZGE="
     },
     '300000000000000'
   )
