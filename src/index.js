@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import { initContract } from './services/utils'
+import {  } from './services/contractUtils'
 
 window.nearInitPromise = initContract()
   .then(() => {

@@ -1,14 +1,20 @@
+import { getClientAcct, getNear } from './utils';
+
+const nearAcct = process.env.NEAR_ACCT
+
 export async function getLatestBlockID(){
-  const latestHash = (await window.near
+  const near = await getNear();
+  const latestHash = (await near
     .connection.provider.status())
     .sync_info.latest_block_hash;
-  const latestBlock = await window.near
+  const latestBlock = await near
     .connection.provider.block(latestHash);
   return latestBlock.header.height
 }
 
 export async function getBlockByHash(blockHash) {
-  const blockInfoByHash = await window.near
+  const near = await getNear();
+  const blockInfoByHash = await near
     .connection.provider.block({
       blockId: blockHash,
   })
@@ -17,11 +23,75 @@ export async function getBlockByHash(blockHash) {
 };
 
 export async function getBlockByID(blockID){
-    const blockInfoByHeight = await window.near
+    const near = await getNear();
+    const blockInfoByHeight = await near
       .connection.provider.block({
         blockId: blockID,
     })
   return blockInfoByHeight
+}
+
+// returns two transactions associated with client <> oracle-node call
+export async function getTransactions(firstBlock, lastBlock){
+  const near = await getNear();
+
+  // creates an array of block IDs based on first and last block
+  const blockArr = [];
+  for (let i = firstBlock; i <= lastBlock; i++) {
+    blockArr.push(i)
+  }
+
+  // returns block details based on ID's in array
+  const blockDetails = await Promise.all(
+    blockArr.map(block => {
+      return getBlockByID(block);
+    }))
+
+  // returns an array of chunk hashes from block details
+  const chunkHashArr = [];
+  blockDetails.map(block => {
+    block.chunks.map(chunk => {
+      chunkHashArr.push(chunk.chunk_hash);
+    });
+  });
+
+  // returns chunk details based from the array of hashes
+  const chunkDetails = await Promise.all(
+    chunkHashArr.map(chunk => {
+      return near
+        .connection.provider.chunk(chunk);
+    }));
+
+  // checks chunk details for transactions
+  // if there are transactions in the chunk
+  // find ones associated with our two accounts
+  const transactions = []
+  chunkDetails.map(chunk => {
+    chunk.transactions?.map(txs => {
+      if(txs.signer_id.includes(`oracle-node.${nearAcct}`)
+        || txs.signer_id.includes(`client.${nearAcct}`)) {
+        transactions.push(txs);
+      }
+    });
+  });
+
+  // we want to exclude transactions from the oracle-node
+  // so we return only transactions that contain these two methods
+  const matchingTxs = transactions.reduce((acc, curr) => {
+    curr.actions.map(action => {
+      if((action.FunctionCall.method_name === "fulfill_request")
+        || (action.FunctionCall.method_name === "get_token_price")){
+        acc.push(curr);
+      }
+    }); return acc;
+  }, [])
+  console.log("Transactions: ", matchingTxs)
+
+  const txsLinks = matchingTxs.map(txs => (({
+    method: txs.actions[0].FunctionCall.method_name,
+    link: `https://explorer.testnet.near.org/transactions/${txs.hash}`
+  })));
+  return txsLinks
 }
 
 export function formatResult(result){
@@ -48,10 +118,11 @@ export function convertArgs(tokenSymbol, CUR = 'USD') {
   return btoa(JSON.stringify(obj))
 }
 
-export async function callClient(searchValue){
+export async function callClient(searchValue) {
+  const clientAcct = await getClientAcct()
   const tokenSearch = convertArgs(searchValue.toUpperCase())
-  return await window.clientAcct.functionCall(
-    'client.huh.testnet',
+  return await clientAcct.functionCall(
+    `client.${nearAcct}`,
     'get_token_price',
     {
       symbol: tokenSearch,
@@ -61,9 +132,10 @@ export async function callClient(searchValue){
   )
 }
 
-export async function getReceivedVal(nonce){
-  return await window.clientAcct.viewFunction(
-    'client.huh.testnet',
+export async function getReceivedVal(nonce) {
+  const clientAcct = await getClientAcct()
+  return await clientAcct.viewFunction(
+    `client.${nearAcct}`,
     'get_received_val',
     { nonce: nonce.toString() }
   )

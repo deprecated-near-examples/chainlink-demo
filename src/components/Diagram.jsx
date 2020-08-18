@@ -4,6 +4,7 @@ import '../styles/diagram.css'
 import DiagramOverlay from './diagramOverlay'
 import ChangeDiagramState from './changeDiagramState'
 import { useDiagramState } from './DiagramState'
+import StyledButton from "./StyledButton";
 
 const Diagram = () => {
     const state = useDiagramState()
@@ -125,7 +126,7 @@ const Diagram = () => {
                                             />
                                         </div>
                                 </div>
-                        : <button className="learn-more">Learn More</button> }
+                        : <StyledButton backgroundColorDisabled="#6AD1E3" backgroundColor="#0071CE" className={"learn-more"} width={210}>Learn More</StyledButton> }
                         </div>
                     </div>
                 </div>

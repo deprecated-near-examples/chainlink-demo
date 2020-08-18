@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import '../styles/diagramstatechange.css'
 import { useDiagramDispatch } from './DiagramState'
+import StyledButton from "./StyledButton";
 
 function ChangeDiagramState() {
     const [count, setCount] = useState(1)
@@ -39,12 +40,12 @@ function ChangeDiagramState() {
     return (
       <div>
         <div className="counter">
-          {/* <button onClick={decrementCounter}>
+          {/* <StyledButton onClick={decrementCounter}>
             Prev
-          </button> */}
-          <button onClick={incrementCounter}>
+          </StyledButton> */}
+          <StyledButton onClick={incrementCounter}>
             Next
-          </button>
+          </StyledButton>
         </div>
       </div>
   )
