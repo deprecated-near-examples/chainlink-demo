@@ -44,7 +44,6 @@ export async function getTransactions(firstBlock, lastBlock){
     currentBlock = await getBlockByID(blockHash);
     blockArr.push(currentBlock.header.hash);
     blockHash = currentBlock.header.prev_hash;
-    console.log('in here');
   } while (blockHash !== firstBlock)
 
   // returns block details based on ID's in array
@@ -73,7 +72,7 @@ export async function getTransactions(firstBlock, lastBlock){
   const transactions = []
   chunkDetails.map(chunk => {
     chunk.transactions?.map(txs => {
-      if(txs.signer_id.includes(`oracle-node.${nearAcct}`)) {
+      if (txs.signer_id.includes(`oracle-node.${nearAcct}`)) {
         transactions.push(txs);
       }
     });
