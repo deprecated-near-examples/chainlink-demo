@@ -1,7 +1,4 @@
 import { connect, keyStores, KeyPair } from 'near-api-js'
-const nearAcct = process.env.NEAR_ACCT
-import { getBlockByID } from './contractUtils';
-import bs58 from 'bs58'
 
 //configuration for connection to NEAR
 const nearConfig = {

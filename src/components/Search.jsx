@@ -11,7 +11,9 @@ import {
   getFormattedNonce,
   getLatestBlockID,
   getTransactions,
-  getReceivedVal } from '../services/contractUtils'
+  getReceivedVal,
+  getTransaction,
+  getReceiptsFromAccountPrefix } from '../services/contractUtils'
 import { useDiagramDispatch } from './DiagramState'
 
 const Search = () => {
@@ -30,6 +32,9 @@ const Search = () => {
     e.preventDefault()
     const result = await callClient(searchValue).then(setLoading(true));
     window.firstTransactionHash = result.transaction.hash;
+    const txObj = await getTransaction(window.firstTransactionHash, 'client');
+    await getReceiptsFromAccountPrefix(txObj, 'oracle', 2)
+    window.firstTransaction = result.transaction;
     const firstBlockID = result.transaction_outcome.block_hash;
     const requestNonce = getFormattedNonce(result);
     window.nonce = requestNonce;
