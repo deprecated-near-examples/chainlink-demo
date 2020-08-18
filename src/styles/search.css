@@ -62,6 +62,10 @@
     color: #25282A;
 }
 
+select{
+  padding-left: 10px;
+}
+
  option[type="option"] {
   position: relative;
   line-height: 1;
@@ -86,19 +90,27 @@
   
   input[type="submit"] {
     width: 94px;
-    height: 45px;   
-    background: #8FD6BD;
-    font-weight: bold;
-    font-size: 18px;
-    line-height: 22px;
-    text-align: center;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-    border: none;
-    outline:none;
-    transition: all 0.5s;
   }
+
+  .styled-button {
+      border-radius: 5px;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 18px;
+      height: 45px;
+      line-height: 22px;
+      opacity: 1;
+      outline:none;
+      text-align: center;
+      transition: all 0.5s;
+  }
+
+  .styled-button-disabled:hover {
+      cursor: not-allowed;
+  }
+
 
   #option {
     margin: 8px;
@@ -109,11 +121,9 @@
     color: #24272A;
     border: none;
   }
-  
-  .submit-button:hover {
-    background-color: #00C08B;
-    border: none;
-    outline:none;
+
+  .submit-button-disabled:hover {
+      cursor: not-allowed;
   }
 
   .alice, .bob {
@@ -146,3 +156,5 @@
   .spinner {
     margin-top: -8px;
   }
+
+ 

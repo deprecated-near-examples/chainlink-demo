@@ -1,17 +1,19 @@
 import React, { useState } from 'react'
-import '../styles/search.css'
+
 import alice from '../assets/alice.png'
 import bob from '../assets/bob.png'
 import spinner from '../assets/spinner.gif'
+import '../styles/search.css'
+
 import { 
   callClient, 
-  getReceivedVal, 
   formatResult, 
-  getFormattedNonce, 
-  getLatestBlockID } from '../services/contractMethods'
-import { getTransactions } from '../services/utils'
+  getFormattedNonce,
+  getLatestBlockID,
+  getTransactions,
+  getReceivedVal } from '../services/contractUtils'
 import { useDiagramDispatch } from './DiagramState'
-
+import StyledButton from './StyledButton';
 
 const Search = () => {
   const dispatch = useDiagramDispatch()
@@ -19,30 +21,24 @@ const Search = () => {
   const [searchValue, setSearchValue] = useState(null);
   const [searchResult, setSearchResult] = useState("");
   const [loading, setLoading] = useState(false);
-  const [submitButtonCss, setButtonCss] = useState("submit-button");
-  // const [blockHash, setBlockHash] = useState("");
-  // const [curNonce, setCurNonce] = useState(0);
-
 
   const handleChange = (e) => {
+    e.preventDefault()
     setSearchValue(e.target.value);
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setButtonCss("");
-    window.firstBlockID = await getLatestBlockID();
+    const firstBlockID = await getLatestBlockID();
     const result = await callClient(searchValue).then(setLoading(true));
     const requestNonce = getFormattedNonce(result);
 
     console.log('Request Nonce: ', requestNonce);
 
-    // setBlockHash(result.receipts_outcome[0].block_hash);
-    // setCurNonce(requestNonce);
-    fetchNonceAnswer(requestNonce);
+    fetchNonceAnswer(firstBlockID, requestNonce);
   }
 
-  const fetchNonceAnswer = async (nonce) => {
+  const fetchNonceAnswer = async (firstBlockID, nonce) => {
       let result = await getReceivedVal(nonce);
       console.log('Checking for result...');
 
@@ -51,16 +47,17 @@ const Search = () => {
         const finalBlockID = await getLatestBlockID();
         setSearchResult(result);
         setLoading(false);
-        setButtonCss("submit-button");
         dispatch({type: 'displayDiagram'});
 
-        console.log('FIRST block ID: ', window.firstBlockID);
+        console.log('FIRST block ID: ', firstBlockID);
         console.log('LAST block ID: ', finalBlockID);
 
-        getTransactions(window.firstBlockID, finalBlockID);
+        window.transactions = await getTransactions(firstBlockID, finalBlockID);
+        console.log('window.transactions', window.transactions)
 
       } else setTimeout(async ()=> {
-        await fetchNonceAnswer(nonce)}, 750);
+        await fetchNonceAnswer(firstBlockID, nonce)
+      }, 750);
 }
 
   return (
@@ -80,11 +77,11 @@ const Search = () => {
             <option value="ETH" id="option">Ethereum</option>
             <option value="LINK" id="option">Chainlink</option>
           </select>
-          <input 
+          <StyledButton
             onClick={handleSubmit} 
-            type="submit" value="Check" 
-            disabled={loading || searchValue === null} 
-            className={submitButtonCss} 
+            type="submit"
+            value="Check"
+            disabled={loading || searchValue === null}
           />
     
         </form>
