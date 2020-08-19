@@ -4,37 +4,33 @@ import { useDiagramDispatch, useDiagramState } from './DiagramState'
 
 function ChangeDiagramState() {
 
-  const [count, setCount] = useState(1)
+  const [count, setCount] = useState(0)
 
   const dispatch = useDiagramDispatch()
   const state = useDiagramState()
   
   const incrementCounter = () => {
-    const newCount = count + 1
+    const newCount = count + 1 === 7 ? 0 : count + 1
     setCount(newCount)
-      updateDiagram()
-      if (count === 6) {
-        setCount(count - 6 )
-      }
+    console.log(newCount)
+    updateDiagram(newCount)
   }
 
   const decrementCounter = () => {
-    const newCount = count - 1
+    const newCount = count - 1 === -1 ? 6 : count - 1
     setCount(newCount)
-      updateDiagram()
-      if (count === 0) {
-        setCount(count + 6 )
-      }
+    console.log(newCount)
+    updateDiagram(newCount)
   }
 
-  const updateDiagram = () => {
-      if (count === 0) dispatch({type: 'displayDiagram'})
-      if (count === 1) dispatch({type: 'firstImageChange'})
-      if (count === 2) dispatch({type: 'secondImageChange'})
-      if (count === 3) dispatch({type: 'thirdImageChange'})
-      if (count === 4) dispatch({type: 'fourthImageChange'})
-      if (count === 5) dispatch({type: 'fifthImageChange'})
-      if (count === 6) dispatch({type: 'sixthImageChange'})
+  const updateDiagram = (newCount) => {
+      if (newCount === 0) dispatch({type: 'displayDiagram'})
+      if (newCount === 1) dispatch({type: 'firstImageChange'})
+      if (newCount === 2) dispatch({type: 'secondImageChange'})
+      if (newCount === 3) dispatch({type: 'thirdImageChange'})
+      if (newCount === 4) dispatch({type: 'fourthImageChange'})
+      if (newCount === 5) dispatch({type: 'fifthImageChange'})
+      if (newCount === 6) dispatch({type: 'sixthImageChange'})
   }
   
   return (
