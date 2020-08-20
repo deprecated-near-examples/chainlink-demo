@@ -5,8 +5,11 @@ import DiagramOverlay from './diagramOverlay'
 import { useDiagramState } from './DiagramState'
 
 const Diagram = () => {
+
+    // The useDiagramState function is used to access the state of the diagram from the DiagramState component
     const state = useDiagramState()
 
+    // The following states are used to control whether the explainer section is expanded and the explanation visible or not
     const [active, setActive] = useState(false)
     const [showExplorerLink, setExplorerLink] = useState(false)
     const [button, setButton] = useState("Expand")
@@ -15,6 +18,7 @@ const Diagram = () => {
     const [nearkatcss, setNearKatcss] = useState("nearkat-one")
     const [description, setDescription] = useState("Here’s more detail on this part if needed")
 
+    // The above states ar changed through the following function
     const expandExplainer = () => {
         if (active === false){
             setButton("Show Less")

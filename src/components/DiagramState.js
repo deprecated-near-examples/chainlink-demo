@@ -36,6 +36,8 @@ import firsttoparrowtwo from '../assets/first-top-arrow-two.png'
 import secondtoparrowone from '../assets/second-top-arrow-one.png'
 import secondtoparrowtwo from '../assets/second-top-arrow-two.png'
 
+// The initialState is the first diagram displayed in the demo
+
 const initialState = { 
   // Naming Image Placeholder
    firsttoparrow: firsttoparrowone,
@@ -53,14 +55,17 @@ const initialState = {
    tenthImage: oracleone,
 
    // Variable to display token transfer
+
    aliceTokens: 50,
    bobTokens: 0,
 
    // State Varables 
+
    descriptionstate: true,
    diagramVisibility: false,
   
-   // css variables and text
+   // css variables and changing text which are displayed in the diagram
+
    bobtokenscss: "bobtokens-inactive",
    transfertencss: "transfer-ten-inactive",
    bobcontractlockcss: "bob-contract-lock-inactive",
@@ -72,6 +77,7 @@ const initialState = {
    longDescription: `Alice wants to make a request to an Oracle Contract to receive a token price. To pay for the request, she transfers 50 into her Client Contract (red). The Oracle Contract is run by Bob (blue).`,
 
    // additional images
+
    divider: divider,
    glass: glass,
    explainerbackground: explainerbackgroundone,
@@ -83,6 +89,8 @@ const initialState = {
    oracleExplainer: oracleExplainer,
    bobcontractlock: bobcontractlock,
 };
+
+// The diagramReducer defines the different states that the diagram can be in -- state changes are initiated through the changeDiagramState
 
 function diagramReducer(state, action) {
   switch (action.type) {

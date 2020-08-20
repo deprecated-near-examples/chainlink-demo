@@ -1,6 +1,8 @@
 import React from 'react'
 import '../styles/diagramOverlay.css'
 
+// This component is used to hide the diagram before the first search result
+
 const DiagramOverlay = () => {
 
     return (
