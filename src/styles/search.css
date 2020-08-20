@@ -108,6 +108,7 @@ select {
 
 .submit-button:disabled {
     cursor: default;
+    background-color: #8FD6BD;
 }
 
 .alice, .bob {
