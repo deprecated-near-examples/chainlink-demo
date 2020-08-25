@@ -108,8 +108,8 @@ function diagramReducer(state, action) {
         transfertencss: "transfer-ten-active",
         explainercss: "explainer-two",   
         desciption: "Contract sends request & tokens to Oracle Contract",
-        explorerLink: "https://explorer.testnet.near.org/",
-        seeExplorerLink: "See the transaction in the explorer",
+        explorerLink: window.transactions[1].link,
+        seeExplorerLink: "See the transaction in NEAR explorer",
         longDescription: `Alice sends a fungible token payment to Bob’s Oracle Contract to request the token price from Bob’s Oracle Contract. In this case, Alice sends 10.`,
       };
     case 'secondImageChange':
@@ -171,6 +171,8 @@ function diagramReducer(state, action) {
         bobcontractlockcss: "bob-contract-lock-active",
         explainercss: "explainer-five",   
         desciption: `Price is returned to Oracle Contract`,
+        explorerLink: window.transactions[0].link,
+        seeExplorerLink: "See the transaction in NEAR explorer",
         longDescription: `Once the Oracle Node has received the information from the API, it will then forward it to Bob’s on-chain Oracle Contract. 
         Bob’s Oracle Contract has the information to Alice’s request.`        
       }
