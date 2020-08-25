@@ -90,7 +90,7 @@ const initialState = {
    bobcontractlock: bobcontractlock,
 };
 
-// The diagramReducer defines the different states that the diagram can be in -- state changes are initiated through the changeDiagramState
+// The diagramReducer defines the different states that the diagram can be in -- state changes are initiated through the ChangeDiagramState
 
 function diagramReducer(state, action) {
   switch (action.type) {
