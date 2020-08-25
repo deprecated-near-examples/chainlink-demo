@@ -1,7 +1,7 @@
 
 import React, {useState} from 'react'
 import '../styles/diagram.css'
-import DiagramOverlay from './diagramOverlay'
+import DiagramOverlay from './DiagramOverlay'
 import { useDiagramState } from './DiagramState'
 
 const Diagram = () => {
