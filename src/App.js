@@ -11,9 +11,9 @@ function App() {
     <div className="App">
       <Header/>
       <DiagramProvider>
-          <Search/>
-          <Diagram/>
-          <ChangeDiagramState/>
+        <Search/>
+        <Diagram/>
+        <ChangeDiagramState/>
       </DiagramProvider>
     </div>
   )
