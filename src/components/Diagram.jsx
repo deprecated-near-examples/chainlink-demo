@@ -15,7 +15,7 @@ const Diagram = () => {
     const [explainerBackground, setExplainerBackground] = useState(state.explainerbackground)
     const [nearkat, setNearKat] = useState(state.nearkatone)
     const [nearkatcss, setNearKatcss] = useState("nearkat-one")
-    const [description, setDescription] = useState("Here’s more detail on this part if needed")
+    const [description, setDescription] = useState(state.shortDescription)
 
     // The above states ar changed through the following function
     const expandExplainer = () => {
@@ -30,7 +30,7 @@ const Diagram = () => {
         }
         else if (active === true){
             setButton("Expand");
-            setDescription("Here’s more detail on this part if needed")
+            setDescription(state.shortDescription)
             setExplainerBackground(state.explainerbackground)
             setNearKat(state.nearkatone)
             setNearKatcss("nearkat-one")
