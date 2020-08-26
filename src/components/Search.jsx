@@ -104,13 +104,13 @@ const Search = () => {
         <div className="alice-box">
           <img src={alice} alt="Alice" className="alice"/>
           <p>
-            <strong id="bold">Alice</strong> owns Client Contract
+            <strong id="bold">Client Contract</strong>
           </p>
-      </div>
+        </div>
         <div className="bob-box">
           <img src={bob} alt="Bob" className="bob"/>
           <p>
-            <strong id="bold">Bob</strong> owns Oracle Contract & Node
+            <strong id="bold">Oracle Contract</strong>
           </p>
         </div>
       </div>
