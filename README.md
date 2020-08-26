@@ -9,7 +9,7 @@ On initial page load, the application auto-connects to the NEAR blockchain using
 1) `client` contract makes a call to the ***on-chain*** `oracle` contract
 2) ***on-chain*** `oracle` makes a request to ***off-chain*** `oracle-node` (Chainlink)
 3) Chainlink `oracle-node` makes a request to an API
-4) API responds with the fulfilled token price request to the Chainlink `oracle-node` 
+4) API responds with the fulfilled token price to the Chainlink `oracle-node` 
 5) Chainlink `oracle-node` passes API response to the ***on-Chain*** `oracle` contract
 6) ***on-chain*** `oracle` contract fulfills the original `client` contract request with the API's response
 
