@@ -4,7 +4,7 @@ A simple front-end dApp demonstrating how smart contracts on NEAR can access off
 
 - This example allows users to search for and retrieve a token's current market price in USD. 
 
-On initial page load, the application auto-connects to the NEAR network using built in access keys configured by the dApp developer. When a search is performed, the application interacts with a `client` contract on NEAR by placing a contract call that invokes a method called `get_token_price`. This triggers the following chain of events:
+On initial page load, the application auto-connects to the NEAR blockchain using built in access keys configured by the dApp developer. When a search is performed, the application interacts with a `client` smart contract (already deployed on NEAR) by placing a contract call that invokes the `get_token_price` method within `client`. This triggers the following chain of events:
 
 1) `client` contract makes a call to the ***on-chain*** `oracle` contract
 2) ***on-chain*** `oracle` makes a request to ***off-chain*** `oracle-node` (Chainlink)
