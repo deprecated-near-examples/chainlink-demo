@@ -15,6 +15,6 @@ On initial page load, the application auto-connects to the NEAR blockchain using
 
 ![Chainlink and NEAR diagram](src/assets/near-chainlink-diagram-v1.png)
 
-Both the `client` and ***on-chain*** `oracle` contracts were created & deployed on the NEAR network using [this walk-through](https://github.com/smartcontractkit/near-protocol-contracts) which can also provide a deeper look into the inner workings of the above steps.
+Both the `client` and ***on-chain*** `oracle` contracts were created & deployed on the NEAR network using a walk-through from [this repository](https://github.com/smartcontractkit/near-protocol-contracts) which can also provide a deeper look into the inner workings of the above steps.
 
 We welcome community feedback & bug reporting so please let us know of any suggestions or issues you may have!
