@@ -1,11 +1,10 @@
 
 import React, {useState} from 'react'
 import '../styles/diagram.css'
-import DiagramOverlay from './diagramOverlay'
+import DiagramOverlay from './DiagramOverlay'
 import { useDiagramState } from './DiagramState'
 
 const Diagram = () => {
-
     // The useDiagramState function is used to access the state of the diagram from the DiagramState component
     const state = useDiagramState()
 
@@ -16,7 +15,7 @@ const Diagram = () => {
     const [explainerBackground, setExplainerBackground] = useState(state.explainerbackground)
     const [nearkat, setNearKat] = useState(state.nearkatone)
     const [nearkatcss, setNearKatcss] = useState("nearkat-one")
-    const [description, setDescription] = useState("Here’s more detail on this part if needed")
+    const [description, setDescription] = useState(state.shortDescription)
 
     // The above states ar changed through the following function
     const expandExplainer = () => {
@@ -28,15 +27,15 @@ const Diagram = () => {
             setNearKatcss("nearkat-two")
             setActive(true)
             setExplorerLink(true)
-         }
+        }
         else if (active === true){
-           setButton("Expand");
-           setDescription("Here’s more detail on this part if needed")
-           setExplainerBackground(state.explainerbackground)
-           setNearKat(state.nearkatone)
-           setNearKatcss("nearkat-one")
-           setActive(false)
-           setExplorerLink(false)
+            setButton("Expand");
+            setDescription(state.shortDescription)
+            setExplainerBackground(state.explainerbackground)
+            setNearKat(state.nearkatone)
+            setNearKatcss("nearkat-one")
+            setActive(false)
+            setExplorerLink(false)
         }
     }
 
@@ -122,7 +121,13 @@ const Diagram = () => {
                             {state.descriptionstate ? 
                                 <div>
                                     <p className="description" >{description}</p>
-                                    {showExplorerLink ? <p className="explorer-link"><a href={state.explorerLink} target="_blank">{state.seeExplorerLink}</a></p> : <p></p> }
+                                    { showExplorerLink ?
+                                    <p className="explorer-link">
+                                        <a href={state.explorerLink} target="_blank">
+                                            {state.seeExplorerLink}
+                                        </a>
+                                    </p> : 
+                                    null }
                                         <div className="explainer-button" onClick={expandExplainer}>
                                             <p>{button}</p>
                                             <img 
@@ -131,8 +136,12 @@ const Diagram = () => {
                                                 className="glass"
                                             />
                                         </div>
-                                </div>
-                        : <button className={"learn-more-button"}><a href="https://docs.chain.link/docs/what-is-chainlink" target="_blank" >Learn More</a></button> }
+                                </div> : 
+                                <button className={"learn-more-button"}>
+                                    <a href="https://docs.chain.link/docs/what-is-chainlink" target="_blank" >
+                                        Learn More
+                                    </a>
+                                </button> }
                         </div>
                     </div>
                 </div>

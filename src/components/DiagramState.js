@@ -37,61 +37,56 @@ import secondtoparrowone from '../assets/second-top-arrow-one.png'
 import secondtoparrowtwo from '../assets/second-top-arrow-two.png'
 
 // The initialState is the first diagram displayed in the demo
-
 const initialState = { 
   // Naming Image Placeholder
-   firsttoparrow: firsttoparrowone,
-   secondtoparrow: secondtoparrowone,
+  firsttoparrow: firsttoparrowone,
+  secondtoparrow: secondtoparrowone,
 
-   firstImage: aliceone,
-   secondImage: arrowone,
-   thirdImage: arrowoneotherdirection,
-   fourthImage: bobone,
-   fifthImage: longarrowoneotherdirection,
-   sixthImage: longarrowone,
-   seventhImage: robotone,
-   eighthImage: arrowone,
-   ninethImage: arrowoneotherdirection,
-   tenthImage: oracleone,
+  firstImage: aliceone,
+  secondImage: arrowone,
+  thirdImage: arrowoneotherdirection,
+  fourthImage: bobone,
+  fifthImage: longarrowoneotherdirection,
+  sixthImage: longarrowone,
+  seventhImage: robotone,
+  eighthImage: arrowone,
+  ninethImage: arrowoneotherdirection,
+  tenthImage: oracleone,
 
-   // Variable to display token transfer
+  // Variable to display token transfer
+  aliceTokens: 50,
+  bobTokens: 0,
 
-   aliceTokens: 50,
-   bobTokens: 0,
-
-   // State Varables 
-
-   descriptionstate: true,
-   diagramVisibility: false,
+  // State Varables 
+  descriptionstate: true,
+  diagramVisibility: true, //set to 'true' for development... change back to 'false' before deploying
   
-   // css variables and changing text which are displayed in the diagram
+  // css variables and changing text which are displayed in the diagram
+  bobtokenscss: "bobtokens-inactive",
+  transfertencss: "transfer-ten-inactive",
+  bobcontractlockcss: "bob-contract-lock-inactive",
+  explainercss: "",
+  stepcss: "step-one",
+  explorerLink: "",
+  seeExplorerLink: "",
+  shortDescription:"yoyoyo",
+  desciption: `Call is placed to \"Client Contract\"`,
+  longDescription: `Alice wants to make a request to an Oracle Contract to receive a token price. To pay for the request, she transfers 50 into her Client Contract (red). The Oracle Contract is run by Bob (blue).`,
 
-   bobtokenscss: "bobtokens-inactive",
-   transfertencss: "transfer-ten-inactive",
-   bobcontractlockcss: "bob-contract-lock-inactive",
-   explainercss: "",
-   stepcss: "step-one",
-   explorerLink: "",
-   seeExplorerLink: "",
-   desciption: `Alice’s contract allowance is set to cover tx fees`,
-   longDescription: `Alice wants to make a request to an Oracle Contract to receive a token price. To pay for the request, she transfers 50 into her Client Contract (red). The Oracle Contract is run by Bob (blue).`,
-
-   // additional images
-
-   divider: divider,
-   glass: glass,
-   explainerbackground: explainerbackgroundone,
-   explainerbackgroundtwo: explainerbackgroundtwo,
-   nearkatone: nearkatone,
-   nearkattwo: nearkattwo,
-   step: stepone,
-   transferten: transferten,
-   oracleExplainer: oracleExplainer,
-   bobcontractlock: bobcontractlock,
+  // additional images
+  divider: divider,
+  glass: glass,
+  explainerbackground: explainerbackgroundone,
+  explainerbackgroundtwo: explainerbackgroundtwo,
+  nearkatone: nearkatone,
+  nearkattwo: nearkattwo,
+  step: stepone,
+  transferten: transferten,
+  oracleExplainer: oracleExplainer,
+  bobcontractlock: bobcontractlock,
 };
 
-// The diagramReducer defines the different states that the diagram can be in -- state changes are initiated through the changeDiagramState
-
+// The diagramReducer defines the different states that the diagram can be in -- state changes are initiated through the ChangeDiagramState
 function diagramReducer(state, action) {
   switch (action.type) {
     case 'initialState':
@@ -114,8 +109,9 @@ function diagramReducer(state, action) {
         transfertencss: "transfer-ten-active",
         explainercss: "explainer-two",   
         desciption: "Contract sends request & tokens to Oracle Contract",
-        explorerLink: "https://explorer.testnet.near.org/",
-        seeExplorerLink: "See the transaction in the explorer",
+        explorerLink: window.transactions ? window.transactions[1].link : null,
+        seeExplorerLink: "See the transaction in NEAR explorer",
+        shortDescription:"yoyoyo",
         longDescription: `Alice sends a fungible token payment to Bob’s Oracle Contract to request the token price from Bob’s Oracle Contract. In this case, Alice sends 10.`,
       };
     case 'secondImageChange':
@@ -177,6 +173,8 @@ function diagramReducer(state, action) {
         bobcontractlockcss: "bob-contract-lock-active",
         explainercss: "explainer-five",   
         desciption: `Price is returned to Oracle Contract`,
+        explorerLink: window.transactions ? window.transactions[0].link : null,
+        seeExplorerLink: "See the transaction in NEAR explorer",
         longDescription: `Once the Oracle Node has received the information from the API, it will then forward it to Bob’s on-chain Oracle Contract. 
         Bob’s Oracle Contract has the information to Alice’s request.`        
       }
@@ -232,7 +230,6 @@ const DiagramStateContext = React.createContext()
 const DiagramDispatchContext = React.createContext()
 
 function DiagramProvider ({children}) {
-
   const [state, dispatch] = useReducer(diagramReducer, initialState)
 
   return (
@@ -254,9 +251,9 @@ function useDiagramState() {
 
 function useDiagramDispatch() {
   const context = React.useContext(DiagramDispatchContext)
-   if (context === undefined) {
-     throw new Error('useDiagramDispatch must be used within a DiagramProvider')
-   }
+    if (context === undefined) {
+      throw new Error('useDiagramDispatch must be used within a DiagramProvider')
+    }
   return context
 }
 
