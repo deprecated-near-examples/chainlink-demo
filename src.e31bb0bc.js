@@ -31798,7 +31798,7 @@ module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],"../node_modules/buffer/index.js":[function(require,module,exports) {
+},{}],"../node_modules/node-libs-browser/node_modules/buffer/index.js":[function(require,module,exports) {
 
 var global = arguments[3];
 /*!
@@ -33591,7 +33591,7 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":"../node_modules/base64-js/index.js","ieee754":"../node_modules/ieee754/index.js","isarray":"../node_modules/isarray/index.js","buffer":"../node_modules/buffer/index.js"}],"../node_modules/safe-buffer/index.js":[function(require,module,exports) {
+},{"base64-js":"../node_modules/base64-js/index.js","ieee754":"../node_modules/ieee754/index.js","isarray":"../node_modules/isarray/index.js","buffer":"../node_modules/node-libs-browser/node_modules/buffer/index.js"}],"../node_modules/safe-buffer/index.js":[function(require,module,exports) {
 
 /*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 /* eslint-disable node/no-deprecated-api */
@@ -33659,7 +33659,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   return buffer.SlowBuffer(size)
 }
 
-},{"buffer":"../node_modules/buffer/index.js"}],"../node_modules/base-x/src/index.js":[function(require,module,exports) {
+},{"buffer":"../node_modules/node-libs-browser/node_modules/buffer/index.js"}],"../node_modules/base-x/src/index.js":[function(require,module,exports) {
 'use strict'
 // base-x encoding / decoding
 // Copyright (c) 2018 base-x contributors
@@ -38316,7 +38316,7 @@ function deserialize(schema, classType, buffer) {
 }
 exports.deserialize = deserialize;
 
-},{"bs58":"../node_modules/bs58/index.js","bn.js":"../node_modules/near-api-js/node_modules/bn.js/lib/bn.js","text-encoding-utf-8":"../node_modules/text-encoding-utf-8/lib/encoding.lib.js","buffer":"../node_modules/buffer/index.js"}],"../node_modules/near-api-js/lib/utils/enums.js":[function(require,module,exports) {
+},{"bs58":"../node_modules/bs58/index.js","bn.js":"../node_modules/near-api-js/node_modules/bn.js/lib/bn.js","text-encoding-utf-8":"../node_modules/text-encoding-utf-8/lib/encoding.lib.js","buffer":"../node_modules/node-libs-browser/node_modules/buffer/index.js"}],"../node_modules/near-api-js/lib/utils/enums.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Assignable = exports.Enum = void 0;
@@ -38803,7 +38803,7 @@ function adaptTransactionResult(txResult) {
 }
 exports.adaptTransactionResult = adaptTransactionResult;
 
-},{"buffer":"../node_modules/buffer/index.js"}],"../node_modules/near-api-js/node_modules/depd/lib/browser/index.js":[function(require,module,exports) {
+},{"buffer":"../node_modules/node-libs-browser/node_modules/buffer/index.js"}],"../node_modules/near-api-js/node_modules/depd/lib/browser/index.js":[function(require,module,exports) {
 /*!
  * depd
  * Copyright(c) 2015 Douglas Christopher Wilson
@@ -39890,7 +39890,8 @@ function EventEmitter() {
   EventEmitter.init.call(this);
 }
 
-module.exports = EventEmitter; // Backwards-compat with node 0.10.x
+module.exports = EventEmitter;
+module.exports.once = once; // Backwards-compat with node 0.10.x
 
 EventEmitter.EventEmitter = EventEmitter;
 EventEmitter.prototype._events = undefined;
@@ -40245,6 +40246,37 @@ function unwrapListeners(arr) {
 
   return ret;
 }
+
+function once(emitter, name) {
+  return new Promise(function (resolve, reject) {
+    function eventListener() {
+      if (errorListener !== undefined) {
+        emitter.removeListener('error', errorListener);
+      }
+
+      resolve([].slice.call(arguments));
+    }
+
+    ;
+    var errorListener; // Adding an error listener is not optional because
+    // if an error is thrown on an event emitter we cannot
+    // guarantee that the actual event we are waiting will
+    // be fired. The result could be a silent way to create
+    // memory or file descriptor leaks, which is something
+    // we should avoid.
+
+    if (name !== 'error') {
+      errorListener = function errorListener(err) {
+        emitter.removeListener(name, eventListener);
+        reject(err);
+      };
+
+      emitter.once('error', errorListener);
+    }
+
+    emitter.once(name, eventListener);
+  });
+}
 },{}],"../node_modules/readable-stream/lib/internal/streams/stream-browser.js":[function(require,module,exports) {
 module.exports = require('events').EventEmitter;
 
@@ -40313,7 +40345,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   return buffer.SlowBuffer(size)
 }
 
-},{"buffer":"../node_modules/buffer/index.js"}],"../node_modules/core-util-is/lib/util.js":[function(require,module,exports) {
+},{"buffer":"../node_modules/node-libs-browser/node_modules/buffer/index.js"}],"../node_modules/core-util-is/lib/util.js":[function(require,module,exports) {
 var Buffer = require("buffer").Buffer;
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -40423,7 +40455,7 @@ function objectToString(o) {
   return Object.prototype.toString.call(o);
 }
 
-},{"buffer":"../node_modules/buffer/index.js"}],"../node_modules/readable-stream/lib/internal/streams/BufferList.js":[function(require,module,exports) {
+},{"buffer":"../node_modules/node-libs-browser/node_modules/buffer/index.js"}],"../node_modules/readable-stream/lib/internal/streams/BufferList.js":[function(require,module,exports) {
 
 'use strict';
 
@@ -41460,7 +41492,72 @@ Duplex.prototype._destroy = function (err, cb) {
 
   pna.nextTick(cb, err);
 };
-},{"process-nextick-args":"../node_modules/process-nextick-args/index.js","core-util-is":"../node_modules/core-util-is/lib/util.js","inherits":"../node_modules/inherits/inherits_browser.js","./_stream_readable":"../node_modules/readable-stream/lib/_stream_readable.js","./_stream_writable":"../node_modules/readable-stream/lib/_stream_writable.js"}],"../node_modules/readable-stream/node_modules/string_decoder/lib/string_decoder.js":[function(require,module,exports) {
+},{"process-nextick-args":"../node_modules/process-nextick-args/index.js","core-util-is":"../node_modules/core-util-is/lib/util.js","inherits":"../node_modules/inherits/inherits_browser.js","./_stream_readable":"../node_modules/readable-stream/lib/_stream_readable.js","./_stream_writable":"../node_modules/readable-stream/lib/_stream_writable.js"}],"../node_modules/string_decoder/node_modules/safe-buffer/index.js":[function(require,module,exports) {
+
+/* eslint-disable node/no-deprecated-api */
+var buffer = require('buffer')
+var Buffer = buffer.Buffer
+
+// alternative to using Object.keys for old browsers
+function copyProps (src, dst) {
+  for (var key in src) {
+    dst[key] = src[key]
+  }
+}
+if (Buffer.from && Buffer.alloc && Buffer.allocUnsafe && Buffer.allocUnsafeSlow) {
+  module.exports = buffer
+} else {
+  // Copy properties from require('buffer')
+  copyProps(buffer, exports)
+  exports.Buffer = SafeBuffer
+}
+
+function SafeBuffer (arg, encodingOrOffset, length) {
+  return Buffer(arg, encodingOrOffset, length)
+}
+
+// Copy static methods from Buffer
+copyProps(Buffer, SafeBuffer)
+
+SafeBuffer.from = function (arg, encodingOrOffset, length) {
+  if (typeof arg === 'number') {
+    throw new TypeError('Argument must not be a number')
+  }
+  return Buffer(arg, encodingOrOffset, length)
+}
+
+SafeBuffer.alloc = function (size, fill, encoding) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  var buf = Buffer(size)
+  if (fill !== undefined) {
+    if (typeof encoding === 'string') {
+      buf.fill(fill, encoding)
+    } else {
+      buf.fill(fill)
+    }
+  } else {
+    buf.fill(0)
+  }
+  return buf
+}
+
+SafeBuffer.allocUnsafe = function (size) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  return Buffer(size)
+}
+
+SafeBuffer.allocUnsafeSlow = function (size) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  return buffer.SlowBuffer(size)
+}
+
+},{"buffer":"../node_modules/node-libs-browser/node_modules/buffer/index.js"}],"../node_modules/string_decoder/lib/string_decoder.js":[function(require,module,exports) {
 
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -41758,7 +41855,7 @@ function simpleWrite(buf) {
 function simpleEnd(buf) {
   return buf && buf.length ? this.write(buf) : '';
 }
-},{"safe-buffer":"../node_modules/readable-stream/node_modules/safe-buffer/index.js"}],"../node_modules/readable-stream/lib/_stream_readable.js":[function(require,module,exports) {
+},{"safe-buffer":"../node_modules/string_decoder/node_modules/safe-buffer/index.js"}],"../node_modules/readable-stream/lib/_stream_readable.js":[function(require,module,exports) {
 
 var global = arguments[3];
 var process = require("process");
@@ -42781,7 +42878,7 @@ function indexOf(xs, x) {
   }
   return -1;
 }
-},{"process-nextick-args":"../node_modules/process-nextick-args/index.js","isarray":"../node_modules/isarray/index.js","events":"../node_modules/events/events.js","./internal/streams/stream":"../node_modules/readable-stream/lib/internal/streams/stream-browser.js","safe-buffer":"../node_modules/readable-stream/node_modules/safe-buffer/index.js","core-util-is":"../node_modules/core-util-is/lib/util.js","inherits":"../node_modules/inherits/inherits_browser.js","util":"../node_modules/parcel-bundler/src/builtins/_empty.js","./internal/streams/BufferList":"../node_modules/readable-stream/lib/internal/streams/BufferList.js","./internal/streams/destroy":"../node_modules/readable-stream/lib/internal/streams/destroy.js","./_stream_duplex":"../node_modules/readable-stream/lib/_stream_duplex.js","string_decoder/":"../node_modules/readable-stream/node_modules/string_decoder/lib/string_decoder.js","process":"../node_modules/process/browser.js"}],"../node_modules/readable-stream/lib/_stream_transform.js":[function(require,module,exports) {
+},{"process-nextick-args":"../node_modules/process-nextick-args/index.js","isarray":"../node_modules/isarray/index.js","events":"../node_modules/events/events.js","./internal/streams/stream":"../node_modules/readable-stream/lib/internal/streams/stream-browser.js","safe-buffer":"../node_modules/readable-stream/node_modules/safe-buffer/index.js","core-util-is":"../node_modules/core-util-is/lib/util.js","inherits":"../node_modules/inherits/inherits_browser.js","util":"../node_modules/parcel-bundler/src/builtins/_empty.js","./internal/streams/BufferList":"../node_modules/readable-stream/lib/internal/streams/BufferList.js","./internal/streams/destroy":"../node_modules/readable-stream/lib/internal/streams/destroy.js","./_stream_duplex":"../node_modules/readable-stream/lib/_stream_duplex.js","string_decoder/":"../node_modules/string_decoder/lib/string_decoder.js","process":"../node_modules/process/browser.js"}],"../node_modules/readable-stream/lib/_stream_transform.js":[function(require,module,exports) {
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -43282,7 +43379,7 @@ IncomingMessage.prototype._onXHRProgress = function () {
 	}
 }
 
-},{"./capability":"../node_modules/stream-http/lib/capability.js","inherits":"../node_modules/inherits/inherits_browser.js","readable-stream":"../node_modules/readable-stream/readable-browser.js","process":"../node_modules/process/browser.js","buffer":"../node_modules/buffer/index.js"}],"../node_modules/to-arraybuffer/index.js":[function(require,module,exports) {
+},{"./capability":"../node_modules/stream-http/lib/capability.js","inherits":"../node_modules/inherits/inherits_browser.js","readable-stream":"../node_modules/readable-stream/readable-browser.js","process":"../node_modules/process/browser.js","buffer":"../node_modules/node-libs-browser/node_modules/buffer/index.js"}],"../node_modules/to-arraybuffer/index.js":[function(require,module,exports) {
 
 var Buffer = require('buffer').Buffer
 
@@ -43312,7 +43409,7 @@ module.exports = function (buf) {
 	}
 }
 
-},{"buffer":"../node_modules/buffer/index.js"}],"../node_modules/stream-http/lib/request.js":[function(require,module,exports) {
+},{"buffer":"../node_modules/node-libs-browser/node_modules/buffer/index.js"}],"../node_modules/stream-http/lib/request.js":[function(require,module,exports) {
 var Buffer = require("buffer").Buffer;
 var global = arguments[3];
 var process = require("process");
@@ -43644,7 +43741,7 @@ var unsafeHeaders = [
 	'via'
 ]
 
-},{"./capability":"../node_modules/stream-http/lib/capability.js","inherits":"../node_modules/inherits/inherits_browser.js","./response":"../node_modules/stream-http/lib/response.js","readable-stream":"../node_modules/readable-stream/readable-browser.js","to-arraybuffer":"../node_modules/to-arraybuffer/index.js","buffer":"../node_modules/buffer/index.js","process":"../node_modules/process/browser.js"}],"../node_modules/xtend/immutable.js":[function(require,module,exports) {
+},{"./capability":"../node_modules/stream-http/lib/capability.js","inherits":"../node_modules/inherits/inherits_browser.js","./response":"../node_modules/stream-http/lib/response.js","readable-stream":"../node_modules/readable-stream/readable-browser.js","to-arraybuffer":"../node_modules/to-arraybuffer/index.js","buffer":"../node_modules/node-libs-browser/node_modules/buffer/index.js","process":"../node_modules/process/browser.js"}],"../node_modules/xtend/immutable.js":[function(require,module,exports) {
 module.exports = extend;
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
@@ -47415,7 +47512,7 @@ class JsonRpcProvider extends provider_1.Provider {
 }
 exports.JsonRpcProvider = JsonRpcProvider;
 
-},{"depd":"../node_modules/near-api-js/node_modules/depd/lib/browser/index.js","./provider":"../node_modules/near-api-js/lib/providers/provider.js","../utils/web":"../node_modules/near-api-js/lib/utils/web.js","../utils/errors":"../node_modules/near-api-js/lib/utils/errors.js","../utils/serialize":"../node_modules/near-api-js/lib/utils/serialize.js","../utils/rpc_errors":"../node_modules/near-api-js/lib/utils/rpc_errors.js","buffer":"../node_modules/buffer/index.js"}],"../node_modules/near-api-js/lib/providers/index.js":[function(require,module,exports) {
+},{"depd":"../node_modules/near-api-js/node_modules/depd/lib/browser/index.js","./provider":"../node_modules/near-api-js/lib/providers/provider.js","../utils/web":"../node_modules/near-api-js/lib/utils/web.js","../utils/errors":"../node_modules/near-api-js/lib/utils/errors.js","../utils/serialize":"../node_modules/near-api-js/lib/utils/serialize.js","../utils/rpc_errors":"../node_modules/near-api-js/lib/utils/rpc_errors.js","buffer":"../node_modules/node-libs-browser/node_modules/buffer/index.js"}],"../node_modules/near-api-js/lib/providers/index.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TypedError = exports.getTransactionLastResult = exports.FinalExecutionStatusBasic = exports.JsonRpcProvider = exports.Provider = void 0;
@@ -48105,7 +48202,7 @@ var Buffer = require("buffer").Buffer;
   }
 })();
 
-},{"process":"../node_modules/process/browser.js","buffer":"../node_modules/buffer/index.js"}],"../node_modules/near-api-js/lib/transaction.js":[function(require,module,exports) {
+},{"process":"../node_modules/process/browser.js","buffer":"../node_modules/node-libs-browser/node_modules/buffer/index.js"}],"../node_modules/near-api-js/lib/transaction.js":[function(require,module,exports) {
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -48715,7 +48812,7 @@ class Account {
 }
 exports.Account = Account;
 
-},{"bn.js":"../node_modules/near-api-js/node_modules/bn.js/lib/bn.js","./transaction":"../node_modules/near-api-js/lib/transaction.js","./providers":"../node_modules/near-api-js/lib/providers/index.js","./utils/serialize":"../node_modules/near-api-js/lib/utils/serialize.js","./utils/key_pair":"../node_modules/near-api-js/lib/utils/key_pair.js","./utils/errors":"../node_modules/near-api-js/lib/utils/errors.js","./utils/rpc_errors":"../node_modules/near-api-js/lib/utils/rpc_errors.js","buffer":"../node_modules/buffer/index.js"}],"../node_modules/near-api-js/lib/account_creator.js":[function(require,module,exports) {
+},{"bn.js":"../node_modules/near-api-js/node_modules/bn.js/lib/bn.js","./transaction":"../node_modules/near-api-js/lib/transaction.js","./providers":"../node_modules/near-api-js/lib/providers/index.js","./utils/serialize":"../node_modules/near-api-js/lib/utils/serialize.js","./utils/key_pair":"../node_modules/near-api-js/lib/utils/key_pair.js","./utils/errors":"../node_modules/near-api-js/lib/utils/errors.js","./utils/rpc_errors":"../node_modules/near-api-js/lib/utils/rpc_errors.js","buffer":"../node_modules/node-libs-browser/node_modules/buffer/index.js"}],"../node_modules/near-api-js/lib/account_creator.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UrlAccountCreator = exports.LocalAccountCreator = exports.AccountCreator = void 0;
@@ -50196,7 +50293,7 @@ class ConnectedWalletAccount extends account_1.Account {
     }
 }
 
-},{"./account":"../node_modules/near-api-js/lib/account.js","./transaction":"../node_modules/near-api-js/lib/transaction.js","./utils":"../node_modules/near-api-js/lib/utils/index.js","./utils/serialize":"../node_modules/near-api-js/lib/utils/serialize.js","buffer":"../node_modules/buffer/index.js"}],"../node_modules/near-api-js/lib/common-index.js":[function(require,module,exports) {
+},{"./account":"../node_modules/near-api-js/lib/account.js","./transaction":"../node_modules/near-api-js/lib/transaction.js","./utils":"../node_modules/near-api-js/lib/utils/index.js","./utils/serialize":"../node_modules/near-api-js/lib/utils/serialize.js","buffer":"../node_modules/node-libs-browser/node_modules/buffer/index.js"}],"../node_modules/near-api-js/lib/common-index.js":[function(require,module,exports) {
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -50288,12 +50385,11 @@ exports.getClientAcct = getClientAcct;
 
 var _nearApiJs = require("near-api-js");
 
-console.log('aloha process.env.NEAR_ACCT', "p.mike.testnet"); //configuration for connection to NEAR
-
+//configuration for connection to NEAR
 const nearConfig = {
   networkId: 'testnet',
   nodeUrl: 'https://rpc.testnet.near.org',
-  contractName: `client.${"p.mike.testnet"}`,
+  contractName: `client.${"chainlink.testnet"}`,
   walletUrl: 'https://wallet.testnet.near.org',
   helperUrl: 'https://helper.testnet.near.org'
 }; // These get set the first time we attempt a connection, and get
@@ -50306,9 +50402,8 @@ let clientAcct;
 async function connectToNear() {
   const keyStore = new _nearApiJs.keyStores.InMemoryKeyStore();
 
-  const keyPair = _nearApiJs.KeyPair.fromString("ed25519:wYgze8MJGgBTKqTCkHRoRZYTU5BmJMvvL7mSSMi1qxtQzeZbYdtBq2dgJVk9WLiyKRbsCRaeAUCrqK12tw8LdrW");
+  const keyPair = _nearApiJs.KeyPair.fromString("ed25519:pKGNrdKXuVZvLRGUZHbiT1dZWgRiGN1gfCvcJwQsevZr18QqJETW1GFDcFbAoGTXAUkbyy6h7oWnizeuWPzgSzG"); //sets key in memory
 
-  console.log('aloha keyPair', keyPair); //sets key in memory
 
   await keyStore.setKey(nearConfig.networkId, nearConfig.contractName, keyPair);
   near = await (0, _nearApiJs.connect)(Object.assign({
@@ -50361,8 +50456,7 @@ var _utils = require("./utils");
 
 const bs58 = require('bs58');
 
-const nearAcct = "p.mike.testnet";
-console.log('aloha nearAcct', nearAcct); // const baseAcct = process.env.NEAR_ACCT
+const nearAcct = "chainlink.testnet";
 
 async function getLatestBlockID() {
   const near = await (0, _utils.getNear)();
@@ -50458,15 +50552,17 @@ async function getTransactions(firstBlock, lastBlock) {
     });
     return acc;
   }, []); // Note: at this point should be only one transaction
+  //insert initial transaction into matchingTxs array
 
-  console.log("Transactions: ", matchingTxs);
+  matchingTxs.push(window.firstTransaction); //transaction receipts from other steps
+
   const txObj = await getTransaction(matchingTxs[0].hash, 'oracle-node');
-  await getReceiptsFromAccountPrefix(txObj, 'client', 6);
+  await getReceiptsFromAccountPrefix(txObj, 'client', 6); //creates transaction links from matchingTxs
+
   const txsLinks = matchingTxs.map(txs => ({
     method: txs.actions[0].FunctionCall.method_name,
     link: `https://explorer.testnet.near.org/transactions/${txs.hash}`
   }));
-  console.log('txsLinks', txsLinks);
   return txsLinks;
 }
 
@@ -50541,7 +50637,7 @@ function getOracleRequests(baseAcct) {
 function checkWithdrawableTokens() {
   window.oracleContract.get_withdrawable_tokens().then(result => console.log('withdrawable tokens amt: ', result));
 }
-},{"./utils":"services/utils.js","bs58":"../node_modules/bs58/index.js","buffer":"../node_modules/buffer/index.js"}],"assets/divider.png":[function(require,module,exports) {
+},{"./utils":"services/utils.js","bs58":"../node_modules/bs58/index.js","buffer":"../node_modules/node-libs-browser/node_modules/buffer/index.js"}],"assets/divider.png":[function(require,module,exports) {
 module.exports = "/divider.ab0b398d.png";
 },{}],"assets/glass.png":[function(require,module,exports) {
 module.exports = "/glass.88e56c82.png";
@@ -50703,6 +50799,7 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+// The initialState is the first diagram displayed in the demo
 const initialState = {
   // Naming Image Placeholder
   firsttoparrow: _firstTopArrowOne.default,
@@ -50717,19 +50814,24 @@ const initialState = {
   eighthImage: _arrowOne.default,
   ninethImage: _arrowOneOtherDirection.default,
   tenthImage: _oracleOne.default,
-  // Variables 
+  // Variable to display token transfer
   aliceTokens: 50,
   bobTokens: 0,
+  // State Varables 
   descriptionstate: true,
-  diagramVisibility: false,
-  // css variables
+  diagramVisibility: true,
+  //set to 'true' for development... change back to 'false' before deploying
+  // css variables and changing text which are displayed in the diagram
   bobtokenscss: "bobtokens-inactive",
   transfertencss: "transfer-ten-inactive",
   bobcontractlockcss: "bob-contract-lock-inactive",
-  explainercss: "",
+  explainercss: "explainer",
   stepcss: "step-one",
-  desciption: `Alice’s contract allowance is set to cover tx fees`,
-  longDescription: 'More information on the smart contract processes will go here.',
+  explorerLink: "",
+  seeExplorerLink: "",
+  shortDescription: "",
+  desciption: `Call is placed to \"Client Contract\"`,
+  longDescription: `The user search initiates a call to the "Client" contract requesting the token price for the selected option. The client contract currently has 50 fungible tokens has a balance of 50 fungible tokens that can be used to pay for this request.`,
   // additional images
   divider: _divider.default,
   glass: _glass.default,
@@ -50741,7 +50843,7 @@ const initialState = {
   transferten: _transferTen.default,
   oracleExplainer: _oracleExplainer.default,
   bobcontractlock: _bobContractLock.default
-};
+}; // The diagramReducer defines the different states that the diagram can be in -- state changes are initiated through the ChangeDiagramState
 
 function diagramReducer(state, action) {
   switch (action.type) {
@@ -50765,7 +50867,10 @@ function diagramReducer(state, action) {
         transfertencss: "transfer-ten-active",
         explainercss: "explainer-two",
         desciption: "Contract sends request & tokens to Oracle Contract",
-        longDescription: ""
+        explorerLink: window.transactions ? window.transactions[1].link : null,
+        seeExplorerLink: "See the transaction in NEAR explorer",
+        shortDescription: window.transactions ? window.transactions[1].link : null,
+        longDescription: `Alice sends a fungible token payment to Bob’s Oracle Contract to request the token price from Bob’s Oracle Contract. In this case, Alice sends 10.`
       };
 
     case 'secondImageChange':
@@ -50783,7 +50888,9 @@ function diagramReducer(state, action) {
         bobtokenscss: "bobtokens-active",
         bobcontractlockcss: "bob-contract-lock-active",
         explainercss: "explainer-three",
-        desciption: "Tokens locked & request sent to Oracle Node."
+        desciption: "Tokens locked & request sent to Oracle Node.",
+        longDescription: `Bob receives the token payment and the request from Alice. Until Bob has successfully processed Alice’s request and returned the token price, the payment will be locked in his contract. 
+        Bob forwards Alice’s request from his Oracle Contract on-chain to his Oracle Node off-chain.`
       };
 
     case 'thirdImageChange':
@@ -50802,7 +50909,10 @@ function diagramReducer(state, action) {
         bobtokenscss: "bobtokens-active",
         bobcontractlockcss: "bob-contract-lock-active",
         explainercss: "explainer-four",
-        desciption: "Oracle Node interfaces with API to retrieve data"
+        desciption: "Oracle Node interfaces with API to retrieve data",
+        longDescription: `The Oracle Node received the information from Bob’s Oracle Contract.
+        Now it can request the data from the off-chain API. In real life, Bob would not run one Oracle Node but multiple, which each request information from a different API. 
+        The information is compared to filter the most accurate.`
       };
 
     case 'fourthImageChange':
@@ -50820,9 +50930,12 @@ function diagramReducer(state, action) {
         bobtokenscss: "bobtokens-active",
         bobcontractlockcss: "bob-contract-lock-active",
         explainercss: "explainer-five",
-        desciption: `Price is returned to Oracle Contract`
+        desciption: `Price is returned to Oracle Contract`,
+        explorerLink: window.transactions ? window.transactions[0].link : null,
+        seeExplorerLink: "See the transaction in NEAR explorer",
+        longDescription: `Once the Oracle Node has received the information from the API, it will then forward it to Bob’s on-chain Oracle Contract. 
+        Bob’s Oracle Contract has the information to Alice’s request.`
       };
-    //`Price ${result} is returned to Oracle Contract`
 
     case 'fifthImageChange':
       return { ...initialState,
@@ -50839,7 +50952,9 @@ function diagramReducer(state, action) {
         bobtokenscss: "bobtokens-active",
         bobcontractlockcss: "bob-contract-lock-active",
         bobcontractlock: _bobContractUnlock.default,
-        desciption: `Price is returned to Alice’s Contract`
+        desciption: `Price is returned to Alice’s Contract`,
+        longDescription: `In the last step, Bob’s Oracle Contract will forward the information to Alice’s Client Contract. 
+        The Oracle Contract has completed Alice’s request. Alice’s initial payment is unlocked in the Oracle Contract and can now be accessed by Bob.`
       };
 
     case 'sixthImageChange':
@@ -50905,53 +51020,7 @@ function useDiagramDispatch() {
 
   return context;
 }
-},{"react":"../node_modules/react/index.js","../assets/divider.png":"assets/divider.png","../assets/glass.png":"assets/glass.png","../assets/explainer-background.png":"assets/explainer-background.png","../assets/explainerbackgroundtwo.png":"assets/explainerbackgroundtwo.png","../assets/explainerbackgroundthree.png":"assets/explainerbackgroundthree.png","../assets/nearkat-one.png":"assets/nearkat-one.png","../assets/nearkat-two.png":"assets/nearkat-two.png","../assets/step-one.png":"assets/step-one.png","../assets/step-two.png":"assets/step-two.png","../assets/step-three.png":"assets/step-three.png","../assets/step-four.png":"assets/step-four.png","../assets/step-five.png":"assets/step-five.png","../assets/step-six.png":"assets/step-six.png","../assets/transfer-ten.png":"assets/transfer-ten.png","../assets/bob-contract-lock.png":"assets/bob-contract-lock.png","../assets/bob-contract-unlock.png":"assets/bob-contract-unlock.png","../assets/alice-one.png":"assets/alice-one.png","../assets/bob-one.png":"assets/bob-one.png","../assets/bob-two.png":"assets/bob-two.png","../assets/arrow-one.png":"assets/arrow-one.png","../assets/arrow-two.png":"assets/arrow-two.png","../assets/arrow-one-other-direction.png":"assets/arrow-one-other-direction.png","../assets/arrow-two-other-direction.png":"assets/arrow-two-other-direction.png","../assets/long-arrow-one.png":"assets/long-arrow-one.png","../assets/long-arrow-one-green.png":"assets/long-arrow-one-green.png","../assets/long-arrow-one-other-direction.png":"assets/long-arrow-one-other-direction.png","../assets/long-arrow-two-other-direction.png":"assets/long-arrow-two-other-direction.png","../assets/robot-one.png":"assets/robot-one.png","../assets/robot-two.png":"assets/robot-two.png","../assets/oracle-one.png":"assets/oracle-one.png","../assets/oracle-two.png":"assets/oracle-two.png","../assets/oracleExplainer.png":"assets/oracleExplainer.png","../assets/first-top-arrow-one.png":"assets/first-top-arrow-one.png","../assets/first-top-arrow-two.png":"assets/first-top-arrow-two.png","../assets/second-top-arrow-one.png":"assets/second-top-arrow-one.png","../assets/second-top-arrow-two.png":"assets/second-top-arrow-two.png"}],"components/StyledButton.jsx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-const StyledButton = ({
-  backgroundColor = '#00C08B',
-  backgroundColorDisabled = '#8FD6BD',
-  children,
-  className,
-  width = 94,
-  type = 'button',
-  ...props
-}) => {
-  if (type === 'submit') {
-    return /*#__PURE__*/_react.default.createElement("input", _extends({
-      className: `styled-button ${className}`,
-      type: type,
-      style: {
-        backgroundColor: props.disabled ? backgroundColorDisabled : backgroundColor,
-        width: width
-      }
-    }, props), children);
-  } else {
-    return /*#__PURE__*/_react.default.createElement("button", _extends({
-      className: `styled-button ${className}`,
-      type: type,
-      style: {
-        backgroundColor: props.disabled ? backgroundColorDisabled : backgroundColor,
-        width: width
-      }
-    }, props), children);
-  }
-};
-
-var _default = StyledButton;
-exports.default = _default;
-},{"react":"../node_modules/react/index.js"}],"components/Search.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../assets/divider.png":"assets/divider.png","../assets/glass.png":"assets/glass.png","../assets/explainer-background.png":"assets/explainer-background.png","../assets/explainerbackgroundtwo.png":"assets/explainerbackgroundtwo.png","../assets/explainerbackgroundthree.png":"assets/explainerbackgroundthree.png","../assets/nearkat-one.png":"assets/nearkat-one.png","../assets/nearkat-two.png":"assets/nearkat-two.png","../assets/step-one.png":"assets/step-one.png","../assets/step-two.png":"assets/step-two.png","../assets/step-three.png":"assets/step-three.png","../assets/step-four.png":"assets/step-four.png","../assets/step-five.png":"assets/step-five.png","../assets/step-six.png":"assets/step-six.png","../assets/transfer-ten.png":"assets/transfer-ten.png","../assets/bob-contract-lock.png":"assets/bob-contract-lock.png","../assets/bob-contract-unlock.png":"assets/bob-contract-unlock.png","../assets/alice-one.png":"assets/alice-one.png","../assets/bob-one.png":"assets/bob-one.png","../assets/bob-two.png":"assets/bob-two.png","../assets/arrow-one.png":"assets/arrow-one.png","../assets/arrow-two.png":"assets/arrow-two.png","../assets/arrow-one-other-direction.png":"assets/arrow-one-other-direction.png","../assets/arrow-two-other-direction.png":"assets/arrow-two-other-direction.png","../assets/long-arrow-one.png":"assets/long-arrow-one.png","../assets/long-arrow-one-green.png":"assets/long-arrow-one-green.png","../assets/long-arrow-one-other-direction.png":"assets/long-arrow-one-other-direction.png","../assets/long-arrow-two-other-direction.png":"assets/long-arrow-two-other-direction.png","../assets/robot-one.png":"assets/robot-one.png","../assets/robot-two.png":"assets/robot-two.png","../assets/oracle-one.png":"assets/oracle-one.png","../assets/oracle-two.png":"assets/oracle-two.png","../assets/oracleExplainer.png":"assets/oracleExplainer.png","../assets/first-top-arrow-one.png":"assets/first-top-arrow-one.png","../assets/first-top-arrow-two.png":"assets/first-top-arrow-two.png","../assets/second-top-arrow-one.png":"assets/second-top-arrow-one.png","../assets/second-top-arrow-two.png":"assets/second-top-arrow-two.png"}],"components/Search.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -50973,8 +51042,6 @@ var _contractUtils = require("../services/contractUtils");
 
 var _DiagramState = require("./DiagramState");
 
-var _StyledButton = _interopRequireDefault(require("./StyledButton"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
@@ -50982,7 +51049,9 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 const Search = () => {
-  const dispatch = (0, _DiagramState.useDiagramDispatch)();
+  // The useDiagramDispatch function from the DiagramState component is accessed to regulate whether the diagram is visible or not
+  const dispatch = (0, _DiagramState.useDiagramDispatch)(); // The states are used to regulate the button behaviour between token price searches
+
   const [searchValue, setSearchValue] = (0, _react.useState)(null);
   const [searchResult, setSearchResult] = (0, _react.useState)("");
   const [loading, setLoading] = (0, _react.useState)(false);
@@ -51021,7 +51090,8 @@ const Search = () => {
       console.log('FIRST block ID: ', firstBlockID);
       console.log('LAST block ID: ', finalBlockID);
       window.transactions = await (0, _contractUtils.getTransactions)(firstBlockID, finalBlockID);
-      console.log('window.transactions', window.transactions);
+      console.log('STEPS: ', window.nearSteps);
+      console.log('Transaction Links: ', window.transactions);
     } else setTimeout(async () => {
       await fetchNonceAnswer(firstBlockID, nonce);
     }, 750);
@@ -51035,7 +51105,8 @@ const Search = () => {
     name: "tokenSymbol",
     className: "search",
     id: "tokenSymbol",
-    onChange: handleChange
+    onChange: handleChange,
+    disabled: loading
   }, /*#__PURE__*/_react.default.createElement("option", {
     value: "",
     default: true,
@@ -51053,10 +51124,11 @@ const Search = () => {
   }, "Ethereum"), /*#__PURE__*/_react.default.createElement("option", {
     value: "LINK",
     id: "option"
-  }, "Chainlink")), /*#__PURE__*/_react.default.createElement(_StyledButton.default, {
+  }, "Chainlink")), /*#__PURE__*/_react.default.createElement("input", {
     onClick: handleSubmit,
     type: "submit",
     value: "Check",
+    className: "submit-button",
     disabled: loading || searchValue === null
   })), /*#__PURE__*/_react.default.createElement("div", {
     className: "search-result"
@@ -51077,7 +51149,7 @@ const Search = () => {
     className: "alice"
   }), /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("strong", {
     id: "bold"
-  }, "Alice"), " owns Client Contract")), /*#__PURE__*/_react.default.createElement("div", {
+  }, "Client Contract"))), /*#__PURE__*/_react.default.createElement("div", {
     className: "bob-box"
   }, /*#__PURE__*/_react.default.createElement("img", {
     src: _bob.default,
@@ -51085,12 +51157,12 @@ const Search = () => {
     className: "bob"
   }), /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("strong", {
     id: "bold"
-  }, "Bob"), " owns Oracle Contract & Node"))));
+  }, "Oracle Contract")))));
 };
 
 var _default = Search;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","../assets/alice.png":"assets/alice.png","../assets/bob.png":"assets/bob.png","../assets/spinner.gif":"assets/spinner.gif","../styles/search.css":"styles/search.css","../services/contractUtils":"services/contractUtils.js","./DiagramState":"components/DiagramState.js","./StyledButton":"components/StyledButton.jsx"}],"styles/diagram.css":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../assets/alice.png":"assets/alice.png","../assets/bob.png":"assets/bob.png","../assets/spinner.gif":"assets/spinner.gif","../styles/search.css":"styles/search.css","../services/contractUtils":"services/contractUtils.js","./DiagramState":"components/DiagramState.js"}],"styles/diagram.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -51100,7 +51172,7 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"components/diagramOverlay.js":[function(require,module,exports) {
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"components/DiagramOverlay.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -51114,6 +51186,7 @@ require("../styles/diagramOverlay.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// This component is used to hide the diagram before the first search result
 const DiagramOverlay = () => {
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "diagram-overlay"
@@ -51122,91 +51195,7 @@ const DiagramOverlay = () => {
 
 var _default = DiagramOverlay;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","../styles/diagramOverlay.css":"styles/diagramOverlay.css"}],"styles/diagramstatechange.css":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"components/changeDiagramState.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireWildcard(require("react"));
-
-require("../styles/diagramstatechange.css");
-
-var _DiagramState = require("./DiagramState");
-
-var _StyledButton = _interopRequireDefault(require("./StyledButton"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function ChangeDiagramState() {
-  const [count, setCount] = (0, _react.useState)(1);
-  const dispatch = (0, _DiagramState.useDiagramDispatch)();
-
-  const incrementCounter = () => {
-    if (count < 7) {
-      setCount(count + 1);
-      updateDiagram();
-
-      if (count === 6) {
-        setCount(count - 6);
-      }
-    }
-  }; //   const decrementCounter = () => {
-  //     if (count >= 0) {
-  //         setCount(count - 1)
-  //         updateDiagram()
-  //         if (count === 0) {
-  //           setCount(count + 6 )
-  //         }
-  //     }
-  // };
-
-
-  const updateDiagram = () => {
-    if (count === 0) dispatch({
-      type: 'displayDiagram'
-    });
-    if (count === 1) dispatch({
-      type: 'firstImageChange'
-    });
-    if (count === 2) dispatch({
-      type: 'secondImageChange'
-    });
-    if (count === 3) dispatch({
-      type: 'thirdImageChange'
-    });
-    if (count === 4) dispatch({
-      type: 'fourthImageChange'
-    });
-    if (count === 5) dispatch({
-      type: 'fifthImageChange'
-    });
-    if (count === 6) dispatch({
-      type: 'sixthImageChange'
-    });
-  };
-
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", {
-    className: "counter"
-  }, /*#__PURE__*/_react.default.createElement(_StyledButton.default, {
-    onClick: incrementCounter
-  }, "Next")));
-}
-
-var _default = ChangeDiagramState;
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","../styles/diagramstatechange.css":"styles/diagramstatechange.css","./DiagramState":"components/DiagramState.js","./StyledButton":"components/StyledButton.jsx"}],"components/Diagram.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../styles/diagramOverlay.css":"styles/diagramOverlay.css"}],"components/Diagram.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -51218,13 +51207,9 @@ var _react = _interopRequireWildcard(require("react"));
 
 require("../styles/diagram.css");
 
-var _diagramOverlay = _interopRequireDefault(require("./diagramOverlay"));
-
-var _changeDiagramState = _interopRequireDefault(require("./changeDiagramState"));
+var _DiagramOverlay = _interopRequireDefault(require("./DiagramOverlay"));
 
 var _DiagramState = require("./DiagramState");
-
-var _StyledButton = _interopRequireDefault(require("./StyledButton"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -51233,29 +51218,34 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 const Diagram = () => {
-  const state = (0, _DiagramState.useDiagramState)();
+  // The useDiagramState function is used to access the state of the diagram from the DiagramState component
+  const state = (0, _DiagramState.useDiagramState)(); // The following states are used to control whether the explainer section is expanded and the explanation visible or not
+
   const [active, setActive] = (0, _react.useState)(false);
-  const [button, setButton] = (0, _react.useState)("Expand");
-  const [explainerBackground, setExplainerBackground] = (0, _react.useState)(state.explainerbackground);
+  const [showExplorerLink, setExplorerLink] = (0, _react.useState)(false);
+  const [button, setButton] = (0, _react.useState)("Expand"); // const [explainerBackground, setExplainerBackground] = useState(state.explainerbackground)
+
   const [nearkat, setNearKat] = (0, _react.useState)(state.nearkatone);
   const [nearkatcss, setNearKatcss] = (0, _react.useState)("nearkat-one");
-  const [description, setDescription] = (0, _react.useState)("Here’s more detail on this part if needed");
+  const [description, setDescription] = (0, _react.useState)(state.shortDescription); // The above states ar changed through the following function
 
   const expandExplainer = () => {
     if (active === false) {
       setButton("Show Less");
-      setDescription(state.longDescription);
-      setExplainerBackground(state.explainerbackgroundtwo);
+      setDescription(state.longDescription); // setExplainerBackground(state.explainerbackgroundtwo)
+
       setNearKat(state.nearkattwo);
       setNearKatcss("nearkat-two");
       setActive(true);
+      setExplorerLink(true);
     } else if (active === true) {
-      setButton("Expand");
-      setDescription("Here’s more detail on this part if needed");
-      setExplainerBackground(state.explainerbackground);
+      setButton("More Info");
+      setDescription(state.shortDescription); // setExplainerBackground(state.explainerbackground)
+
       setNearKat(state.nearkatone);
       setNearKatcss("nearkat-one");
       setActive(false);
+      setExplorerLink(false);
     }
   };
 
@@ -51346,10 +51336,8 @@ const Diagram = () => {
     alt: "Oracle"
   }))), /*#__PURE__*/_react.default.createElement("div", {
     className: state.explainercss
-  }, /*#__PURE__*/_react.default.createElement("img", {
-    src: explainerBackground,
-    alt: "ExplainerBackground",
-    className: "explainer-background"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "arrow"
   }), /*#__PURE__*/_react.default.createElement("div", {
     className: "explainer-one-content"
   }, /*#__PURE__*/_react.default.createElement("img", {
@@ -51364,24 +51352,102 @@ const Diagram = () => {
     className: "explainer-content"
   }, state.descriptionstate ? /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("p", {
     className: "description"
-  }, description), /*#__PURE__*/_react.default.createElement("div", {
+  }, description), showExplorerLink ? /*#__PURE__*/_react.default.createElement("p", {
+    className: "explorer-link"
+  }, /*#__PURE__*/_react.default.createElement("a", {
+    href: state.explorerLink,
+    target: "_blank"
+  }, state.seeExplorerLink)) : null, /*#__PURE__*/_react.default.createElement("div", {
     className: "explainer-button",
     onClick: expandExplainer
   }, /*#__PURE__*/_react.default.createElement("p", null, button), /*#__PURE__*/_react.default.createElement("img", {
     src: state.glass,
     alt: "Glass",
     className: "glass"
-  }))) : /*#__PURE__*/_react.default.createElement(_StyledButton.default, {
-    backgroundColorDisabled: "#6AD1E3",
-    backgroundColor: "#0071CE",
-    className: "learn-more",
-    width: 210
-  }, "Learn More")))), /*#__PURE__*/_react.default.createElement(_changeDiagramState.default, null)) : /*#__PURE__*/_react.default.createElement(_diagramOverlay.default, null));
+  }))) : /*#__PURE__*/_react.default.createElement("button", {
+    className: "learn-more-button"
+  }, /*#__PURE__*/_react.default.createElement("a", {
+    href: "https://docs.chain.link/docs/what-is-chainlink",
+    target: "_blank"
+  }, "Learn More")))))) : /*#__PURE__*/_react.default.createElement(_DiagramOverlay.default, null));
 };
 
 var _default = Diagram;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","../styles/diagram.css":"styles/diagram.css","./diagramOverlay":"components/diagramOverlay.js","./changeDiagramState":"components/changeDiagramState.js","./DiagramState":"components/DiagramState.js","./StyledButton":"components/StyledButton.jsx"}],"App.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../styles/diagram.css":"styles/diagram.css","./DiagramOverlay":"components/DiagramOverlay.jsx","./DiagramState":"components/DiagramState.js"}],"styles/diagramstatechange.css":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"components/ChangeDiagramState.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+require("../styles/diagramstatechange.css");
+
+var _DiagramState = require("./DiagramState");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function ChangeDiagramState() {
+  const [count, setCount] = (0, _react.useState)(0); // Accessing the React Context through the custom functions from the Diagram State
+
+  const dispatch = (0, _DiagramState.useDiagramDispatch)();
+  const state = (0, _DiagramState.useDiagramState)(); // Counter will change the state of the diagram; the counter cannot go above 6 or below 0
+
+  const incrementCounter = () => {
+    const newCount = count + 1 === 7 ? 0 : count + 1;
+    setCount(newCount);
+    updateDiagram(newCount);
+  };
+
+  const decrementCounter = () => {
+    const newCount = count - 1 === -1 ? 6 : count - 1;
+    setCount(newCount);
+    updateDiagram(newCount);
+  }; // Each number in the counter corresponds to one state of the diagram 
+
+
+  const updateDiagram = newCount => {
+    if (newCount === 1) dispatch({
+      type: 'firstImageChange'
+    });else if (newCount === 2) dispatch({
+      type: 'secondImageChange'
+    });else if (newCount === 3) dispatch({
+      type: 'thirdImageChange'
+    });else if (newCount === 4) dispatch({
+      type: 'fourthImageChange'
+    });else if (newCount === 5) dispatch({
+      type: 'fifthImageChange'
+    });else if (newCount === 6) dispatch({
+      type: 'sixthImageChange'
+    });else dispatch({
+      type: 'displayDiagram'
+    });
+  };
+
+  return /*#__PURE__*/_react.default.createElement("div", null, state.diagramVisibility ? /*#__PURE__*/_react.default.createElement("div", {
+    className: "counter"
+  }, /*#__PURE__*/_react.default.createElement("button", {
+    onClick: decrementCounter,
+    className: "counter-button"
+  }, "Prev"), /*#__PURE__*/_react.default.createElement("button", {
+    onClick: incrementCounter,
+    className: "counter-button"
+  }, "Next")) : /*#__PURE__*/_react.default.createElement("div", null));
+}
+
+var _default = ChangeDiagramState;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","../styles/diagramstatechange.css":"styles/diagramstatechange.css","./DiagramState":"components/DiagramState.js"}],"App.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -51399,7 +51465,7 @@ var _Search = _interopRequireDefault(require("./components/Search"));
 
 var _Diagram = _interopRequireDefault(require("./components/Diagram"));
 
-var _changeDiagramState = _interopRequireDefault(require("./components/changeDiagramState"));
+var _ChangeDiagramState = _interopRequireDefault(require("./components/ChangeDiagramState"));
 
 var _DiagramState = require("./components/DiagramState");
 
@@ -51412,12 +51478,12 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function App() {
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "App"
-  }, /*#__PURE__*/_react.default.createElement(_Header.default, null), /*#__PURE__*/_react.default.createElement(_DiagramState.DiagramProvider, null, /*#__PURE__*/_react.default.createElement(_Search.default, null), /*#__PURE__*/_react.default.createElement(_Diagram.default, null), /*#__PURE__*/_react.default.createElement(_changeDiagramState.default, null)));
+  }, /*#__PURE__*/_react.default.createElement(_Header.default, null), /*#__PURE__*/_react.default.createElement(_DiagramState.DiagramProvider, null, /*#__PURE__*/_react.default.createElement(_Search.default, null), /*#__PURE__*/_react.default.createElement(_Diagram.default, null), /*#__PURE__*/_react.default.createElement(_ChangeDiagramState.default, null)));
 }
 
 var _default = App;
 exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","./components/Header":"components/Header.jsx","./components/Search":"components/Search.jsx","./components/Diagram":"components/Diagram.jsx","./components/changeDiagramState":"components/changeDiagramState.js","./components/DiagramState":"components/DiagramState.js"}],"index.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","./components/Header":"components/Header.jsx","./components/Search":"components/Search.jsx","./components/Diagram":"components/Diagram.jsx","./components/ChangeDiagramState":"components/ChangeDiagramState.jsx","./components/DiagramState":"components/DiagramState.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -51464,7 +51530,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55187" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51656" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
