@@ -69,7 +69,7 @@ const initialState = {
   stepcss: "step-one",
   explorerLink: "",
   seeExplorerLink: "",
-  shortDescription:"",
+  shortDescription: "",
   desciption: `Call is placed to \"Client Contract\"`,
   longDescription: `The user search initiates a call to the "Client" contract requesting the token price for the selected option. The client contract currently has 50 fungible tokens has a balance of 50 fungible tokens that can be used to pay for this request.`,
 
