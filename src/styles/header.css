@@ -36,7 +36,8 @@
 }
 
 .logos {
-    margin-left: 5px;
-    margin-top: 8px;
-    height: 45px;
+    margin: auto auto;
+    padding: 4px;
+    min-height: 36px;
+    min-width: 36px;
 }
