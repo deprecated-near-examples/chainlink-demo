@@ -112,7 +112,7 @@ const Diagram = () => {
                     <div className="explainer-one-content">
                         <img src={nearkat} alt="NEARKAT" className={nearkatcss}/>
                         <img src={state.step} alt="Step" className={state.stepcss}/>
-                        <h4>{state.desciption}</h4>
+                        <h4>{state.description}</h4>
                         <div className="explainer-content">
                             {state.descriptionstate ? 
                                 <div>
