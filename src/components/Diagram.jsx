@@ -12,7 +12,7 @@ const Diagram = () => {
     const [active, setActive] = useState(false)
     const [showExplorerLink, setExplorerLink] = useState(false)
     const [button, setButton] = useState("Expand")
-    const [explainerBackground, setExplainerBackground] = useState(state.explainerbackground)
+    // const [explainerBackground, setExplainerBackground] = useState(state.explainerbackground)
     const [nearkat, setNearKat] = useState(state.nearkatone)
     const [nearkatcss, setNearKatcss] = useState("nearkat-one")
     const [description, setDescription] = useState(state.shortDescription)
@@ -22,7 +22,7 @@ const Diagram = () => {
         if (active === false){
             setButton("Show Less")
             setDescription(state.longDescription)
-            setExplainerBackground(state.explainerbackgroundtwo)
+            // setExplainerBackground(state.explainerbackgroundtwo)
             setNearKat(state.nearkattwo)
             setNearKatcss("nearkat-two")
             setActive(true)
@@ -31,7 +31,7 @@ const Diagram = () => {
         else if (active === true){
             setButton("Expand");
             setDescription(state.shortDescription)
-            setExplainerBackground(state.explainerbackground)
+            // setExplainerBackground(state.explainerbackground)
             setNearKat(state.nearkatone)
             setNearKatcss("nearkat-one")
             setActive(false)
@@ -108,11 +108,7 @@ const Diagram = () => {
                 </div>
 
                 <div className={state.explainercss}>
-                    <img 
-                        src={explainerBackground} 
-                        alt="ExplainerBackground" 
-                        className="explainer-background"
-                    />
+                    <div className="arrow"></div>
                     <div className="explainer-one-content">
                         <img src={nearkat} alt="NEARKAT" className={nearkatcss}/>
                         <img src={state.step} alt="Step" className={state.stepcss}/>
