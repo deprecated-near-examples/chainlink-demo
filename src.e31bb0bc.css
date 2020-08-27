@@ -36,9 +36,10 @@
 }
 
 .logos {
-    margin-left: 5px;
-    margin-top: 8px;
-    height: 45px;
+    margin: auto auto;
+    padding: 4px;
+    min-height: 36px;
+    min-width: 36px;
 }
 .search-box {
     font-family: 'Inter', sans-serif;
@@ -401,6 +402,7 @@ button:active {
     display: flex;
     font-size: 14px;
     color: #0071CE;
+    margin-top: 40px;
 }
 
 .explainer-button:hover, .explorer-link:hover {
