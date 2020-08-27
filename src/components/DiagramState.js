@@ -65,11 +65,11 @@ const initialState = {
   bobtokenscss: "bobtokens-inactive",
   transfertencss: "transfer-ten-inactive",
   bobcontractlockcss: "bob-contract-lock-inactive",
-  explainercss: "",
+  explainercss: "explainer",
   stepcss: "step-one",
   explorerLink: "",
   seeExplorerLink: "",
-  shortDescription:"yoyoyo",
+  shortDescription:"Here is more detail",
   desciption: `Call is placed to \"Client Contract\"`,
   longDescription: `Alice wants to make a request to an Oracle Contract to receive a token price. To pay for the request, she transfers 50 into her Client Contract (red). The Oracle Contract is run by Bob (blue).`,
 
