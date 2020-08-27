@@ -65,7 +65,7 @@ const initialState = {
   bobtokenscss: "bobtokens-inactive",
   transfertencss: "transfer-ten-inactive",
   bobcontractlockcss: "bob-contract-lock-inactive",
-  explainercss: "",
+  explainercss: "explainer",
   stepcss: "step-one",
   explorerLink: "",
   seeExplorerLink: "",
