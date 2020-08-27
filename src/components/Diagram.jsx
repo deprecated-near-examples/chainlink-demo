@@ -1,4 +1,3 @@
-
 import React, {useState} from 'react'
 import '../styles/diagram.css'
 import DiagramOverlay from './DiagramOverlay'
@@ -12,7 +11,6 @@ const Diagram = () => {
     const [active, setActive] = useState(false)
     const [showExplorerLink, setExplorerLink] = useState(false)
     const [button, setButton] = useState("Expand")
-    // const [explainerBackground, setExplainerBackground] = useState(state.explainerbackground)
     const [nearkat, setNearKat] = useState(state.nearkatone)
     const [nearkatcss, setNearKatcss] = useState("nearkat-one")
     const [description, setDescription] = useState(state.shortDescription)
@@ -22,7 +20,6 @@ const Diagram = () => {
         if (active === false){
             setButton("Show Less")
             setDescription(state.longDescription)
-            // setExplainerBackground(state.explainerbackgroundtwo)
             setNearKat(state.nearkattwo)
             setNearKatcss("nearkat-two")
             setActive(true)
@@ -31,7 +28,6 @@ const Diagram = () => {
         else if (active === true){
             setButton("More Info");
             setDescription(state.shortDescription)
-            // setExplainerBackground(state.explainerbackground)
             setNearKat(state.nearkatone)
             setNearKatcss("nearkat-one")
             setActive(false)
