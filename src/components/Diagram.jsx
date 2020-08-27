@@ -11,7 +11,7 @@ const Diagram = () => {
     // The following states are used to control whether the explainer section is expanded and the explanation visible or not
     const [active, setActive] = useState(false)
     const [showExplorerLink, setExplorerLink] = useState(false)
-    const [button, setButton] = useState("Expand")
+    const [button, setButton] = useState("More Info")
     const [explainerBackground, setExplainerBackground] = useState(state.explainerbackground)
     const [nearkat, setNearKat] = useState(state.nearkatone)
     const [nearkatcss, setNearKatcss] = useState("nearkat-one")
@@ -29,7 +29,7 @@ const Diagram = () => {
             setExplorerLink(true)
         }
         else if (active === true){
-            setButton("Expand");
+            setButton("More Info");
             setDescription(state.shortDescription)
             setExplainerBackground(state.explainerbackground)
             setNearKat(state.nearkatone)

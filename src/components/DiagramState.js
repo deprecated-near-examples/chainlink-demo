@@ -69,9 +69,9 @@ const initialState = {
   stepcss: "step-one",
   explorerLink: "",
   seeExplorerLink: "",
-  shortDescription:"yoyoyo",
+  shortDescription:"",
   desciption: `Call is placed to \"Client Contract\"`,
-  longDescription: `Alice wants to make a request to an Oracle Contract to receive a token price. To pay for the request, she transfers 50 into her Client Contract (red). The Oracle Contract is run by Bob (blue).`,
+  longDescription: `The user search initiates a call to the "Client" contract requesting the token price for the selected option. The client contract currently has 50 fungible tokens has a balance of 50 fungible tokens that can be used to pay for this request.`,
 
   // additional images
   divider: divider,
@@ -111,7 +111,7 @@ function diagramReducer(state, action) {
         desciption: "Contract sends request & tokens to Oracle Contract",
         explorerLink: window.transactions ? window.transactions[1].link : null,
         seeExplorerLink: "See the transaction in NEAR explorer",
-        shortDescription:"yoyoyo",
+        shortDescription: window.transactions ? window.transactions[1].link : null,
         longDescription: `Alice sends a fungible token payment to Bob’s Oracle Contract to request the token price from Bob’s Oracle Contract. In this case, Alice sends 10.`,
       };
     case 'secondImageChange':
