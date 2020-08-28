@@ -59,7 +59,7 @@ const initialState = {
 
   // State Varables 
   descriptionstate: true,
-  diagramVisibility: true, //set to 'true' for development... change back to 'false' before deploying
+  diagramVisibility: false, //set to 'true' for development... change back to 'false' before deploying
   
   // css variables and changing text which are displayed in the diagram
   bobtokenscss: "bobtokens-inactive",
@@ -68,7 +68,7 @@ const initialState = {
   explainercss: "explainer",
   stepcss: "step-one",
   seeExplorerLink: "See transaction in NEAR Explorer!",
-  explorerLink: window.transactions ? window.transactions[0].link : null,
+  explorerLink: window.transactions ? window.transactions[1].link : null,
   description: `Call is placed to the Client Contract`,
   longDescription: `The user search initiates a call to the "Client" contract requesting the token price. The Client Contract has an existing balance of 50 fungible tokens (FT) that it can access to pay for requests.`,
 
@@ -94,6 +94,7 @@ function diagramReducer(state, action) {
       return {
         ...initialState,
         diagramVisibility: true,
+        explorerLink: window.transactions ? window.transactions[1].link : null
       }
     case 'firstImageChange':
       return {
@@ -189,7 +190,7 @@ function diagramReducer(state, action) {
         bobcontractlockcss: "bob-contract-lock-active",
         bobcontractlock: bobcontractunlock,
         seeExplorerLink: "See transaction in NEAR Explorer!",
-        explorerLink: window.transactions ? window.transactions[1].link : null,
+        explorerLink: window.transactions ? window.transactions[0].link : null,
         description: `Initial request is fulfilled!`,
         longDescription: `The on-chain Oracle Contract fulfills the original request by providing the token price from the API to the Client Contract. With this fulfilled request, the initial FT payment is now unlocked and can be accessed by the owner of the Oracle Contract / Oracle Node. Both the on-chain Oracle Contract and off-chain Oracle Node are typically owned by the same party.`
       }
