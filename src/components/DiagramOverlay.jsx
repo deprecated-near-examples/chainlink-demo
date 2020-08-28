@@ -31,7 +31,7 @@ const DiagramOverlay = () => {
                 </p>
                 {
                     isMissingEnvVars ?
-                      <p className={'warning'}><strong>Warning</strong>: thank you for the interest in this project. <span className={'warning-text'}>It looks like you have not set up your environment variables for this demonstration.</span> Please reach out to us <a href="http://near.chat" target="_blank">on Discord</a> for help. Otherwise, please use the button below to see how an oracle request is made and fulfilled.</p>
+                      <p className={'warning'}><strong>Warning</strong>: <span className={'warning-text'}>it looks like you have not set up your environment variables for this demonstration.</span> Thank you for the interest in this project. Please reach out to us <a href="http://near.chat" target="_blank">on Discord</a> for help. Otherwise, please use the button below to see how an oracle request <em>would be</em> made and fulfilled.</p>
                       : null
                 }
                 <button className="diagram-button" onClick={showDiagram}>Show Diagram</button>
