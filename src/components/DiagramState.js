@@ -67,9 +67,8 @@ const initialState = {
   bobcontractlockcss: "bob-contract-lock-inactive",
   explainercss: "explainer",
   stepcss: "step-one",
-  explorerLink: "",
-  seeExplorerLink: "",
-  shortDescription: "",
+  seeExplorerLink: "See transaction in NEAR Explorer!",
+  explorerLink: window.transactions ? window.transactions[0].link : null,
   description: `Call is placed to the Client Contract`,
   longDescription: `The user search initiates a call to the "Client" contract requesting the token price. The Client Contract has an existing balance of 50 fungible tokens (FT) that it can access to pay for requests.`,
 
@@ -107,11 +106,9 @@ function diagramReducer(state, action) {
         step: steptwo,
         bobtokenscss: "bobtokens-active",
         transfertencss: "transfer-ten-active",
-        explainercss: "explainer-two",   
+        explainercss: "explainer-two",
+        seeExplorerLink: null,   
         description: "Initial request & 10 FT are sent to the on-chain Oracle Contract",
-        explorerLink: window.transactions ? window.transactions[1].link : null,
-        seeExplorerLink: "See the transaction in NEAR explorer",
-        shortDescription: window.transactions ? window.transactions[1].link : null,
         longDescription: `10 fungible tokens are sent to the on-chain Oracle Contract along with a the user's request.`,
       };
     case 'secondImageChange':
@@ -129,7 +126,8 @@ function diagramReducer(state, action) {
         step: stepthree,
         bobtokenscss: "bobtokens-active",
         bobcontractlockcss: "bob-contract-lock-active",
-        explainercss: "explainer-three",   
+        explainercss: "explainer-three",  
+        seeExplorerLink: null, 
         description: "Off-chain Oracle-Node retrieves the new request",
         longDescription:`The Oracle-Node, created using Chainlink, finds requests by consistently polling the on-chain Oracle Contract. When a new request is found, the Oracle-Node begins processing the request. The FT payment is locked until the Client Contract receives a successfully completed request.`
       }
@@ -149,7 +147,8 @@ function diagramReducer(state, action) {
         step: stepfour,
         bobtokenscss: "bobtokens-active",
         bobcontractlockcss: "bob-contract-lock-active",
-        explainercss: "explainer-four",   
+        explainercss: "explainer-four",
+        seeExplorerLink: null,    
         description: "Chainlink Oracle-Node interfaces with API",
         longDescription: `With the original request in hand, the off-chain oracle node interfaces with an API and retrieves the requested token price.`
       }
@@ -168,10 +167,9 @@ function diagramReducer(state, action) {
         step: stepfive,
         bobtokenscss: "bobtokens-active",
         bobcontractlockcss: "bob-contract-lock-active",
-        explainercss: "explainer-five",   
+        explainercss: "explainer-five",
+        seeExplorerLink: null,    
         description: `Price is returned to Oracle Contract`,
-        explorerLink: window.transactions ? window.transactions[0].link : null,
-        seeExplorerLink: "See the transaction in NEAR explorer",
         longDescription: `The off-chain Oracle-Node passes the token price from the API to the on-chain Oracle Contract.`        
       }
     case 'fifthImageChange':
@@ -190,6 +188,8 @@ function diagramReducer(state, action) {
         bobtokenscss: "bobtokens-active",
         bobcontractlockcss: "bob-contract-lock-active",
         bobcontractlock: bobcontractunlock,
+        seeExplorerLink: "See transaction in NEAR Explorer!",
+        explorerLink: window.transactions ? window.transactions[1].link : null,
         description: `Initial request is fulfilled!`,
         longDescription: `The on-chain Oracle Contract fulfills the original request by providing the token price from the API to the Client Contract. With this fulfilled request, the initial FT payment is now unlocked and can be accessed by the owner of the Oracle Contract / Oracle Node. Both the on-chain Oracle Contract and off-chain Oracle Node are typically owned by the same party.`
       }
