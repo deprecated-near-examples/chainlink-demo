@@ -131,7 +131,7 @@ function diagramReducer(state, action) {
         bobcontractlockcss: "bob-contract-lock-active",
         explainercss: "explainer-three",   
         description: "Off-chain Oracle-Node retrieves the new request",
-        longDescription:`The Oracle-Node, created using Chainlink, finds requests by consistently polling the on-chain Oracle Contract. When a new request is found, the Oracle-Node begins processing the request, but the FT payment is locked until the Client receives a successfully completed request.`
+        longDescription:`The Oracle-Node, created using Chainlink, finds requests by consistently polling the on-chain Oracle Contract. When a new request is found, the Oracle-Node begins processing the request. The FT payment is locked until the Client Contract receives a successfully completed request.`
       }
     case 'thirdImageChange':
       return {
