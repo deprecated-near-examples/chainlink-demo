@@ -110,7 +110,7 @@ const Search = () => {
         <div className="bob-box">
           <img src={bob} alt="Bob" className="bob"/>
           <p>
-            <strong id="bold">Oracle Contract</strong>
+            <strong id="bold">Oracle Contracts</strong>
           </p>
         </div>
       </div>

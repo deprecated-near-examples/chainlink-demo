@@ -70,8 +70,8 @@ const initialState = {
   explorerLink: "",
   seeExplorerLink: "",
   shortDescription: "",
-  description: `Call is placed to \"Client Contract\"`,
-  longDescription: `The user search initiates a call to the "Client" contract requesting the token price for the selected option. The client contract currently has 50 fungible tokens has a balance of 50 fungible tokens that can be used to pay for this request.`,
+  description: `Call is placed to the Client Contract`,
+  longDescription: `The user search initiates a call to the "Client" contract requesting the token price. The Client Contract has an existing balance of 50 fungible tokens (FT) that it can access to pay for requests.`,
 
   // additional images
   divider: divider,
@@ -108,11 +108,11 @@ function diagramReducer(state, action) {
         bobtokenscss: "bobtokens-active",
         transfertencss: "transfer-ten-active",
         explainercss: "explainer-two",   
-        description: "Contract sends request & tokens to Oracle Contract",
+        description: "Initial request & 10 FT are sent to the on-chain Oracle Contract",
         explorerLink: window.transactions ? window.transactions[1].link : null,
         seeExplorerLink: "See the transaction in NEAR explorer",
         shortDescription: window.transactions ? window.transactions[1].link : null,
-        longDescription: `Alice sends a fungible token payment to Bob’s Oracle Contract to request the token price from Bob’s Oracle Contract. In this case, Alice sends 10.`,
+        longDescription: `10 fungible tokens are sent to the on-chain Oracle Contract along with a the user's request.`,
       };
     case 'secondImageChange':
       return {
@@ -130,9 +130,8 @@ function diagramReducer(state, action) {
         bobtokenscss: "bobtokens-active",
         bobcontractlockcss: "bob-contract-lock-active",
         explainercss: "explainer-three",   
-        description: "Tokens locked & request sent to Oracle Node.",
-        longDescription:`Bob receives the token payment and the request from Alice. Until Bob has successfully processed Alice’s request and returned the token price, the payment will be locked in his contract. 
-        Bob forwards Alice’s request from his Oracle Contract on-chain to his Oracle Node off-chain.`
+        description: "Off-chain Oracle-Node retrieves the new request",
+        longDescription:`The Oracle-Node, created using Chainlink, finds requests by consistently polling the on-chain Oracle Contract. When a new request is found, the Oracle-Node begins processing the request, but the FT payment is locked until the Client receives a successfully completed request.`
       }
     case 'thirdImageChange':
       return {
@@ -151,10 +150,8 @@ function diagramReducer(state, action) {
         bobtokenscss: "bobtokens-active",
         bobcontractlockcss: "bob-contract-lock-active",
         explainercss: "explainer-four",   
-        description: "Oracle Node interfaces with API to retrieve data",
-        longDescription: `The Oracle Node received the information from Bob’s Oracle Contract.
-        Now it can request the data from the off-chain API. In real life, Bob would not run one Oracle Node but multiple, which each request information from a different API. 
-        The information is compared to filter the most accurate.`
+        description: "Chainlink Oracle-Node interfaces with API",
+        longDescription: `With the original request in hand, the off-chain oracle node interfaces with an API and retrieves the requested token price.`
       }
     case 'fourthImageChange':
       return {
@@ -175,8 +172,7 @@ function diagramReducer(state, action) {
         description: `Price is returned to Oracle Contract`,
         explorerLink: window.transactions ? window.transactions[0].link : null,
         seeExplorerLink: "See the transaction in NEAR explorer",
-        longDescription: `Once the Oracle Node has received the information from the API, it will then forward it to Bob’s on-chain Oracle Contract. 
-        Bob’s Oracle Contract has the information to Alice’s request.`        
+        longDescription: `The off-chain Oracle-Node passes the token price from the API to the on-chain Oracle Contract.`        
       }
     case 'fifthImageChange':
       return {
@@ -194,9 +190,8 @@ function diagramReducer(state, action) {
         bobtokenscss: "bobtokens-active",
         bobcontractlockcss: "bob-contract-lock-active",
         bobcontractlock: bobcontractunlock,
-        description: `Price is returned to Alice’s Contract`,
-        longDescription: `In the last step, Bob’s Oracle Contract will forward the information to Alice’s Client Contract. 
-        The Oracle Contract has completed Alice’s request. Alice’s initial payment is unlocked in the Oracle Contract and can now be accessed by Bob.`
+        description: `Initial request is fulfilled!`,
+        longDescription: `The on-chain Oracle Contract fulfills the original request by providing the token price from the API to the Client Contract. With this fulfilled request, the initial FT payment is now unlocked and can be accessed by the owner of the Oracle Contract / Oracle Node. Both the on-chain Oracle Contract and off-chain Oracle Node are typically owned by the same party.`
       }
     case 'sixthImageChange':
       return {
@@ -215,7 +210,7 @@ function diagramReducer(state, action) {
         stepcss: "step-two",
         bobtokenscss: "bobtokens-active",
         bobcontractlockcss: "bob-contract-lock-active",
-        description: `Learn more about using Chainlink on NEAR`,
+        description: `Requested token price is now rendered to the front-end dApp!`,
         descriptionstate: false,
       }
     default:

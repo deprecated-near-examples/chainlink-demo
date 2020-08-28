@@ -8,32 +8,7 @@ const Diagram = () => {
     const state = useDiagramState()
 
     // The following states are used to control whether the explainer section is expanded and the explanation visible or not
-    const [active, setActive] = useState(false)
-    const [showExplorerLink, setExplorerLink] = useState(false)
-    const [button, setButton] = useState("Expand")
-    const [nearkat, setNearKat] = useState(state.nearkatone)
-    const [nearkatcss, setNearKatcss] = useState("nearkat-one")
-    const [description, setDescription] = useState(state.shortDescription)
-
-    // The above states ar changed through the following function
-    const expandExplainer = () => {
-        if (active === false){
-            setButton("Show Less")
-            setDescription(state.longDescription)
-            setNearKat(state.nearkattwo)
-            setNearKatcss("nearkat-two")
-            setActive(true)
-            setExplorerLink(true)
-        }
-        else if (active === true){
-            setButton("More Info");
-            setDescription(state.shortDescription)
-            setNearKat(state.nearkatone)
-            setNearKatcss("nearkat-one")
-            setActive(false)
-            setExplorerLink(false)
-        }
-    }
+    const [showExplorerLink, setExplorerLink] = useState(true)
 
     return (
         <div className="diagram">
@@ -106,28 +81,20 @@ const Diagram = () => {
                 <div className={state.explainercss}>
                     <div className="arrow"></div>
                     <div className="explainer-one-content">
-                        <img src={nearkat} alt="NEARKAT" className={nearkatcss}/>
+                        <img src={state.nearkatone} alt="NEARKAT" className="nearkat-one"/>
                         <img src={state.step} alt="Step" className={state.stepcss}/>
                         <h4>{state.description}</h4>
                         <div className="explainer-content">
                             {state.descriptionstate ? 
                                 <div>
-                                    <p className="description" >{description}</p>
+                                    <p className="description" >{state.longDescription}</p>
                                     { showExplorerLink ?
                                     <p className="explorer-link">
                                         <a href={state.explorerLink} target="_blank">
                                             {state.seeExplorerLink}
                                         </a>
-                                    </p> : 
-                                    null }
-                                        <div className="explainer-button" onClick={expandExplainer}>
-                                            <p>{button}</p>
-                                            <img 
-                                                src={state.glass} 
-                                                alt="Glass" 
-                                                className="glass"
-                                            />
-                                        </div>
+                                    </p> 
+                                    : null }
                                 </div> : 
                                 <button className={"learn-more-button"}>
                                     <a href="https://docs.chain.link/docs/what-is-chainlink" target="_blank" >
