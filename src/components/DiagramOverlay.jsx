@@ -1,8 +1,15 @@
 import React from 'react'
 import '../styles/diagramOverlay.css'
+import { useDiagramDispatch } from './DiagramState'
 
 // This component is used to hide the diagram before the first search result
 const DiagramOverlay = () => {
+
+    const dispatch = useDiagramDispatch()
+
+    const showDiagram = () => {
+        dispatch({type: 'displayDiagram'});
+    }
 
     return (
         <div className="diagram-overlay">
@@ -13,6 +20,7 @@ const DiagramOverlay = () => {
                 <p> 
                     Begin by selecting one of the token prices, then click on "Check" to initiate your request on the NEAR blockchain. Once the request is fulfilled, we will show you the Oracle process step-by-step.
                 </p>
+                <button className="diagram-button" onClick={showDiagram}>Show Diagram</button>
             </div>
         </div>
     )
