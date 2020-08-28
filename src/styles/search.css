@@ -111,7 +111,7 @@ select {
 }
 
 .submit-button:disabled {
-    cursor: default;
+    cursor: not-allowed;
     background-color: #8FD6BD;
 }
 
