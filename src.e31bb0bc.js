@@ -50820,7 +50820,7 @@ const initialState = {
   bobTokens: 0,
   // State Varables 
   descriptionstate: true,
-  diagramVisibility: true,
+  diagramVisibility: false,
   //set to 'true' for development... change back to 'false' before deploying
   // css variables and changing text which are displayed in the diagram
   bobtokenscss: "bobtokens-inactive",
@@ -51497,7 +51497,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61697" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62865" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

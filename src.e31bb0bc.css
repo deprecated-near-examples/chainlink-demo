@@ -150,6 +150,10 @@ select {
     text-align: center;
 }
 
+.submit-button:hover{
+  background-color: #00ce94
+}
+
 .submit-button:disabled {
     cursor: default;
     background-color: #8FD6BD;
@@ -566,7 +570,7 @@ a:hover{
 }
 
 .counter-button:hover {
-    background-color: #00da9c; 
+    background-color: #00ce94; 
     cursor: pointer;
 }
 
