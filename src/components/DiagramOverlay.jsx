@@ -7,10 +7,11 @@ const DiagramOverlay = () => {
     return (
         <div className="diagram-overlay">
             <div>
-                <h1>Welcome to the Chainlink Oracle Demo</h1>
-                <p>
-                    Please select one of the available token prices and check the price.
-                    We will then display a diagram that will walk you through the process of accessing the price through the Chainlink Oracle.
+                <p> 
+                    This simple front-end dApp demonstrates how smart contracts on <a href="http://near.org">NEAR</a> can access off-chain data by using an incentivized <a href="http://chain.link">Chainlink</a> Oracle Node. 
+                </p>
+                <p> 
+                    Begin by selecting one of the token prices, then click on "Check" to initiate your request on the NEAR blockchain. Once the request is fulfilled, we will show you the Oracle process step-by-step.
                 </p>
             </div>
         </div>

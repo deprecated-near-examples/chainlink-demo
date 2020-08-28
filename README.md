@@ -6,12 +6,12 @@ A simple front-end dApp demonstrating how smart contracts on NEAR can access off
 
 On initial page load, the application auto-connects to the NEAR blockchain using built in access keys configured by the dApp developer. When a search is performed, the application interacts with a `client` smart contract (already deployed on NEAR) by placing a contract call that invokes the `get_token_price` method within `client`. This triggers the following chain of events:
 
-1) `client` contract makes a call to the ***on-chain*** `oracle` contract
-2) ***on-chain*** `oracle` makes a request to ***off-chain*** `oracle-node` (Chainlink)
-3) Chainlink `oracle-node` makes a request to an API
-4) API responds with the fulfilled token price to the Chainlink `oracle-node` 
-5) Chainlink `oracle-node` passes API response to the ***on-Chain*** `oracle` contract
-6) ***on-chain*** `oracle` contract fulfills the original `client` contract request with the API's response
+1) `Client Contract` makes a call to the ***on-chain*** `Oracle Contract`
+2) ***on-chain*** `Oracle Contract` makes a request to ***off-chain*** `Oracle-Node` (Chainlink)
+3) Chainlink `Oracle-Node` makes a request to an API
+4) API responds with the token price to the Chainlink `Oracle-Node` 
+5) Chainlink `Oracle-Node` passes API response to the ***on-Chain*** `Oracle contract`
+6) ***on-chain*** `Oracle Contract` fulfills the original `Client Contract` request with the API result. 
 
 ![Chainlink and NEAR diagram](src/assets/near-chainlink-diagram-v1.png)
 

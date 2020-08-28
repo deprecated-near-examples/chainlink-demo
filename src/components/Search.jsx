@@ -19,7 +19,7 @@ const Search = () => {
   // The useDiagramDispatch function from the DiagramState component is accessed to regulate whether the diagram is visible or not
   const dispatch = useDiagramDispatch()
 
-  // The states are used to regulate the button behaviour between token price searches
+  // The states are used to regulate the button behavior between token price searches
   const [searchValue, setSearchValue] = useState(null);
   const [searchResult, setSearchResult] = useState("");
   const [loading, setLoading] = useState(false);
@@ -53,13 +53,13 @@ const Search = () => {
         result = formatResult(result);
         const finalBlockID = await getLatestBlockID();
         setSearchResult(result);
-        setLoading(false);
-        dispatch({type: 'displayDiagram'});
-
         console.log('FIRST block ID: ', firstBlockID);
         console.log('LAST block ID: ', finalBlockID);
 
-        window.transactions = await getTransactions(firstBlockID, finalBlockID);
+        window.transactions = await getTransactions(firstBlockID, finalBlockID)
+        dispatch({type: 'displayDiagram'});
+        setLoading(false)
+
         console.log('STEPS: ', window.nearSteps)
         console.log('Transaction Links: ', window.transactions)
 
@@ -110,7 +110,7 @@ const Search = () => {
         <div className="bob-box">
           <img src={bob} alt="Bob" className="bob"/>
           <p>
-            <strong id="bold">Oracle Contract</strong>
+            <strong id="bold">Oracle Contract & Node</strong>
           </p>
         </div>
       </div>

@@ -10,7 +10,7 @@
 
 .diagram-overlay div {
     border: 4px solid #E6E6E6;
-    padding: 16px;
+    padding: 10px;
     box-sizing: border-box;
     border-radius: 10px;
 }
@@ -26,4 +26,15 @@
     font-size: 18px;
     line-height: 32px;
     color: #24272A;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+a {
+    color: #375BD2;
+    text-decoration: none;
+}
+
+a:hover{
+    color: #a0b6ff;
 }

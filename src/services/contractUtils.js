@@ -122,8 +122,9 @@ export async function getTransactions(firstBlock, lastBlock) {
 }
 
 export function formatResult(result){
+  const price = result / 100
   return `$${
-    Number(result)
+    Number(price)
       .toFixed(2)
       .toString()
       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
