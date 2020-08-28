@@ -50389,7 +50389,7 @@ var _nearApiJs = require("near-api-js");
 const nearConfig = {
   networkId: 'testnet',
   nodeUrl: 'https://rpc.testnet.near.org',
-  contractName: `client.${"chainlink.testnet"}`,
+  contractName: `client.${"nearkat.testnet"}`,
   walletUrl: 'https://wallet.testnet.near.org',
   helperUrl: 'https://helper.testnet.near.org'
 }; // These get set the first time we attempt a connection, and get
@@ -50402,7 +50402,7 @@ let clientAcct;
 async function connectToNear() {
   const keyStore = new _nearApiJs.keyStores.InMemoryKeyStore();
 
-  const keyPair = _nearApiJs.KeyPair.fromString("ed25519:pKGNrdKXuVZvLRGUZHbiT1dZWgRiGN1gfCvcJwQsevZr18QqJETW1GFDcFbAoGTXAUkbyy6h7oWnizeuWPzgSzG"); //sets key in memory
+  const keyPair = _nearApiJs.KeyPair.fromString("ed25519:4FdrsR5KDqMqPE3t4AhPbW46hArtQpgN5vJQ3SezkkNp7qSEG3u7HYcy4tjytg3nRqTyAXKy7ugvCpffmMgRewmT"); //sets key in memory
 
 
   await keyStore.setKey(nearConfig.networkId, nearConfig.contractName, keyPair);
@@ -50456,7 +50456,7 @@ var _utils = require("./utils");
 
 const bs58 = require('bs58');
 
-const nearAcct = "chainlink.testnet";
+const nearAcct = "nearkat.testnet";
 
 async function getLatestBlockID() {
   const near = await (0, _utils.getNear)();
@@ -50828,11 +50828,10 @@ const initialState = {
   bobcontractlockcss: "bob-contract-lock-inactive",
   explainercss: "explainer",
   stepcss: "step-one",
-  explorerLink: "",
-  seeExplorerLink: "",
-  shortDescription: "",
-  desciption: `Call is placed to \"Client Contract\"`,
-  longDescription: `The user search initiates a call to the "Client" contract requesting the token price for the selected option. The client contract currently has 50 fungible tokens has a balance of 50 fungible tokens that can be used to pay for this request.`,
+  seeExplorerLink: "See transaction in NEAR Explorer!",
+  explorerLink: null,
+  description: `Call is placed to the Client Contract`,
+  longDescription: `The user search initiates a call to the "Client" contract requesting the token price. The Client Contract has an existing balance of 50 fungible tokens (FT) that it can access to pay for requests.`,
   // additional images
   divider: _divider.default,
   glass: _glass.default,
@@ -50853,7 +50852,8 @@ function diagramReducer(state, action) {
 
     case 'displayDiagram':
       return { ...initialState,
-        diagramVisibility: true
+        diagramVisibility: true,
+        explorerLink: window.transactions ? window.transactions[1].link : null
       };
 
     case 'firstImageChange':
@@ -50867,11 +50867,9 @@ function diagramReducer(state, action) {
         bobtokenscss: "bobtokens-active",
         transfertencss: "transfer-ten-active",
         explainercss: "explainer-two",
-        desciption: "Contract sends request & tokens to Oracle Contract",
-        explorerLink: window.transactions ? window.transactions[1].link : null,
-        seeExplorerLink: "See the transaction in NEAR explorer",
-        shortDescription: window.transactions ? window.transactions[1].link : null,
-        longDescription: `Alice sends a fungible token payment to Bob’s Oracle Contract to request the token price from Bob’s Oracle Contract. In this case, Alice sends 10.`
+        seeExplorerLink: null,
+        description: "Initial request & 10 FT are sent to the on-chain Oracle Contract",
+        longDescription: `10 fungible tokens are sent to the on-chain Oracle Contract along with a the user's request.`
       };
 
     case 'secondImageChange':
@@ -50889,9 +50887,9 @@ function diagramReducer(state, action) {
         bobtokenscss: "bobtokens-active",
         bobcontractlockcss: "bob-contract-lock-active",
         explainercss: "explainer-three",
-        desciption: "Tokens locked & request sent to Oracle Node.",
-        longDescription: `Bob receives the token payment and the request from Alice. Until Bob has successfully processed Alice’s request and returned the token price, the payment will be locked in his contract. 
-        Bob forwards Alice’s request from his Oracle Contract on-chain to his Oracle Node off-chain.`
+        seeExplorerLink: null,
+        description: "Off-chain Oracle-Node retrieves the new request",
+        longDescription: `The Oracle-Node, created using Chainlink, finds requests by consistently polling the on-chain Oracle Contract. When a new request is found, the Oracle-Node begins processing the request. The FT payment is locked until the Client Contract receives a successfully completed request.`
       };
 
     case 'thirdImageChange':
@@ -50910,10 +50908,9 @@ function diagramReducer(state, action) {
         bobtokenscss: "bobtokens-active",
         bobcontractlockcss: "bob-contract-lock-active",
         explainercss: "explainer-four",
-        desciption: "Oracle Node interfaces with API to retrieve data",
-        longDescription: `The Oracle Node received the information from Bob’s Oracle Contract.
-        Now it can request the data from the off-chain API. In real life, Bob would not run one Oracle Node but multiple, which each request information from a different API. 
-        The information is compared to filter the most accurate.`
+        seeExplorerLink: null,
+        description: "Chainlink Oracle-Node interfaces with API",
+        longDescription: `With the original request in hand, the off-chain oracle node interfaces with an API and retrieves the requested token price.`
       };
 
     case 'fourthImageChange':
@@ -50931,11 +50928,9 @@ function diagramReducer(state, action) {
         bobtokenscss: "bobtokens-active",
         bobcontractlockcss: "bob-contract-lock-active",
         explainercss: "explainer-five",
-        desciption: `Price is returned to Oracle Contract`,
-        explorerLink: window.transactions ? window.transactions[0].link : null,
-        seeExplorerLink: "See the transaction in NEAR explorer",
-        longDescription: `Once the Oracle Node has received the information from the API, it will then forward it to Bob’s on-chain Oracle Contract. 
-        Bob’s Oracle Contract has the information to Alice’s request.`
+        seeExplorerLink: null,
+        description: `Price is returned to Oracle Contract`,
+        longDescription: `The off-chain Oracle-Node passes the token price from the API to the on-chain Oracle Contract.`
       };
 
     case 'fifthImageChange':
@@ -50953,9 +50948,10 @@ function diagramReducer(state, action) {
         bobtokenscss: "bobtokens-active",
         bobcontractlockcss: "bob-contract-lock-active",
         bobcontractlock: _bobContractUnlock.default,
-        desciption: `Price is returned to Alice’s Contract`,
-        longDescription: `In the last step, Bob’s Oracle Contract will forward the information to Alice’s Client Contract. 
-        The Oracle Contract has completed Alice’s request. Alice’s initial payment is unlocked in the Oracle Contract and can now be accessed by Bob.`
+        seeExplorerLink: "See transaction in NEAR Explorer!",
+        explorerLink: window.transactions ? window.transactions[0].link : null,
+        description: `Initial request is fulfilled!`,
+        longDescription: `The on-chain Oracle Contract fulfills the original request by providing the token price from the API to the Client Contract. With this fulfilled request, the initial FT payment is now unlocked and can be accessed by the owner of the Oracle Contract / Oracle Node. Both the on-chain Oracle Contract and off-chain Oracle Node are typically owned by the same party.`
       };
 
     case 'sixthImageChange':
@@ -50974,7 +50970,7 @@ function diagramReducer(state, action) {
         stepcss: "step-two",
         bobtokenscss: "bobtokens-active",
         bobcontractlockcss: "bob-contract-lock-active",
-        desciption: `Learn more about using Chainlink on NEAR`,
+        description: `Requested token price is now rendered to the front-end dApp!`,
         descriptionstate: false
       };
 
@@ -51051,7 +51047,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 const Search = () => {
   // The useDiagramDispatch function from the DiagramState component is accessed to regulate whether the diagram is visible or not
-  const dispatch = (0, _DiagramState.useDiagramDispatch)(); // The states are used to regulate the button behaviour between token price searches
+  const dispatch = (0, _DiagramState.useDiagramDispatch)(); // The states are used to regulate the button behavior between token price searches
 
   const [searchValue, setSearchValue] = (0, _react.useState)(null);
   const [searchResult, setSearchResult] = (0, _react.useState)("");
@@ -51084,13 +51080,13 @@ const Search = () => {
       result = (0, _contractUtils.formatResult)(result);
       const finalBlockID = await (0, _contractUtils.getLatestBlockID)();
       setSearchResult(result);
-      setLoading(false);
-      dispatch({
-        type: 'displayDiagram'
-      });
       console.log('FIRST block ID: ', firstBlockID);
       console.log('LAST block ID: ', finalBlockID);
       window.transactions = await (0, _contractUtils.getTransactions)(firstBlockID, finalBlockID);
+      dispatch({
+        type: 'displayDiagram'
+      });
+      setLoading(false);
       console.log('STEPS: ', window.nearSteps);
       console.log('Transaction Links: ', window.transactions);
     } else setTimeout(async () => {
@@ -51158,7 +51154,7 @@ const Search = () => {
     className: "bob"
   }), /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("strong", {
     id: "bold"
-  }, "Oracle Contract")))));
+  }, "Oracle Contract & Node")))));
 };
 
 var _default = Search;
@@ -51191,7 +51187,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const DiagramOverlay = () => {
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "diagram-overlay"
-  }, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h1", null, "Welcome to the Chainlink Oracle Demo"), /*#__PURE__*/_react.default.createElement("p", null, "Please select one of the available token prices and check the price. We will then display a diagram that will walk you through the process of accessing the price through the Chainlink Oracle.")));
+  }, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("p", null, "This simple front-end dApp demonstrates how smart contracts on ", /*#__PURE__*/_react.default.createElement("a", {
+    href: "http://near.org"
+  }, "NEAR"), " can access off-chain data by using an incentivized ", /*#__PURE__*/_react.default.createElement("a", {
+    href: "http://chain.link"
+  }, "Chainlink"), " Oracle Node."), /*#__PURE__*/_react.default.createElement("p", null, "Begin by selecting one of the token prices, then click on \"Check\" to initiate your request on the NEAR blockchain. Once the request is fulfilled, we will show you the Oracle process step-by-step.")));
 };
 
 var _default = DiagramOverlay;
@@ -51222,34 +51222,7 @@ const Diagram = () => {
   // The useDiagramState function is used to access the state of the diagram from the DiagramState component
   const state = (0, _DiagramState.useDiagramState)(); // The following states are used to control whether the explainer section is expanded and the explanation visible or not
 
-  const [active, setActive] = (0, _react.useState)(false);
-  const [showExplorerLink, setExplorerLink] = (0, _react.useState)(false);
-  const [button, setButton] = (0, _react.useState)("Expand"); // const [explainerBackground, setExplainerBackground] = useState(state.explainerbackground)
-
-  const [nearkat, setNearKat] = (0, _react.useState)(state.nearkatone);
-  const [nearkatcss, setNearKatcss] = (0, _react.useState)("nearkat-one");
-  const [description, setDescription] = (0, _react.useState)(state.shortDescription); // The above states ar changed through the following function
-
-  const expandExplainer = () => {
-    if (active === false) {
-      setButton("Show Less");
-      setDescription(state.longDescription); // setExplainerBackground(state.explainerbackgroundtwo)
-
-      setNearKat(state.nearkattwo);
-      setNearKatcss("nearkat-two");
-      setActive(true);
-      setExplorerLink(true);
-    } else if (active === true) {
-      setButton("More Info");
-      setDescription(state.shortDescription); // setExplainerBackground(state.explainerbackground)
-
-      setNearKat(state.nearkatone);
-      setNearKatcss("nearkat-one");
-      setActive(false);
-      setExplorerLink(false);
-    }
-  };
-
+  const [showExplorerLink, setExplorerLink] = (0, _react.useState)(true);
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "diagram"
   }, state.diagramVisibility ? /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", {
@@ -51342,33 +51315,26 @@ const Diagram = () => {
   }), /*#__PURE__*/_react.default.createElement("div", {
     className: "explainer-one-content"
   }, /*#__PURE__*/_react.default.createElement("img", {
-    src: nearkat,
+    src: state.nearkatone,
     alt: "NEARKAT",
-    className: nearkatcss
+    className: "nearkat-one"
   }), /*#__PURE__*/_react.default.createElement("img", {
     src: state.step,
     alt: "Step",
     className: state.stepcss
-  }), /*#__PURE__*/_react.default.createElement("h4", null, state.desciption), /*#__PURE__*/_react.default.createElement("div", {
+  }), /*#__PURE__*/_react.default.createElement("h4", null, state.description), /*#__PURE__*/_react.default.createElement("div", {
     className: "explainer-content"
   }, state.descriptionstate ? /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("p", {
     className: "description"
-  }, description), showExplorerLink ? /*#__PURE__*/_react.default.createElement("p", {
+  }, state.longDescription), showExplorerLink ? /*#__PURE__*/_react.default.createElement("p", {
     className: "explorer-link"
   }, /*#__PURE__*/_react.default.createElement("a", {
     href: state.explorerLink,
     target: "_blank"
-  }, state.seeExplorerLink)) : null, /*#__PURE__*/_react.default.createElement("div", {
-    className: "explainer-button",
-    onClick: expandExplainer
-  }, /*#__PURE__*/_react.default.createElement("p", null, button), /*#__PURE__*/_react.default.createElement("img", {
-    src: state.glass,
-    alt: "Glass",
-    className: "glass"
-  }))) : /*#__PURE__*/_react.default.createElement("button", {
+  }, state.seeExplorerLink)) : null) : /*#__PURE__*/_react.default.createElement("button", {
     className: "learn-more-button"
   }, /*#__PURE__*/_react.default.createElement("a", {
-    href: "https://docs.chain.link/docs/what-is-chainlink",
+    href: "https://near.org/blog/near-bringing-chainlinks-leading-oracle-solution-to-its-open-web-ecosystem",
     target: "_blank"
   }, "Learn More")))))) : /*#__PURE__*/_react.default.createElement(_DiagramOverlay.default, null));
 };
@@ -51531,7 +51497,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62678" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61344" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

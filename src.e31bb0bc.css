@@ -41,6 +41,7 @@
     min-height: 36px;
     min-width: 36px;
 }
+
 .search-box {
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -188,6 +189,10 @@ button:active {
     min-width: 1153px;
     max-width: 1153px;
     height: 560px;
+
+}
+a:hover{
+    color: #a0b6ff;
 }
 
 .first-top-arrow, .second-top-arrow {
@@ -324,15 +329,15 @@ button:active {
 }
 
 .arrow {
-     position: absolute;
-     z-index: 6;
-     width: 20px;
-     height: 20px;
-     background: white;
-     transform: translateX(-40%) translateY(-60%) rotate(45deg);
-     left: 20%;
-     border-top: 4px solid #E6E6E6;
-     border-left: 4px solid #E6E6E6;
+    position: absolute;
+    z-index: 6;
+    width: 20px;
+    height: 20px;
+    background: white;
+    transform: translateX(-40%) translateY(-60%) rotate(45deg);
+    left: 20%;
+    border-top: 4px solid #E6E6E6;
+    border-left: 4px solid #E6E6E6;
 }
 
 .explainer-two {
@@ -387,7 +392,7 @@ button:active {
 .explorer-link {
     font-size: 18px;
     line-height: 200%;
-    font-size: 14px;
+    font-size: 16px;
     color: #0071CE;
     margin-top: 16px;
     margin-bottom: 16px;
@@ -406,7 +411,8 @@ button:active {
 }
 
 .explainer-button:hover, .explorer-link:hover {
-    text-decoration: underline;
+    color: #a0b6ff;
+    text-decoration: none;
     cursor: pointer;
 }
 
@@ -432,9 +438,11 @@ button:active {
 .explorer-link a, .explorer-link a:link, .explorer-link a:visited {
     color: #0071CE;
     text-decoration: none;
+    font-size: 16px;
 }
 
 .learn-more-button:hover {
+    opacity: 85%;
     cursor: pointer;
 }
 
@@ -491,6 +499,7 @@ button:active {
     opacity: 1;
 }
 
+
 .diagram-overlay {
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -503,7 +512,7 @@ button:active {
 
 .diagram-overlay div {
     border: 4px solid #E6E6E6;
-    padding: 16px;
+    padding: 10px;
     box-sizing: border-box;
     border-radius: 10px;
 }
@@ -519,6 +528,17 @@ button:active {
     font-size: 18px;
     line-height: 32px;
     color: #24272A;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+a {
+    color: #375BD2;
+    text-decoration: none;
+}
+
+a:hover{
+    color: #a0b6ff;
 }
 
 .counter {
@@ -546,6 +566,7 @@ button:active {
 }
 
 .counter-button:hover {
+    opacity: 75%;
     cursor: pointer;
 }
 
