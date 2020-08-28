@@ -6,6 +6,10 @@
     min-width: 1153px;
     max-width: 1153px;
     height: 560px;
+
+}
+a:hover{
+    color: #a0b6ff;
 }
 
 .first-top-arrow, .second-top-arrow {
@@ -142,15 +146,15 @@
 }
 
 .arrow {
-     position: absolute;
-     z-index: 6;
-     width: 20px;
-     height: 20px;
-     background: white;
-     transform: translateX(-40%) translateY(-60%) rotate(45deg);
-     left: 20%;
-     border-top: 4px solid #E6E6E6;
-     border-left: 4px solid #E6E6E6;
+    position: absolute;
+    z-index: 6;
+    width: 20px;
+    height: 20px;
+    background: white;
+    transform: translateX(-40%) translateY(-60%) rotate(45deg);
+    left: 20%;
+    border-top: 4px solid #E6E6E6;
+    border-left: 4px solid #E6E6E6;
 }
 
 .explainer-two {
@@ -224,6 +228,7 @@
 }
 
 .explainer-button:hover, .explorer-link:hover {
+    color: #a0b6ff;
     text-decoration: none;
     cursor: pointer;
 }
@@ -254,6 +259,7 @@
 }
 
 .learn-more-button:hover {
+    opacity: 85%;
     cursor: pointer;
 }
 

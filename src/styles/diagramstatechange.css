@@ -23,14 +23,6 @@
 }
 
 .counter-button:hover {
+    opacity: 75%;
     cursor: pointer;
 }
-
-a {
-    color: #375BD2;
-    text-decoration: none;
-  }
-  
-  a:hover{
-    color: #a0b6ff;
-  }
