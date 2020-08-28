@@ -68,7 +68,7 @@ const initialState = {
   explainercss: "explainer",
   stepcss: "step-one",
   seeExplorerLink: "See transaction in NEAR Explorer!",
-  explorerLink: window.transactions ? window.transactions[1].link : null,
+  explorerLink: null,
   description: `Call is placed to the Client Contract`,
   longDescription: `The user search initiates a call to the "Client" contract requesting the token price. The Client Contract has an existing balance of 50 fungible tokens (FT) that it can access to pay for requests.`,
 
