@@ -50389,7 +50389,7 @@ var _nearApiJs = require("near-api-js");
 const nearConfig = {
   networkId: 'testnet',
   nodeUrl: 'https://rpc.testnet.near.org',
-  contractName: `client.${"nearkat.testnet"}`,
+  contractName: `client.${"chainlink.testnet"}`,
   walletUrl: 'https://wallet.testnet.near.org',
   helperUrl: 'https://helper.testnet.near.org'
 }; // These get set the first time we attempt a connection, and get
@@ -50402,7 +50402,7 @@ let clientAcct;
 async function connectToNear() {
   const keyStore = new _nearApiJs.keyStores.InMemoryKeyStore();
 
-  const keyPair = _nearApiJs.KeyPair.fromString("ed25519:4FdrsR5KDqMqPE3t4AhPbW46hArtQpgN5vJQ3SezkkNp7qSEG3u7HYcy4tjytg3nRqTyAXKy7ugvCpffmMgRewmT"); //sets key in memory
+  const keyPair = _nearApiJs.KeyPair.fromString("ed25519:pKGNrdKXuVZvLRGUZHbiT1dZWgRiGN1gfCvcJwQsevZr18QqJETW1GFDcFbAoGTXAUkbyy6h7oWnizeuWPzgSzG"); //sets key in memory
 
 
   await keyStore.setKey(nearConfig.networkId, nearConfig.contractName, keyPair);
@@ -50456,7 +50456,7 @@ var _utils = require("./utils");
 
 const bs58 = require('bs58');
 
-const nearAcct = "nearkat.testnet";
+const nearAcct = "chainlink.testnet";
 
 async function getLatestBlockID() {
   const near = await (0, _utils.getNear)();
@@ -50820,7 +50820,7 @@ const initialState = {
   bobTokens: 0,
   // State Varables 
   descriptionstate: true,
-  diagramVisibility: false,
+  diagramVisibility: true,
   //set to 'true' for development... change back to 'false' before deploying
   // css variables and changing text which are displayed in the diagram
   bobtokenscss: "bobtokens-inactive",
@@ -51497,7 +51497,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61344" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61697" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
