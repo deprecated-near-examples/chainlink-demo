@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "license": "UNLICENSED",
   "scripts": {
-    "start": "echo The app is starting! It will automatically open in your browser when ready && env-cmd -f ./neardev/dev-account.env parcel src/index.html --open",
+    "start": "echo The app is starting! It will automatically open in your browser when ready && parcel src/index.html --open --no-cache",
     "build:web": "parcel build src/index.html --public-url ./",
     "test": "jest test --runInBand",
     "deploy": "yarn build:web && gh-pages -d dist/"
