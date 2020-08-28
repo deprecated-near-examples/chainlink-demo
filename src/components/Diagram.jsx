@@ -97,7 +97,7 @@ const Diagram = () => {
                                     : null }
                                 </div> : 
                                 <button className={"learn-more-button"}>
-                                    <a href="https://docs.chain.link/docs/what-is-chainlink" target="_blank" >
+                                    <a href="https://near.org/blog/near-bringing-chainlinks-leading-oracle-solution-to-its-open-web-ecosystem" target="_blank" >
                                         Learn More
                                     </a>
                                 </button> }
