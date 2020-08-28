@@ -1,4 +1,3 @@
-
 .counter {
     display: flex;
     margin-top: 5px;
@@ -26,3 +25,12 @@
 .counter-button:hover {
     cursor: pointer;
 }
+
+a {
+    color: #375BD2;
+    text-decoration: none;
+  }
+  
+  a:hover{
+    color: #a0b6ff;
+  }

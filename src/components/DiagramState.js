@@ -59,7 +59,7 @@ const initialState = {
 
   // State Varables 
   descriptionstate: true,
-  diagramVisibility: false, //set to 'true' for development... change back to 'false' before deploying
+  diagramVisibility: true, //set to 'true' for development... change back to 'false' before deploying
   
   // css variables and changing text which are displayed in the diagram
   bobtokenscss: "bobtokens-inactive",
