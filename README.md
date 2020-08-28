@@ -13,7 +13,7 @@ On initial page load, the application auto-connects to the NEAR blockchain using
 5) Chainlink `Oracle-Node` passes API response to the ***on-Chain*** `Oracle contract`
 6) ***on-chain*** `Oracle Contract` fulfills the original `Client Contract` request with the API result. 
 
-![Chainlink and NEAR diagram](src/assets/near-chainlink-diagram-v1.png)
+![Chainlink and NEAR diagram](src/assets/chainlink-diagram.png)
 
 Both the `client` and ***on-chain*** `oracle` contracts were created & deployed on the NEAR network using a walk-through from [this repository](https://github.com/smartcontractkit/near-protocol-contracts) which can also provide a deeper look into the inner workings of the above steps.
 
