@@ -62,3 +62,6 @@ a:hover{
     cursor: pointer;
 }
 
+.warning .warning-text {
+    color: #FF585D;
+}
