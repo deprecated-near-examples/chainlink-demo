@@ -106,6 +106,10 @@ select {
     text-align: center;
 }
 
+.submit-button:hover{
+  background-color: #00ce94
+}
+
 .submit-button:disabled {
     cursor: default;
     background-color: #8FD6BD;
@@ -115,15 +119,6 @@ select {
   margin-right: 8px;
   min-width: 45px;
   min-height: 45px;
-}
-
-.bob {
-  margin-top: 8px;
-  margin-bottom: 8px;
-}
-
-.bob {
-  margin-top: 8px;
 }
 
 #bold {

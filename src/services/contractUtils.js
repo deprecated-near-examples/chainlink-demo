@@ -105,21 +105,26 @@ export async function getTransactions(firstBlock, lastBlock) {
     }); return acc;
   }, [])
   // Note: at this point should be only one transaction
-  console.log("Transactions: ", matchingTxs)
+
+  //insert initial transaction into matchingTxs array
+  matchingTxs.push(window.firstTransaction)
+
+  //transaction receipts from other steps
   const txObj = await getTransaction(matchingTxs[0].hash, 'oracle-node');
   await getReceiptsFromAccountPrefix(txObj, 'client', 6)
 
+  //creates transaction links from matchingTxs
   const txsLinks = matchingTxs.map(txs => (({
     method: txs.actions[0].FunctionCall.method_name,
     link: `https://explorer.testnet.near.org/transactions/${txs.hash}`
   })));
-  console.log('txsLinks', txsLinks);
   return txsLinks
 }
 
 export function formatResult(result){
+  const price = result / 100
   return `$${
-    Number(result)
+    Number(price)
       .toFixed(2)
       .toString()
       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")

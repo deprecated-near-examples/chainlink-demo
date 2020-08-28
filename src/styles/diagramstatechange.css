@@ -1,7 +1,6 @@
-
 .counter {
     display: flex;
-    margin-top: 32px;
+    margin-top: 64px;
     left: 0;
     right: 0;
     text-align: center;
@@ -24,5 +23,6 @@
 }
 
 .counter-button:hover {
+    background-color: #00ce94; 
     cursor: pointer;
 }

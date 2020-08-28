@@ -1,5 +1,6 @@
 .diagram-overlay {
     font-family: 'Inter', sans-serif;
+    display: flex;
     font-style: normal;
     justify-content: center;
     align-items: center;
@@ -10,7 +11,7 @@
 
 .diagram-overlay div {
     border: 4px solid #E6E6E6;
-    padding: 16px;
+    padding: 10px;
     box-sizing: border-box;
     border-radius: 10px;
 }
@@ -26,4 +27,38 @@
     font-size: 18px;
     line-height: 32px;
     color: #24272A;
+    margin-left: 15px;
+    margin-right: 15px;
 }
+
+a {
+    color: #375BD2;
+    text-decoration: none;
+}
+
+a:hover{
+    color: #a0b6ff;
+}
+
+.diagram-button {
+    margin-left: 40%;
+    margin-right: 40%;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: #00C08B;
+    font-weight: bold;
+    font-size: 18px;
+    height: 45px;
+    width: 160px;
+    line-height: 22px;
+    outline: none;
+}
+
+.diagram-button:hover {
+    background-color: #00ce94; 
+    cursor: pointer;
+}
+
