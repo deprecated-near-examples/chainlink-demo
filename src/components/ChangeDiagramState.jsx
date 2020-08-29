@@ -1,25 +1,25 @@
-import React, { useState } from 'react'
-import '../styles/diagramstatechange.css'
-import { useDiagramDispatch, useDiagramState } from './DiagramState'
+import React, { useState } from 'react';
+import '../styles/diagramstatechange.css';
+import { useDiagramDispatch, useDiagramState } from '../services/diagramState';
 
 function ChangeDiagramState() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   // Accessing the React Context through the custom functions from the Diagram State
-  const dispatch = useDiagramDispatch()
-  const state = useDiagramState()
+  const dispatch = useDiagramDispatch();
+  const state = useDiagramState();
 
   // Counter will change the state of the diagram; the counter cannot go above 6 or below 0
   const incrementCounter = () => {
     const newCount = count + 1 === 7 ? 0 : count + 1
-    setCount(newCount)
-    updateDiagram(newCount)
+    setCount(newCount);
+    updateDiagram(newCount);
   }
 
   const decrementCounter = () => {
     const newCount = count - 1 === -1 ? 6 : count - 1
-    setCount(newCount)
-    updateDiagram(newCount)
+    setCount(newCount);
+    updateDiagram(newCount);
   }
 
   // Each number in the counter corresponds to one state of the diagram 

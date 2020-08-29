@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import '../styles/diagram.css'
 import DiagramOverlay from './DiagramOverlay'
-import { useDiagramState } from './DiagramState'
+import { useDiagramState } from '../services/diagramState'
 
 const Diagram = () => {
     // The useDiagramState function is used to access the state of the diagram from the DiagramState component
