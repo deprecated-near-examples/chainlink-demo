@@ -45,7 +45,7 @@ export async function getTransaction(hash, subaccountPrefix) {
 }
 
 // returns two transactions associated with client <> oracle-node call
-export async function getTransactions(firstBlock, lastBlock) {
+export async function getTransactions(firstBlock, lastBlock, nonce) {
   const near = await getNear();
 
   // creates an array of block IDs based on first and last block
@@ -98,7 +98,7 @@ export async function getTransactions(firstBlock, lastBlock) {
         const args = action.FunctionCall.args;
         const base64DecodedArgs = Buffer.from(args, 'base64');
         const jsonArgs = JSON.parse(base64DecodedArgs.toString());
-        if (jsonArgs.nonce === window.nonce) {
+        if (jsonArgs.nonce === nonce) {
           acc.push(curr);
         }
       }

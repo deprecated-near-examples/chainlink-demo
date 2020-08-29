@@ -15,11 +15,9 @@ import {
 import { useDiagramDispatch } from '../services/diagramState';
 
 const Search = () => {
-
-  // The useDiagramDispatch function from the DiagramState component is accessed to regulate whether the diagram is visible or not
+  // The useDiagramDispatch hook is used to regulate diagram visibility
   const dispatch = useDiagramDispatch();
 
-  // The states are used to regulate the button behavior between token price searches
   const [searchValue, setSearchValue] = useState(null);
   const [searchResult, setSearchResult] = useState("");
   const [loading, setLoading] = useState(false);
@@ -32,13 +30,12 @@ const Search = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const result = await callClient(searchValue).then(setLoading(true));
-    window.firstTransactionHash = result.transaction.hash;
-    const txObj = await getTransaction(window.firstTransactionHash, 'client');
+    const firstTransactionHash = result.transaction.hash;
+    const txObj = await getTransaction(firstTransactionHash, 'client');
     await getReceiptsFromAccountPrefix(txObj, 'oracle', 2);
     window.firstTransaction = result.transaction;
     const firstBlockID = result.transaction_outcome.block_hash;
     const requestNonce = getFormattedNonce(result);
-    window.nonce = requestNonce;
 
     console.log('Request Nonce: ', requestNonce);
 
@@ -56,7 +53,7 @@ const Search = () => {
         console.log('FIRST block ID: ', firstBlockID);
         console.log('LAST block ID: ', finalBlockID);
 
-        window.transactions = await getTransactions(firstBlockID, finalBlockID)
+        window.transactions = await getTransactions(firstBlockID, finalBlockID, nonce)
         dispatch({type: 'displayDiagram'});
         setLoading(false);
 
