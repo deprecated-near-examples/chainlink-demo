@@ -10,6 +10,10 @@ const Diagram = () => {
     // The following states are used to control whether the explainer section is expanded and the explanation visible or not
     const [showExplorerLink, setExplorerLink] = useState(true)
 
+    const handleClick = () => {
+        window.open('https://near.org/blog/near-bringing-chainlinks-leading-oracle-solution-to-its-open-web-ecosystem/', '_blank'); 
+    }
+
     return (
         <div className="diagram">
             {state.diagramVisibility ? 
@@ -96,11 +100,9 @@ const Diagram = () => {
                                     </p> 
                                     : null }
                                 </div> : 
-                                <button className={"learn-more-button"}>
-                                    <a href="https://near.org/blog/near-bringing-chainlinks-leading-oracle-solution-to-its-open-web-ecosystem" target="_blank" >
-                                        Learn More
-                                    </a>
-                                </button> }
+                                <button onClick={handleClick} className={"learn-more-button"}>
+                                    Learn More
+                                </button>}
                         </div>
                     </div>
                 </div>
