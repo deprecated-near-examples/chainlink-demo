@@ -155,7 +155,7 @@ select {
 }
 
 .submit-button:disabled {
-    cursor: default;
+    cursor: not-allowed;
     background-color: #8FD6BD;
 }
 
@@ -453,7 +453,7 @@ a:hover{
 .nearkat-one {
     position: absolute;
     margin-top: -48px;
-    margin-left: 240px;
+    margin-left: 301px;
 }
 
 .nearkat-two {

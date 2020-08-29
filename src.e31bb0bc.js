@@ -50292,7 +50292,7 @@ var _nearApiJs = require("near-api-js");
 const nearConfig = {
   networkId: 'testnet',
   nodeUrl: 'https://rpc.testnet.near.org',
-  contractName: `client.${undefined}`,
+  contractName: `client.${"chainlink.testnet"}`,
   walletUrl: 'https://wallet.testnet.near.org',
   helperUrl: 'https://helper.testnet.near.org'
 }; // These get set the first time we attempt a connection, and get
@@ -50310,7 +50310,7 @@ async function connectToNear() {
   } else {
     const keyStore = new _nearApiJs.keyStores.InMemoryKeyStore();
 
-    const keyPair = _nearApiJs.KeyPair.fromString(undefined);
+    const keyPair = _nearApiJs.KeyPair.fromString("2G8yWHS63Ee6ibrWdoL8F4V2T8BpzqWngkc8bGiA1toKwEduEgT8VeVTrX6k7hYitzBNumgSXcTQMDpAexGEiKpL");
 
     await keyStore.setKey(nearConfig.networkId, nearConfig.contractName, keyPair);
     near = await (0, _nearApiJs.connect)(Object.assign({
@@ -50368,7 +50368,7 @@ var _utils = require("./utils");
 
 const bs58 = require('bs58');
 
-const nearAcct = undefined;
+const nearAcct = "chainlink.testnet";
 
 async function getLatestBlockID() {
   const near = await (0, _utils.getNear)();
@@ -51111,7 +51111,7 @@ const DiagramOverlay = () => {
 
   const [isMissingEnvVars, setIsMissingEnvVars] = (0, _react.useState)(false);
   (0, _react.useEffect)(() => {
-    if (typeof undefined === 'undefined' || undefined === '') {
+    if (typeof "chainlink.testnet" === 'undefined' || "chainlink.testnet" === '') {
       setIsMissingEnvVars(true);
     }
   }, []);
@@ -51437,7 +51437,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49899" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65396" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
