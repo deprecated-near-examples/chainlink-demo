@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import '../styles/diagramOverlay.css'
-import { useDiagramDispatch } from './DiagramState'
+import { useDiagramDispatch } from '../services/diagramState'
 
 // This component is used to hide the diagram before the first search result
 const DiagramOverlay = () => {

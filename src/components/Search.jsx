@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import alice from '../assets/alice.png'
-import bob from '../assets/bob.png'
-import spinner from '../assets/spinner.gif'
-import '../styles/search.css'
+import React, { useState } from 'react';
+import alice from '../assets/alice.png';
+import bob from '../assets/bob.png';
+import spinner from '../assets/spinner.gif';
+import '../styles/search.css';
 import { 
   callClient, 
   formatResult, 
@@ -11,13 +11,13 @@ import {
   getTransactions,
   getReceivedVal,
   getTransaction,
-  getReceiptsFromAccountPrefix } from '../services/contractUtils'
-import { useDiagramDispatch } from './DiagramState'
+  getReceiptsFromAccountPrefix } from '../services/contractUtils';
+import { useDiagramDispatch } from '../services/diagramState';
 
 const Search = () => {
 
   // The useDiagramDispatch function from the DiagramState component is accessed to regulate whether the diagram is visible or not
-  const dispatch = useDiagramDispatch()
+  const dispatch = useDiagramDispatch();
 
   // The states are used to regulate the button behavior between token price searches
   const [searchValue, setSearchValue] = useState(null);
@@ -25,16 +25,16 @@ const Search = () => {
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setSearchValue(e.target.value);
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const result = await callClient(searchValue).then(setLoading(true));
     window.firstTransactionHash = result.transaction.hash;
     const txObj = await getTransaction(window.firstTransactionHash, 'client');
-    await getReceiptsFromAccountPrefix(txObj, 'oracle', 2)
+    await getReceiptsFromAccountPrefix(txObj, 'oracle', 2);
     window.firstTransaction = result.transaction;
     const firstBlockID = result.transaction_outcome.block_hash;
     const requestNonce = getFormattedNonce(result);
@@ -58,13 +58,13 @@ const Search = () => {
 
         window.transactions = await getTransactions(firstBlockID, finalBlockID)
         dispatch({type: 'displayDiagram'});
-        setLoading(false)
+        setLoading(false);
 
-        console.log('STEPS: ', window.nearSteps)
-        console.log('Transaction Links: ', window.transactions)
+        console.log('STEPS: ', window.nearSteps);
+        console.log('Transaction Links: ', window.transactions);
 
       } else setTimeout(async ()=> {
-        await fetchNonceAnswer(firstBlockID, nonce)
+        await fetchNonceAnswer(firstBlockID, nonce);
       }, 750);
 }
 
