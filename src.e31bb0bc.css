@@ -151,7 +151,7 @@ select {
 }
 
 .submit-button:hover{
-  background-color: #00ce94
+  background-color: #00af7d;
 }
 
 .submit-button:disabled {
@@ -446,7 +446,7 @@ a:hover{
 }
 
 .learn-more-button:hover {
-    background-color: #50b0ff;
+    background-color: #00569c;
     cursor: pointer;
 }
 
@@ -596,7 +596,7 @@ a:hover{
 }
 
 .counter-button:hover {
-    background-color: #00ce94; 
+    background-color: #00af7d; 
     cursor: pointer;
 }
 
